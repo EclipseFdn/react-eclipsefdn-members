@@ -1,12 +1,19 @@
 import React from 'react';
 import MultiStepCopy from './components/MultiStepCopy';
 import './App.css';
+import AppFooter from './components/layout/AppFooter';
+import AppHeader from './components/layout/AppHeader';
 
 function App() {
   return (
     <div className="App">
-      <h1>react-eclipsefdn-members</h1>
-      <MultiStepCopy />
+      <AppHeader />
+      <div className="container">
+        <h1>react-eclipsefdn-members</h1>
+        <MultiStepCopy />
+      </div>
+
+      <AppFooter />
     </div>
   );
 }
