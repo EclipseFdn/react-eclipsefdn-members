@@ -1,31 +1,29 @@
 import React from "react";
-import { Button, CircularProgress } from '@material-ui/core';
-import { useStyles } from './formStyles';
 
-const CustomStepButton = ({step, isSubmitting, setStep, isLastStep}) => {
-  const classes = useStyles()
+const CustomStepButton = ({values, step, isSubmitting, setStep, isLastStep}) => {
+
   return (
-    <div className={classes.button}>
+    <div>
       {step > 0 ? (
-          <Button
-            disabled={isSubmitting}
-            variant="contained"
-            color="primary"
+          <button
+            // disabled={isSubmitting}
+            className="btn btn-primary"
+            type="button"
             onClick={() => setStep((s) => s - 1)}
           >
             Back
-          </Button>
+          </button>
       ) : null}
-        <Button
-          startIcon={isSubmitting ? <CircularProgress size="1rem" /> : null}
-          disabled={isSubmitting}
-          variant="contained"
-          color="primary"
+        <button
+          // startIcon={isSubmitting ? <CircularProgress size="1rem" /> : null}
+          // disabled={isSubmitting}
+          // variant="contained"
+          // color="primary"
+          className="btn btn-primary"
           type="submit"
-          // onClick={()=>console.log(values)}
         >
           {isSubmitting ? 'Submitting' : isLastStep() ? 'Submit' : 'Next'}
-        </Button> 
+        </button> 
     </div>
   )
 };

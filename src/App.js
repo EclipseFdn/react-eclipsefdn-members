@@ -1,5 +1,5 @@
 import React from 'react';
-import MultiStepCopy from './components/MultiStepCopy';
+import MultiStepForm from './components/MultiStepForm';
 import './App.css';
 import AppFooter from './components/layout/AppFooter';
 import AppHeader from './components/layout/AppHeader';
@@ -10,7 +10,7 @@ function App() {
       <AppHeader />
       <div className="container">
         <h1>react-eclipsefdn-members</h1>
-        <MultiStepCopy />
+        <MultiStepForm />
       </div>
 
       <AppFooter />

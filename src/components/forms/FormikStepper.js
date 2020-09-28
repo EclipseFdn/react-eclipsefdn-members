@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Formik, Form } from "formik";
-import CustomStepButton from "./CustomStepButton"
-import { Step, StepLabel, Stepper } from '@material-ui/core';
+import CustomStepButton from "./CustomStepButton";
+import * as Yup from "yup";
+// import Stepper from 'react-stepper-horizontal';
+// import { Step, StepLabel, Stepper } from '@material-ui/core';
 
 const FormikStepper = ({ children, ...props }) => {
     const childrenArray = React.Children.toArray(children)
@@ -12,59 +14,93 @@ const FormikStepper = ({ children, ...props }) => {
     function isLastStep() {
       return step === childrenArray.length - 1
     }
+
+    function isWorkingGroupStep() {
+      return step === 2
+    }
+
+    const validationSchema = Yup.object({
+      organizationName: Yup.string().required('Required'),
+      street: Yup.string().required('Required'),
+      city: Yup.string().required('Required'),
+      provinceOrState: Yup.string().required('Required'),
+      country: Yup.string().required('Required'),
+      // birthDate: Yup.date()
+      //   .required('Required')
+      //   .nullable()
+    })
   
+    // const steps = [
+    //   { 
+    //     id: 0,
+    //     title: "Company Information",
+    //     onClick: (e) => {
+    //       setStep(0)
+    //     }
+    //   },
+    //   { 
+    //     id: 1,
+    //     title: "Membership",
+    //     onClick: (e) => {
+    //       setStep(1)
+    //     }
+    //   },
+    //   { 
+    //     id: 2,
+    //     title: "Working Groups",
+    //     onClick: (e) => {
+    //       setStep(2)
+    //     }
+    //   },
+    //   { 
+    //     id: 3,
+    //     title: "Participation",
+    //     onClick: (e) => {
+    //       setStep(3)
+    //     }
+    //   },
+    // ]
+
+    const handleOnSubmit = async (values, helpers) => {
+      if (isWorkingGroupStep() && values.workingGroup === "none") {
+        console.log(values)
+        setStep((s) => s + 1) // skip one step
+      }
+      if (isLastStep()) {
+        await props.onSubmit(values)
+        setCompleted(true)
+      } 
+      else {
+        props.setFormDataStates(values)
+        setStep((s) => s + 1)
+      }
+    }
+
     return (
       <Formik
         {...props}
-        onSubmit={async (values, helpers) => {
-          if (isLastStep()) {
-            await props.onSubmit(values)
-            setCompleted(true)
-          } else {
-            localStorage.setItem('userData', JSON.stringify(values))
-            props.setFormDataStates(values)
-            setStep((s) => s + 1)
-          }
-        }}
+        onSubmit={handleOnSubmit}
+        validationSchema={validationSchema}
       >
         {({ values, isSubmitting }) => (
           <Form>
-            <Stepper alternativeLabel activeStep={step}>
-              {childrenArray.map((child, index) => (
+            {/* <Stepper steps={steps} activeStep={step}> */}
+              {/* {childrenArray.map((child, index) => (
                 <Step key={child.props.label} completed={step > index || completed}>
                   <StepLabel>{child.props.label}</StepLabel>
                 </Step>
-              ))}
-            </Stepper>
+              ))} */}
+            {/* </Stepper> */}
   
             {currentChild}
   
             <CustomStepButton
+              values={values}
               step={step}
               isSubmitting={isSubmitting}
               setStep={setStep}
               isLastStep={isLastStep}
             />
-            {/* {step > 0 ? (
-                <Button
-                  disabled={isSubmitting}
-                  variant="contained"
-                  color="primary"
-                  onClick={() => setStep((s) => s - 1)}
-                >
-                  Back
-                </Button>
-            ) : null}
-              <Button
-                startIcon={isSubmitting ? <CircularProgress size="1rem" /> : null}
-                disabled={isSubmitting}
-                variant="contained"
-                color="primary"
-                type="submit"
-                // onClick={()=>console.log(values)}
-              >
-                {isSubmitting ? 'Submitting' : isLastStep() ? 'Submit' : 'Next'}
-              </Button> */}
           </Form>
         )}
       </Formik>
