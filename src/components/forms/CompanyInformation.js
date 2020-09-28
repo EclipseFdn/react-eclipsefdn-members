@@ -1,6 +1,6 @@
 import React from "react";
-import { Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import { Field } from "formik";
+// import * as Yup from "yup";
 
 const CompanyInformation = () => {
   return (
@@ -158,8 +158,8 @@ const CompanyInformation = () => {
       <label htmlFor="representativeEmail">Representative Email</label><br />
       <Field name="representativeEmail">
         {({
-          field, // { name, value, onChange, onBlur }
-          form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+          field,
+          form: { touched, errors },
           meta,
         }) => (
           <div>

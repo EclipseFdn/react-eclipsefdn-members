@@ -23,7 +23,6 @@ const EffectiveDate = (props) => {
             )
           }}
         </Field>
-        {/* <ErrorMessage component={TextError} name={name} /> */}
       </>
     )
 }

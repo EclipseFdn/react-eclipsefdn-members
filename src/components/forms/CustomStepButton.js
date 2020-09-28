@@ -1,12 +1,12 @@
 import React from "react";
 
-const CustomStepButton = ({values, step, isSubmitting, setStep, isLastStep}) => {
+const CustomStepButton = ({step, isSubmitting, setStep, isLastStep}) => {
 
   return (
     <div>
       {step > 0 ? (
           <button
-            // disabled={isSubmitting}
+            disabled={isSubmitting}
             className="btn btn-primary"
             type="button"
             onClick={() => setStep((s) => s - 1)}
@@ -16,7 +16,7 @@ const CustomStepButton = ({values, step, isSubmitting, setStep, isLastStep}) => 
       ) : null}
         <button
           // startIcon={isSubmitting ? <CircularProgress size="1rem" /> : null}
-          // disabled={isSubmitting}
+          disabled={isSubmitting}
           // variant="contained"
           // color="primary"
           className="btn btn-primary"
