@@ -1,18 +1,26 @@
 import React from "react";
-import { Field } from "formik";
-// import { WizardStep } from "../forms/FormWizard";
+import Select from './Inputs/Select';
 
-const MembershipLevel = () => {
+const MembershipLevel = ({ formField }) => {
+  const {
+    membershipLevel
+  } = formField;
+
+  const dropdownOptions = [
+    { name: 'Select a level', value: '' },
+    { name: 'Level 1', value: 'l1' },
+    { name: 'Level 2', value: 'l2' },
+    { name: 'Level 3', value: 'l3' }
+  ]
 
   return (
     <>
       <h4>What is your intended Membership Level? </h4>
-      <Field name="membershipLevel" component="select">
-        <option value="" label="Select a level" />
-        <option value="l1" label="level 1" />
-        <option value="l2" label="level 2" />
-        <option value="l3" label="level 3" />
-      </Field>
+      <Select
+        label={membershipLevel.label}
+        name={membershipLevel.name}
+        options={dropdownOptions}
+      />
     </>
   );
 };

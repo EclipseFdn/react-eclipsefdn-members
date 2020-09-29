@@ -1,30 +1,14 @@
 import React from "react";
-import { Field } from "formik";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import DateInput from './Inputs/DateInput';
 
-const EffectiveDate = (props) => {
-    const { label, name, ...rest } = props
-    return (
-      <>
-        <label htmlFor={name}>{label}</label>
-        <Field name={name}>
-          {({ form, field }) => {
-            const { setFieldValue } = form
-            const { value } = field
-            return (
-              <DatePicker 
-                id={name}
-                {...field}
-                {...rest}
-                selected={value}
-                onChange={val => setFieldValue(name, val)}
-              />
-            )
-          }}
-        </Field>
-      </>
-    )
+const EffectiveDate = ({ formField }) => {
+  const {
+    effectiveDate
+  } = formField;
+
+  return (
+    <DateInput label={effectiveDate.label} name={effectiveDate.name} />
+  )
 }
 
 export default EffectiveDate

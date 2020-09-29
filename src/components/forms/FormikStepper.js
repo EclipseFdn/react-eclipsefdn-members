@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Formik, Form } from "formik";
 import CustomStepButton from "./CustomStepButton";
-import * as Yup from "yup";
+import {validationSchema} from '../formModels/ValidationSchema';
 
 const FormikStepper = ({ children, ...props }) => {
     const childrenArray = React.Children.toArray(children)
     const [step, setStep] = useState(0)
     const currentChild = childrenArray[step]
+    const currentValidationSchema = validationSchema[step];
   
     function isLastStep() {
       return step === childrenArray.length - 1
@@ -15,17 +16,6 @@ const FormikStepper = ({ children, ...props }) => {
     function isWorkingGroupStep() {
       return step === 2
     }
-
-    const validationSchema = Yup.object({
-      organizationName: Yup.string().required('Required'),
-      street: Yup.string().required('Required'),
-      city: Yup.string().required('Required'),
-      provinceOrState: Yup.string().required('Required'),
-      country: Yup.string().required('Required'),
-      // effectiveDate: Yup.date()
-      //   .required('Required')
-      //   .nullable()
-    })
 
     const handleOnSubmit = async (values, helpers) => {
       if (isWorkingGroupStep() && values.workingGroup === "none") {
@@ -45,7 +35,7 @@ const FormikStepper = ({ children, ...props }) => {
       <Formik
         {...props}
         onSubmit={handleOnSubmit}
-        validationSchema={validationSchema}
+        validationSchema={currentValidationSchema}
       >
         {({ values, isSubmitting }) => (
           <Form>
