@@ -2,6 +2,7 @@ import React from "react";
 import { Field } from "formik";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "./dateInputstyles.css";
 
 const DateInput = (props) => {
   const { label, name, ...rest } = props

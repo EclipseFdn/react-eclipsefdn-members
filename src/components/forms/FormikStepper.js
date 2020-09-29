@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { Formik, Form } from "formik";
 import CustomStepButton from "./CustomStepButton";
-import {validationSchema} from '../formModels/ValidationSchema';
+import { validationSchema } from '../formModels/ValidationSchema';
 
-const FormikStepper = ({ children, ...props }) => {
+const FormikStepper = ({ step, setStep, children, ...props }) => {
     const childrenArray = React.Children.toArray(children)
-    const [step, setStep] = useState(0)
+    // const [step, setStep] = useState(0)
     const currentChild = childrenArray[step]
     const currentValidationSchema = validationSchema[step];
   
@@ -17,9 +17,15 @@ const FormikStepper = ({ children, ...props }) => {
       return step === 2
     }
 
+    function isEffectiveDateStep() {
+      return step === 4
+    }
+
     const handleOnSubmit = async (values, helpers) => {
       if (isWorkingGroupStep() && values.workingGroup === "none") {
-        console.log(values)
+        setStep((s) => s + 1) // skip one step
+      }
+      if (isEffectiveDateStep() && values.workingGroup === "none") {
         setStep((s) => s + 1) // skip one step
       }
       if (isLastStep()) {

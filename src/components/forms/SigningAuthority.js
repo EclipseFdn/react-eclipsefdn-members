@@ -2,12 +2,13 @@ import React from "react";
 import { Field } from 'formik';
 import SigningAuthorityInfo from './SigningAuthorityInfo';
 
-const SigningAuthority = ({ formField, showHidden, setShowHidden }) => {
+const SigningAuthority = ({ formField, showHidden, setShowHidden, formDataStates }) => {
 
   const { 
     signingAuthority
   } = formField
 
+  // console.log("ischanging?" + formDataStates.signingAuthority)
 
   const handleOnChange = (val) => {
     if (val === "haveSigningAuthority") {
