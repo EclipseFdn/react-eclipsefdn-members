@@ -2,6 +2,10 @@ import React from "react";
 
 const CustomStepButton = ({step, isSubmitting, setStep, isLastStep}) => {
 
+  const handleClick = () => {
+    setStep((s) => s - 1)
+  }
+
   return (
     <div>
       {step > 0 ? (
@@ -9,7 +13,7 @@ const CustomStepButton = ({step, isSubmitting, setStep, isLastStep}) => {
             disabled={isSubmitting}
             className="btn btn-primary"
             type="button"
-            onClick={() => setStep((s) => s - 1)}
+            onClick={handleClick}
           >
             Back
           </button>

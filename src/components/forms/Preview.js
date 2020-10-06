@@ -8,6 +8,7 @@ const Preview = (previewData) => {
 
   return (
     <>
+      <h4>Preview</h4>
       {Object.keys(data).map(key => ( <div key={key}> <strong>{key}</strong>: {data[key]} </div> )) }
     </>
   );

@@ -1,16 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import Select from './Inputs/Select';
+import MembershipContext from "../MembershipContext";
 
 const WorkingGroups = ({ formField }) => {
   const {
     workingGroup
   } = formField;
+  const {isExistingMember} = useContext(MembershipContext)
 
   const dropdownOptions = [
-    { name: 'Select a group', value: '' },
+    { name: 'Select a group', value: ''},
     { name: 'group 1', value: 'g1' },
     { name: 'group 2', value: 'g2' },
     { name: 'I do not want to join a working group at this time', value: 'none' }
+  ]
+
+  const dropdownOptionsForExistingMember = [
+    { name: 'Select a group', value: '' },
+    { name: 'group 1', value: 'g1' },
+    { name: 'group 2', value: 'g2' }
   ]
 
   return (
@@ -19,7 +27,7 @@ const WorkingGroups = ({ formField }) => {
       <Select
         label={workingGroup.label}
         name={workingGroup.name}
-        options={dropdownOptions}
+        options={ isExistingMember ? dropdownOptionsForExistingMember : dropdownOptions}
       />
     </>
   );
