@@ -1,7 +1,31 @@
-import React from 'react'
-import { PropTypes } from 'prop-types'
+/*
+The MIT License (MIT) (https://github.com/mu29/react-stepper/blob/HEAD/LICENSE)
 
-// import Step from './Step'
+Copyright (c) 2016 InJung Chung (https://github.com/mu29/react-stepper)
+Copyright (c) 2020 Yi Liu
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
+
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const styles = {
   root: {
@@ -13,143 +37,23 @@ const styles = {
     display: 'table',
     width: '100%',
     margin: '0 auto',
-  },
+  }
 }
 
-function Stepper({
-  activeStep,
-  // chidlrenSteps,
-  children,
-  handleOnClick,
-  activeColor,
-  completeColor,
-  defaultColor,
-  circleFontColor,
-  activeTitleColor,
-  completeTitleColor,
-  defaultTitleColor,
-  size,
-  circleFontSize,
-  titleFontSize,
-  circleTop,
-  titleTop,
-  completeOpacity,
-  activeOpacity,
-  defaultOpacity,
-  completeTitleOpacity,
-  activeTitleOpacity,
-  defaultTitleOpacity,
-  barStyle,
-  defaultBorderColor,
-  completeBorderColor,
-  activeBorderColor,
-  defaultBorderStyle,
-  completeBorderStyle,
-  activeBorderStyle,
-  defaultBarColor,
-  completeBarColor,
-  activeCircleFontColor,
-  defaultCircleFontColor,
-  checkIcon,
-  fontFamily,
-  circleCursor,
-  barHeight,
-}) {
+const Stepper = ({ children }) => {
   const childrenArray = React.Children.toArray(children)
-  // var steps = chidlrenSteps.map(function (step, index) {
-
-  //   return (
-  //     <Step
-  //       key={index}
-  //       width={100 / chidlrenSteps.length}
-  //       title={step.props.label}
-  //       onClick={handleOnClick}
-  //       active={index === activeStep}
-  //       completed={index < activeStep}
-  //       first={index === 0}
-  //       isLast={index === chidlrenSteps.length - 1}
-  //       index={index}
-  //       activeColor={activeColor}
-  //       completeColor={completeColor}
-  //       defaultColor={defaultColor}
-  //       circleFontColor={circleFontColor}
-  //       activeTitleColor={activeTitleColor}
-  //       completeTitleColor={completeTitleColor}
-  //       defaultTitleColor={defaultTitleColor}
-  //       size={size}
-  //       circleFontSize={circleFontSize}
-  //       titleFontSize={titleFontSize}
-  //       circleTop={circleTop}
-  //       titleTop={titleTop}
-  //       defaultOpacity={defaultOpacity}
-  //       completeOpacity={completeOpacity}
-  //       activeOpacity={activeOpacity}
-  //       defaultTitleOpacity={defaultTitleOpacity}
-  //       completeTitleOpacity={completeTitleOpacity}
-  //       activeTitleOpacity={activeTitleOpacity}
-  //       barStyle={barStyle}
-  //       defaultBorderColor={defaultBorderColor}
-  //       completeBorderColor={completeBorderColor}
-  //       activeBorderColor={activeBorderColor}
-  //       defaultBorderStyle={defaultBorderStyle}
-  //       completeBorderStyle={completeBorderStyle}
-  //       activeBorderStyle={activeBorderStyle}
-  //       defaultBarColor={defaultBarColor}
-  //       completeBarColor={completeBarColor}
-  //       activeCircleFontColor={activeCircleFontColor}
-  //       checkIcon={checkIcon}
-  //       defaultCircleFontColor={defaultCircleFontColor}
-  //       fontFamily={fontFamily}
-  //       circleCursor={circleCursor}
-  //       barHeight={barHeight}
-  //     />
-  //   )
-  // });
 
   return (
     <div style={styles.root}>
       <div style={styles.stepper}>
-        {/* {steps} */}
-        {childrenArray}
+        { childrenArray }
       </div>
     </div>
   )
 }
 
-Stepper.defaultProps = {
-  activeStep: 0,
-}
-
 Stepper.propTypes = {
-  activeStep: PropTypes.number,
-  steps: PropTypes.array,
-  activeColor: PropTypes.string,
-  completeColor: PropTypes.string,
-  defaultColor: PropTypes.string,
-  activeTitleColor: PropTypes.string,
-  completeTitleColor: PropTypes.string,
-  defaultTitleColor: PropTypes.string,
-  circleFontColor: PropTypes.string,
-  size: PropTypes.number,
-  circleFontSize: PropTypes.number,
-  titleFontSize: PropTypes.number,
-  circleTop: PropTypes.number,
-  titleTop: PropTypes.number,
-  defaultOpacity: PropTypes.string,
-  completeOpacity: PropTypes.string,
-  activeOpacity: PropTypes.string,
-  defaultTitleOpacity: PropTypes.string,
-  completeTitleOpacity: PropTypes.string,
-  activeTitleOpacity: PropTypes.string,
-  barStyle: PropTypes.string,
-  defaultBarColor: PropTypes.string,
-  completeBarColor: PropTypes.string,
-  defaultBorderColor: PropTypes.string,
-  completeBorderColor: PropTypes.string,
-  activeBorderColor: PropTypes.string,
-  defaultBorderStyle: PropTypes.string,
-  completeBorderStyle: PropTypes.string,
-  activeBorderStyle: PropTypes.string,
+  children: PropTypes.node
 }
 
 export default Stepper

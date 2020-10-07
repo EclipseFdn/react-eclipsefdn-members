@@ -11,7 +11,7 @@ const FormikStepper = ({ step, setStep, children, ...props }) => {
   const currentValidationSchema = validationSchema[step]
 
   const [completed, setCompleted] = useState(new Set())
-  const [skipped, setSkipped] = React.useState(new Set())
+  const [skipped, setSkipped] = useState(new Set())
 
   function isLastStep() {
     return step === childrenArray.length - 1
@@ -93,7 +93,7 @@ const FormikStepper = ({ step, setStep, children, ...props }) => {
       }
 
       return (
-        <Step key={index} width={100 / childrenArray.length} title={child.props.label} onClick={setStep} active={index === step} completed={isStepComplete(index) || child.props.skipped || stepProps.completed} first={index === 0} isLast={isLastStep()} index={index} checkIcon={checkIcon()} />
+        <Step key={index} width={100 / childrenArray.length} title={child.props.label} onClick={setStep} active={index === step} completed={isStepComplete(index) || child.props.skipped || stepProps.completed} first={index === 0} isLast={index === childrenArray.length - 1} index={index} checkIcon={checkIcon()} />
       )
     })}
       </Stepper>
@@ -114,7 +114,6 @@ const FormikStepper = ({ step, setStep, children, ...props }) => {
               isSubmitting={formik.isSubmitting}
               setStep={setStep}
               isLastStep={isLastStep}
-              // setStatus={formik.setStatus}
             />
           </Form>
         )
