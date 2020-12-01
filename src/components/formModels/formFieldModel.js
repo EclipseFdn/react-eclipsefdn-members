@@ -47,25 +47,70 @@ export const formField = {
     label: 'Twitter Handle',
     placeholder: "Twitter",
   },
-  representativeFirstName: {
-    name: 'representativeFirstName',
+
+  // Company Representative
+  companyRepresentativeFirstName: {
+    name: 'companyRepresentativeFirstName',
     label: 'representative First Name',
     placeholder: firstName,
     requiredErrorMsg: 'representative is required'
   },
-  representativeLastName: {
-    name: 'representativeLastName',
+  companyRepresentativeLastName: {
+    name: 'companyRepresentativeLastName',
     label: 'representative Last Name',
     placeholder: lastName,
     requiredErrorMsg: 'representative is required'
   },
-  representativeEmail: {
-    name: 'representativeEmail',
+  companyRepresentativeEmail: {
+    name: 'companyRepresentativeLastName',
     label: 'representative Email*',
     placeholder: email,
     requiredErrorMsg: 'representative is required',
     invalidErrorMsg: 'email format is incorrect'
   },
+
+  // Marketing Representative
+  marketingRepresentativeFirstName: {
+    name: 'marketingRepresentativeFirstName',
+    label: 'representative First Name',
+    placeholder: firstName,
+    requiredErrorMsg: 'representative is required'
+  },
+  marketingRepresentativeLastName: {
+    name: 'marketingRepresentativeLastName',
+    label: 'representative Last Name',
+    placeholder: lastName,
+    requiredErrorMsg: 'representative is required'
+  },
+  marketingRepresentativeEmail: {
+    name: 'marketingRepresentativeEmail',
+    label: 'representative Email*',
+    placeholder: email,
+    requiredErrorMsg: 'representative is required',
+    invalidErrorMsg: 'email format is incorrect'
+  },
+
+  // Accounting Representative
+  accountingRepresentativeFirstName: {
+    name: 'accountingRepresentativeFirstName',
+    label: 'representative First Name',
+    placeholder: firstName,
+    requiredErrorMsg: 'representative is required'
+  },
+  accountingRepresentativeLastName: {
+    name: 'accountingRepresentativeLastName',
+    label: 'representative Last Name',
+    placeholder: lastName,
+    requiredErrorMsg: 'representative is required'
+  },
+  accountingRepresentativeEmail: {
+    name: 'accountingRepresentativeEmail',
+    label: 'representative Email*',
+    placeholder: email,
+    requiredErrorMsg: 'representative is required',
+    invalidErrorMsg: 'email format is incorrect'
+  },
+
   membershipLevel: {
     name: 'membershipLevel',
     label: 'Membership Level*',

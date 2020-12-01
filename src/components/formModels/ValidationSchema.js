@@ -9,9 +9,9 @@ const {
   country,
   postalCode,
   // twitterHandle,
-  representativeFirstName,
-  representativeLastName,
-  representativeEmail,
+  companyRepresentativeFirstName,
+  companyRepresentativeLastName,
+  companyRepresentativeEmail,
   membershipLevel,
   workingGroup,
   // participationLevel,
@@ -42,10 +42,10 @@ export const validationSchema = [
           `${postalCode.invalidErrorMsg}`,
           val => val && val.length === 5
         ),
-      [representativeFirstName.name]: Yup.string().required(`${representativeFirstName.requiredErrorMsg}`),
-      [representativeLastName.name]: Yup.string().required(`${representativeLastName.requiredErrorMsg}`),
-      [representativeEmail.name]: Yup.string()
-        .required(`${representativeEmail.requiredErrorMsg}`)
+      [companyRepresentativeFirstName.name]: Yup.string().required(`${companyRepresentativeFirstName.requiredErrorMsg}`),
+      [companyRepresentativeLastName.name]: Yup.string().required(`${companyRepresentativeLastName.requiredErrorMsg}`),
+      [companyRepresentativeEmail.name]: Yup.string()
+        .required(`${companyRepresentativeEmail.requiredErrorMsg}`)
         .email('Invalid email address')
     }),
 
