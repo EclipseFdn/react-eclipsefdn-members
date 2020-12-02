@@ -241,7 +241,7 @@ export default class Step extends Component {
       <div style={styles.step}>
         <div style={circleStyle}>{this.getInnerContent()}</div>
         {completed ? (
-          <div onClick={onClick} style={titleStyle}>
+          <div style={titleStyle}>
             {title}
           </div>
         ) : (
