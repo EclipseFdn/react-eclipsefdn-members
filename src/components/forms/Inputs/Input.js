@@ -11,7 +11,7 @@ const Input = ({ name, labelName, placeholder }) => {
         field, // { name, value, onChange, onBlur }
         form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
         meta,
-      }) => (  
+      }) => (
         <div>
           <input className="form-control" type="text" placeholder={placeholder} {...field} />
           {meta.touched && meta.error && (

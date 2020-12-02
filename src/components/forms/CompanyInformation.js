@@ -1,4 +1,5 @@
 import React from "react";
+import AsyncSelect from "./Inputs/AsyncSelect";
 import Input from './Inputs/Input';
 
 const CompanyInformation = ({ formField }) => {
@@ -25,7 +26,12 @@ const CompanyInformation = ({ formField }) => {
   return (
     
     <>
+
       <h3>Confirm/Complete your Company’s Information</h3>
+      <hr />
+
+      <p> test aync organizations </p>
+      <AsyncSelect />
       <hr />
       <Input name={organizationName.name} labelName={organizationName.label} placeholder={organizationName.placeholder} />
 
