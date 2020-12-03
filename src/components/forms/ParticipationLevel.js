@@ -1,8 +1,9 @@
 import React from "react";
 import { Field } from "formik";
-// import { WizardStep } from "../forms/FormWizard";
 
 const ParticipationLevel = () => {
+
+  // This will be probably change to dynamically levels under working groups
 
   return (
     <>

@@ -1,5 +1,6 @@
 import React from "react";
 import Select from './Inputs/Select';
+import MembershipFeeTable from './MembershipFeeTable';
 
 const MembershipLevel = ({ formField }) => {
   const {
@@ -22,7 +23,8 @@ const MembershipLevel = ({ formField }) => {
         name={membershipLevel.name}
         options={dropdownOptions}
       />
-      <p>The table will be here https://www.eclipse.org/membership/documents/membership-prospectus.pdf</p>
+      <p>The table is from here https://www.eclipse.org/membership/documents/membership-prospectus.pdf</p>
+      <MembershipFeeTable />
     </>
   );
 };

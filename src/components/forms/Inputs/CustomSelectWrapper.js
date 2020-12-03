@@ -26,6 +26,9 @@ const CustomSelect = (props) => {
       props.form.setFieldValue('country', option.address.country);
       props.form.setFieldValue('postalCode', option.address.postalCode);
     }
+    if (option.twitter) {
+      props.form.setFieldValue('twitterHandle', option.twitter);
+    }
   }
 
   const promiseOptions = async (inputValue) => {
@@ -37,8 +40,11 @@ const CustomSelect = (props) => {
     if (props.srcData === "workingGroups") {
       src_data = "workingGroups.json"
     }
-    console.log("src_data")
-    console.log(src_data)
+
+    // if(inputValue) {
+    //   src_data = src_data + `?search=${inputValue}`
+    // }
+
     return fetch(src_data, {
         headers : { 
           'Content-Type': 'application/json',
@@ -48,7 +54,7 @@ const CustomSelect = (props) => {
         .then(resp => resp.json())
         .then((data) => {
           if (data.companies) {
-            return data.companies.map(item => ({ value: item.name, label: item.name, address: item.address }));
+            return data.companies.map(item => ({ value: item.name, label: item.name, address: item.address, twitter: item.twitter }));
           }
           if (data.working_groups) {
             if (props.isExistingMember) {
@@ -56,7 +62,7 @@ const CustomSelect = (props) => {
             }
             else {
               let tempData = data.working_groups.map(item => ({ value: item.id, label: item.name }))
-              tempData.push({ label: 'I do not want to join a working group at this time', value: 'none' })
+              tempData.push({ label: 'I do not want to join a working group at this time', value: '' })
               return tempData
             }
           }

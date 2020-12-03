@@ -15,11 +15,11 @@ const {
   membershipLevel,
   workingGroup,
   // participationLevel,
-  effectiveDate,
-  wgRepresentativeFirstName,
-  wgRepresentativeLastName,
-  wgRepresentativeJobTitle,
-  wgRepresentativeEmail,
+  // effectiveDate,
+  // wgRepresentativeFirstName,
+  // wgRepresentativeLastName,
+  // wgRepresentativeJobTitle,
+  // wgRepresentativeEmail,
   signingAuthority,
   signingAuthorityFirstName,
   signingAuthorityLastName,
@@ -57,27 +57,29 @@ export const validationSchema = [
     //Third
     Yup.object({
       [workingGroup.name]: Yup.string().required('Required'),
+      // [effectiveDate.name]: Yup.string().nullable().when(`${workingGroup.name}`, {
+      //   is: (value) => value.value !== "",
+      //   then: Yup.string().required("Required")
+      // }),
+      // [wgRepresentativeFirstName.name]: Yup.string().when(`${workingGroup.name}`, {
+      //   is: (value) => value.value !== "",
+      //   then: Yup.string().required("Required")
+      // }),
+      // [wgRepresentativeLastName.name]: Yup.string().when(`${workingGroup.name}`, {
+      //   is: (value) => value.value !== "",
+      //   then: Yup.string().required("Required")
+      // }),
+      // [wgRepresentativeJobTitle.name]: Yup.string().when(`${workingGroup.name}`, {
+      //   is: (value) => value.value !== "",
+      //   then: Yup.string().required("Required")
+      // }),
+      // [wgRepresentativeEmail.name]: Yup.string().when(`${workingGroup.name}`, {
+      //   is: (value) => value.value !== "",
+      //   then: Yup.string().required("Required")
+      // }),
     }),
 
     // Forth
-    Yup.object({}),
-
-    //Fifth
-    Yup.object({
-      [effectiveDate.name]: Yup.string()
-        .required('Required')
-        .nullable()
-    }),
-
-    //Sixth
-    Yup.object({
-      [wgRepresentativeFirstName.name]: Yup.string().required('Required'),
-      [wgRepresentativeLastName.name]: Yup.string().required('Required'),
-      [wgRepresentativeJobTitle.name]: Yup.string().required('Required'),
-      [wgRepresentativeEmail.name]: Yup.string().required('Required'),
-    }),
-
-    // Seventh
     Yup.object({
       [signingAuthority.name]: Yup.string().required('Required'),
       [signingAuthorityFirstName.name]: Yup.string().when(`${signingAuthority.name}`, {
@@ -92,12 +94,12 @@ export const validationSchema = [
       }),
     }),
 
-    // // Eighth
-    // Yup.object({
-    //   [signingAuthorityFirstName.name]: Yup.string().required('Required'),
-    //   [signingAuthorityLastName.name]: Yup.string().required('Required'),
-    //   [signingAuthorityJobTitile.name]: Yup.string().required('Required'),
-    //   [signingAuthorityEmail.name]: Yup.string().required('Required'),
-    // }),
+    //Fifth
+    Yup.object({}),
 
+    //Sixth
+    Yup.object({}),
+
+    // Seventh
+    Yup.object({}),
   ] 
