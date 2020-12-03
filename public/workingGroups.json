@@ -1,0 +1,16 @@
+{
+    "working_groups": [
+        {
+            "name": "Edgenatives",
+            "id": "edgenatives"
+        },
+        {
+            "name": "ECD tools",
+            "id": "ecd_tools"
+        },
+        {
+            "name": "Jakarta EE",
+            "id": "jakarta_ee"
+        }
+    ]
+}

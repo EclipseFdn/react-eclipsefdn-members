@@ -8,9 +8,10 @@ const MembershipLevel = ({ formField }) => {
 
   const dropdownOptions = [
     { name: 'Select a level', value: '' },
-    { name: 'Level 1', value: 'l1' },
-    { name: 'Level 2', value: 'l2' },
-    { name: 'Level 3', value: 'l3' }
+    { name: 'Strategic Members', value: 'l1' },
+    { name: 'Contributing Members (formerly referred to as Solutions Members)', value: 'l2' },
+    { name: 'Associate Members', value: 'l3' },
+    { name: 'Committer Members', value: 'l4' }
   ]
 
   return (
@@ -21,6 +22,7 @@ const MembershipLevel = ({ formField }) => {
         name={membershipLevel.name}
         options={dropdownOptions}
       />
+      <p>The table will be here https://www.eclipse.org/membership/documents/membership-prospectus.pdf</p>
     </>
   );
 };

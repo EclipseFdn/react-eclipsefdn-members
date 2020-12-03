@@ -1,5 +1,5 @@
 import React from "react";
-import AsyncSelect from "./Inputs/AsyncSelect";
+import CustomSelectWrapper from "./Inputs/CustomSelectWrapper";
 import Input from './Inputs/Input';
 
 const CompanyInformation = ({ formField }) => {
@@ -31,9 +31,9 @@ const CompanyInformation = ({ formField }) => {
       <hr />
 
       <p> test aync organizations </p>
-      <AsyncSelect />
-      <hr />
-      <Input name={organizationName.name} labelName={organizationName.label} placeholder={organizationName.placeholder} />
+      <CustomSelectWrapper name={organizationName.name} />
+
+      {/* <Input name={organizationName.name} labelName={organizationName.label} placeholder={organizationName.placeholder} /> */}
 
       <hr />
       <h5>Address</h5>

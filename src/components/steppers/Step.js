@@ -215,7 +215,7 @@ export default class Step extends Component {
   }
 
   render() {
-    const { title, active, completed, first, isLast, onClick } = this.props
+    const { title, active, completed, first, isLast } = this.props
 
     const styles = this.getStyles()
     const circleStyle = Object.assign(

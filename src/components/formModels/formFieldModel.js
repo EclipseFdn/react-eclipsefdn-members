@@ -3,7 +3,7 @@ const lastName = "Last Name"
 const email = "Email Address"
 const orgName = "Organization Name"
 const jobtitle = "Job Title"
-const requiredErrorMsg = "is required"
+// const requiredErrorMsg = "is required"
 
 export const formField = {
   organizationName: {

@@ -1,10 +1,10 @@
 import React from 'react';
-import AsyncCreatableSelect from 'react-select/async-creatable';
+import AsyncSelect from 'react-select/async';
 
-const AsyncSelect = ({ value, onChange }) => {
+const AsyncSelectWithFixedOptions = ({ value, onChange }) => {
 
-    const promiseOptions = (inputValue) => {
-      return fetch("companies.json", {
+    const promiseOptions = async (inputValue) => {
+      return fetch("workingGroups.json", {
           headers : { 
             'Content-Type': 'application/json',
             'Accept': 'application/json'
@@ -12,20 +12,22 @@ const AsyncSelect = ({ value, onChange }) => {
         })
           .then(resp => resp.json())
           .then((data) => {
-            console.log(data.companies)
-            return data.companies.map(item => ({ value: item.name, label: item.name, address: item.address }));
+            return data.working_groups.map(item => ({ value: item.id, label: item.name }));
         })
     }
 
     return (
-        <AsyncCreatableSelect
+      <>
+        <AsyncSelect
           cacheOptions
           defaultOptions
           loadOptions={promiseOptions}
           value={value}
           onChange={onChange}
         />
+
+      </>
     );
 }
 
-export default AsyncSelect
+export default AsyncSelectWithFixedOptions
