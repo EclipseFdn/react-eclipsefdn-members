@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import CustomSelectWrapper from "./Inputs/CustomSelectWrapper";
+import MembershipContext from "../MembershipContext";
 import Input from './Inputs/Input';
 
 const CompanyInformation = ({ formField }) => {
@@ -23,6 +24,8 @@ const CompanyInformation = ({ formField }) => {
     accountingRepresentativeEmail,
   } = formField;
 
+  const {isExistingMember} = useContext(MembershipContext)
+
   return (
     
     <>
@@ -31,7 +34,7 @@ const CompanyInformation = ({ formField }) => {
       <hr />
 
       <p> test aync organizations </p>
-      <CustomSelectWrapper name={organizationName.name} />
+      <CustomSelectWrapper name={organizationName.name} srcData="companies" isExistingMember={isExistingMember} />
 
       {/* <Input name={organizationName.name} labelName={organizationName.label} placeholder={organizationName.placeholder} /> */}
 

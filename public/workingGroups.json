@@ -1,16 +1,72 @@
 {
     "working_groups": [
         {
-            "name": "Edgenatives",
-            "id": "edgenatives"
-        },
-        {
-            "name": "ECD tools",
-            "id": "ecd_tools"
-        },
-        {
-            "name": "Jakarta EE",
-            "id": "jakarta_ee"
-        }
+            "id": "ascii_doc",
+            "name": "AsciiDoc"
+          },
+          {
+            "id": "ecd_tools",
+            "name": "Eclipse Cloud Development Tools"
+          },
+          {
+            "id": "edge_native",
+            "name": "Edge Native"
+          },
+          {
+            "id": "gemoc_rc",
+            "name": "GEMOC RC"
+          },
+          {
+            "id": "eclipse_iot",
+            "name": "Eclipse IoT"
+          },
+          {
+            "id": "jakarta_ee",
+            "name": "Jakarta EE"
+          },
+          {
+            "id": "openadx",
+            "name": "OpenADx"
+          },
+          {
+            "id": "opengenesis",
+            "name": "OpenGENESIS"
+          },
+          {
+            "id": "openhwgroup",
+            "name": "OpenHW Group"
+          },
+          {
+            "id": "openmdm",
+            "name": "OpenMDM"
+          },
+          {
+            "id": "openmobility",
+            "name": "OpenMobility"
+          },
+          {
+            "id": "openpass",
+            "name": "OpenPass"
+          },
+          {
+            "id": "science",
+            "name": "Science"
+          },
+          {
+            "id": "sparkplug",
+            "name": "Sparkplug"
+          },
+          {
+            "id": "tangle_ee",
+            "name": "Tangle EE"
+          },
+          {
+            "id": "eclipse_ide",
+            "name": "Eclipse IDE"
+          },
+          {
+            "id": "eclipse_org",
+            "name": "Other"
+          }
     ]
 }

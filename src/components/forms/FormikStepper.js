@@ -49,7 +49,7 @@ const FormikStepper = ({ step, setStep, children, ...props }) => {
   //////////////////////////////////////////
 
   const handleOnSubmit = async (values, helpers, action) => {
-    if (isWorkingGroupStep() && values.workingGroup === "none") { // If not select working groups
+    if (isWorkingGroupStep() && values.workingGroup.value === "none") { // If not select working groups
       handleComplete()
       handleSkip()
       // setStep((s) => s + 1) // skip participation level step

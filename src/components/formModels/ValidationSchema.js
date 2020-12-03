@@ -36,12 +36,12 @@ export const validationSchema = [
       [provinceOrState.name]: Yup.string().required(`${provinceOrState.requiredErrorMsg}`),
       [country.name]: Yup.string().required(`${country.requiredErrorMsg}`),
       [postalCode.name]: Yup.string()
-        .required(`${street.requiredErrorMsg}`)
-        .test(
-          'len',
-          `${postalCode.invalidErrorMsg}`,
-          val => val && val.length === 5
-        ),
+        .required(`${street.requiredErrorMsg}`),
+        // .test(
+        //   'len',
+        //   `${postalCode.invalidErrorMsg}`,
+        //   val => val && val.length === 5
+        // ),
       [companyRepresentativeFirstName.name]: Yup.string().required(`${companyRepresentativeFirstName.requiredErrorMsg}`),
       [companyRepresentativeLastName.name]: Yup.string().required(`${companyRepresentativeLastName.requiredErrorMsg}`),
       [companyRepresentativeEmail.name]: Yup.string()
