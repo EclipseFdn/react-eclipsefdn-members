@@ -1,6 +1,6 @@
 import React from 'react';
 import AsyncCreatableSelect from 'react-select/async-creatable';
-import { Field, useField } from "formik";
+import { Field } from "formik";
 // import Select from 'react-select';
 
 const CustomSelectWrapper = ({ name }) => {
@@ -15,11 +15,19 @@ const CustomSelectWrapper = ({ name }) => {
 
 const CustomSelect = (props) => {
 
-  const [field, { setValue }] = useField(props.field.name);
+  // const [field, { setValue }] = useField(props.field.name)
 
-  const onChange = ({ value }) => {
-    setValue(value);
-  };
+  const handleSelect = (option, action) => {
+    console.log(option)
+    props.form.setFieldValue(props.field.name, option);
+    if (option.address) {
+      props.form.setFieldValue('street', option.address.street);
+      props.form.setFieldValue('city', option.address.city);
+      props.form.setFieldValue('provinceOrState', option.address.provinceOrState);
+      props.form.setFieldValue('country', option.address.country);
+      props.form.setFieldValue('postalCode', option.address.postalCode);
+    }
+  }
 
   // function updateBlur() {
   //   form.setFieldTouched(field.name, true);
@@ -52,23 +60,16 @@ const CustomSelect = (props) => {
       })
   }
   return (
-    <>
-    <label htmlFor={field.name}>Company</label>
     <AsyncCreatableSelect
+      {...props.field}
       cacheOptions
       defaultOptions
       loadOptions={promiseOptions}
-      onChange={onChange}
+      onChange={(option, action) => {
+        handleSelect(option, action);
+      }}
     />
-    {/* <Select
-      options={options}
-      value={getValue()}
-      name={field.name}
-      onChange={handleOptionChange}
-      {...field}
-    /> */}
-    </>
-  )
+  );
 
 }
 
