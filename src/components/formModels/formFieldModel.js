@@ -63,7 +63,7 @@ export const formField = {
     requiredErrorMsg: 'representative is required'
   },
   companyRepresentativeEmail: {
-    name: 'companyRepresentativeLastName',
+    name: 'companyRepresentativeEmail',
     label: 'representative Email*',
     placeholder: email,
     requiredErrorMsg: 'representative is required',

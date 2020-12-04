@@ -3,7 +3,7 @@ import AsyncCreatableSelect from 'react-select/async-creatable';
 import AsyncSelect from 'react-select/async';
 import { Field } from "formik";
 
-const CustomSelectWrapper = ({ name, srcData, isExistingMember }) => {
+const CustomSelectWrapper = ({ name, srcData, isExistingMember, setDisableInput }) => {
 
   return (
     <Field
@@ -11,6 +11,7 @@ const CustomSelectWrapper = ({ name, srcData, isExistingMember }) => {
       component={CustomSelect}
       srcData={srcData}
       isExistingMember={isExistingMember}
+      setDisableInput={setDisableInput}
     />
   )
 }
@@ -25,6 +26,8 @@ const CustomSelect = (props) => {
       props.form.setFieldValue('provinceOrState', option.address.provinceOrState);
       props.form.setFieldValue('country', option.address.country);
       props.form.setFieldValue('postalCode', option.address.postalCode);
+      props.setDisableInput(true)
+      
     }
     if (option.twitter) {
       props.form.setFieldValue('twitterHandle', option.twitter);

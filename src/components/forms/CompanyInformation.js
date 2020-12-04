@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import CustomSelectWrapper from "./Inputs/CustomSelectWrapper";
 import MembershipContext from "../MembershipContext";
 import Input from './Inputs/Input';
@@ -26,6 +26,8 @@ const CompanyInformation = ({ formField }) => {
 
   const {isExistingMember} = useContext(MembershipContext)
 
+  const [disableInput, setDisableInput] = useState(false)
+
   return (
     
     <>
@@ -34,18 +36,18 @@ const CompanyInformation = ({ formField }) => {
       <hr />
 
       <p> test aync organizations </p>
-      <CustomSelectWrapper name={organizationName.name} srcData="companies" isExistingMember={isExistingMember} />
+      <CustomSelectWrapper name={organizationName.name} srcData="companies" isExistingMember={isExistingMember} setDisableInput={setDisableInput} />
 
       {/* <Input name={organizationName.name} labelName={organizationName.label} placeholder={organizationName.placeholder} /> */}
 
       <hr />
       <h5>Address</h5>
-      <Input name={street.name} labelName={street.label} placeholder={street.placeholder} />
-      <Input name={city.name} labelName={city.label} placeholder={city.placeholder} />
-      <Input name={provinceOrState.name} labelName={provinceOrState.label} placeholder={provinceOrState.placeholder} />
-      <Input name={country.name} labelName={country.label} placeholder={country.placeholder} />
-      <Input name={postalCode.name} labelName={postalCode.label} placeholder={postalCode.placeholder} />
-      <Input name={twitterHandle.name} labelName={twitterHandle.label} placeholder={twitterHandle.placeholder} />
+      <Input name={street.name} labelName={street.label} placeholder={street.placeholder} disableInput={disableInput} />
+      <Input name={city.name} labelName={city.label} placeholder={city.placeholder} disableInput={disableInput} />
+      <Input name={provinceOrState.name} labelName={provinceOrState.label} placeholder={provinceOrState.placeholder} disableInput={disableInput} />
+      <Input name={country.name} labelName={country.label} placeholder={country.placeholder} disableInput={disableInput} />
+      <Input name={postalCode.name} labelName={postalCode.label} placeholder={postalCode.placeholder} disableInput={disableInput} />
+      <Input name={twitterHandle.name} labelName={twitterHandle.label} placeholder={twitterHandle.placeholder} disableInput={disableInput} />
 
       <hr />
       <h4>Company Representative Contact</h4>

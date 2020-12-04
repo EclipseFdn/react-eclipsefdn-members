@@ -1,7 +1,7 @@
 import React from "react";
 import { Field } from "formik";
 
-const Input = ({ name, labelName, placeholder }) => {
+const Input = ({ name, labelName, placeholder, disableInput }) => {
 
   return (
     <>
@@ -13,7 +13,7 @@ const Input = ({ name, labelName, placeholder }) => {
         meta,
       }) => (
         <div>
-          <input className="form-control" type="text" placeholder={placeholder} {...field} />
+          <input className="form-control" type="text" {...field} placeholder={placeholder} disabled={disableInput} />
           {meta.touched && meta.error && (
             <div className="error">{meta.error}</div>
           )}
