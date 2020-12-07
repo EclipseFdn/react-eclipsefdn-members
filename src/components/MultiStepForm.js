@@ -13,6 +13,9 @@ const MultiStepForm = ({ defineInitialData, step, setStep }) => {
   const [formDataStates, setFormDataStates] = useState(defineInitialData)
   const [showHidden, setShowHidden] = useState(false)
 
+  const [addMKTRepre, setAddMKTRepre] = useState(false)
+  const [addACCRepre, setAddACCRepre] = useState(false)
+
   const handleSubmit = (values) => {  // This is for final submit, after preview
       console.log(values)
   }
@@ -28,10 +31,35 @@ const MultiStepForm = ({ defineInitialData, step, setStep }) => {
         step={step}
         setStep={setStep}
       >
-        <CompanyInformation formField={formField} label="Company Information" skipped={isExistingMember ? true : false} />
-        <MembershipLevel formField={formField} label="Membership Level" skipped={isExistingMember ? true : false} />
-        <WorkingGroups formField={formField} label="Working Groups" />
-        <SigningAuthority formField={formField} showHidden={showHidden} setShowHidden={setShowHidden} formDataStates={formDataStates} label="Signing Authority" />
+        <CompanyInformation
+          formField={formField}
+          label="Company Information"
+          skipped={isExistingMember ? true : false}
+          addMKTRepre={addMKTRepre}
+          setAddMKTRepre={setAddMKTRepre}
+          addACCRepre={addACCRepre}
+          setAddACCRepre={setAddACCRepre}
+        />
+
+        <MembershipLevel
+          formField={formField}
+          label="Membership Level"
+          skipped={isExistingMember ? true : false}
+        />
+
+        <WorkingGroups
+          formField={formField}
+          label="Working Groups"
+        />
+
+        <SigningAuthority
+          formField={formField}
+          showHidden={showHidden}
+          setShowHidden={setShowHidden}
+          formDataStates={formDataStates}
+          label="Signing Authority" 
+        />
+        
         <Preview formField={formField} previewData={formDataStates} label="Preview" />
 
       </FormikStepper>

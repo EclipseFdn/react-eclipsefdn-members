@@ -4,16 +4,22 @@ import MembershipContext from "../MembershipContext";
 import Input from './Inputs/Input';
 import { mapField } from '../formModels/formFieldModel';
 
-const CompanyInformation = ({ formField }) => {
+const CompanyInformation = ({ formField, label, skipped, addMKTRepre, setAddMKTRepre, addACCRepre, setAddACCRepre }) => {
 
-  const {
-    organization,
-    companyRepresentative,
-  } = formField;
+  const { organization, companyRepresentative } = formField
 
   const {isExistingMember} = useContext(MembershipContext)
 
   const [disableInput, setDisableInput] = useState(false)
+
+  const toggleMKTRepreContacts = () => {
+
+    setAddMKTRepre(!addMKTRepre)
+  }
+
+  const toggleACCRepreContacts = () => {
+    setAddACCRepre(!addACCRepre)
+  }
 
   return (
     <>
@@ -28,14 +34,31 @@ const CompanyInformation = ({ formField }) => {
 
       <hr />
       <h4>Company Representative Contact</h4>
-      { mapField(companyRepresentative.representative).map(el => <Input name={`companyRepresentative.representative.${el}`} labelName={el} placeholder={el} key={el} />) }
+      { mapField(companyRepresentative.representative).map(el => <Input name={`companyRepresentative.representative.${el}`} labelName={el} placeholder={el} key={`representative-${el}`} />) }
 
-      <hr />
-      <h4>Marketing Representative Contact</h4>
+      <button type="button" className="btn btn-secondary margin-top-10 margin-right-10" onClick={toggleMKTRepreContacts}>
+        { addMKTRepre ? "Remove Marketing Representative" : "Add Marketing Representative"}
+      </button>
 
+      <button type="button" className="btn btn-secondary margin-top-10" onClick={toggleACCRepreContacts}>
+        { addACCRepre ? "Remove Accounting Representative" : "Add Accounting Representative"}
+      </button>
 
-      <hr />
-      <h4>Accounting Contact</h4>
+      { addMKTRepre &&
+        <>
+          <hr />
+          <h4>Marketing Representative Contact</h4>
+          { mapField(companyRepresentative.marketingRepresentative).map(el => <Input name={`companyRepresentative.marketingRepresentative.${el}`} labelName={el} placeholder={el} key={`marketingRepresentative-${el}`} />) }
+        </>
+      }
+
+      { addACCRepre &&
+        <>
+          <hr />
+          <h4>Accounting Representative Contact</h4>
+          { mapField(companyRepresentative.accounting).map(el => <Input name={`companyRepresentative.accounting.${el}`} labelName={el} placeholder={el} key={`accounting-${el}`} />) }
+        </>
+      }
 
     </>
   );
