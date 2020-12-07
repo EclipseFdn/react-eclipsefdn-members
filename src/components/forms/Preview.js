@@ -12,6 +12,9 @@ const Preview = (previewData) => {
     <>
       <h4>Preview</h4>
       <p> Please check the console log </p>
+      <pre>
+      { JSON.stringify(data, null, 2) }
+      </pre>
       {/* {Object.keys(data).map(key => ( <div key={key}> <strong>{key}</strong>: {data[key]} </div> )) } */}
     </>
   );
