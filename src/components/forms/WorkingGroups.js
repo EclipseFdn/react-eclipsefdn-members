@@ -8,21 +8,21 @@ import WorkingGroupsRepresentative from './WorkingGroupRepresentative';
 
 const WorkingGroups = ({ formField }) => {
   const { values } = useFormikContext()
-  const { workingGroup } = formField
   const {isExistingMember} = useContext(MembershipContext)
 
   return (
     <>
       <h4>Which working group would you like to join? </h4>
       <CustomSelectWrapper
-        // label={workingGroup.label}
-        name={workingGroup.name}
+        label="Working Groups"
+        name="workingGroup"
         srcData="workingGroups"
         isExistingMember={isExistingMember}
       />
+
       { values.workingGroup.value ? 
         <>
-          <ParticipationLevel formField={formField} label="Participation Level" />
+          <ParticipationLevel formField={formField} label="Participation Level" participationLevels={values.workingGroup.participation_levels} />
           <EffectiveDate formField={formField} label="Effective Date" />
         </>
         : null

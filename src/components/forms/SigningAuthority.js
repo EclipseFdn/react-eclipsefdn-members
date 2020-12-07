@@ -4,9 +4,9 @@ import SigningAuthorityInfo from './SigningAuthorityInfo';
 
 const SigningAuthority = ({ formField, showHidden, setShowHidden, formDataStates }) => {
 
-  const { 
-    signingAuthority
-  } = formField
+  // const { 
+  //   signingAuthority
+  // } = formField
 
   // console.log("ischanging?" + formDataStates.signingAuthority)
 
@@ -22,7 +22,7 @@ const SigningAuthority = ({ formField, showHidden, setShowHidden, formDataStates
   return (
     <>
     <h3>Do you have the authority to sign legal agreements on behalf of your organization?</h3>
-    <Field name={signingAuthority.name}>
+    <Field name="signingAuthority">
     {
       ({
         field, // { name, value, onChange, onBlur }
@@ -37,7 +37,7 @@ const SigningAuthority = ({ formField, showHidden, setShowHidden, formDataStates
                 id="haveSigningAuthority"
                 value="haveSigningAuthority"
                 checked={field.value === 'haveSigningAuthority'}
-                name={signingAuthority.name}
+                name="signingAuthority"
                 type="radio"
                 onChange={changeEvent => {
                     form.setFieldValue(field.name, changeEvent.target.value);
@@ -51,7 +51,7 @@ const SigningAuthority = ({ formField, showHidden, setShowHidden, formDataStates
                 {...field}
                 id="noSigningAuthority"
                 value="noSigningAuthority"
-                name={signingAuthority.name}
+                name="signingAuthority"
                 checked={field.value === 'noSigningAuthority'}
                 type="radio"
                 onChange={changeEvent => {

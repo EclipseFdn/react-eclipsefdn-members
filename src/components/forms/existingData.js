@@ -1,65 +1,77 @@
-import { formField } from '../formModels/formFieldModel';
+// import { formField } from '../formModels/formFieldModel';
 
-const {
-  organizationName,
-  street,
-  city,
-  provinceOrState,
-  country,
-  postalCode,
-  twitterHandle,
-  companyRepresentativeFirstName,
-  companyRepresentativeLastName,
-  companyRepresentativeEmail,
-  marketingRepresentativeFirstName,
-  marketingRepresentativeLastName,
-  marketingRepresentativeEmail,
-  accountingRepresentativeFirstName,
-  accountingRepresentativeLastName,
-  accountingRepresentativeEmail,
-  membershipLevel,
-  workingGroup,
-  participationLevel,
-  effectiveDate,
-  wgRepresentativeFirstName,
-  wgRepresentativeLastName,
-  wgRepresentativeJobTitle,
-  wgRepresentativeEmail,
-  signingAuthority,
-  signingAuthorityFirstName,
-  signingAuthorityLastName,
-  signingAuthorityJobTitile,
-  signingAuthorityEmail
-} = formField;
+// const {
+//   organization,
+//   companyRepresentative,
+//   membershipLevel,
+//   workingGroup,
+//   participationLevel,
+//   effectiveDate,
+//   wgRepresentative,
+//   signingAuthority,
+//   signingAuthorityRepresentative
+// } = formField;
 
 export const existingInitialValues = {
-  [organizationName.name]: "OrgA",
-  [street.name]: "11 Alberta",
-  [city.name]: "Ottawa",
-  [provinceOrState.name]: "ON",
-  [country.name]: "CA",
-  [postalCode.name]: "70000",
-  [twitterHandle.name]: "@abcd",
-  [companyRepresentativeFirstName.name]: "Alice",
-  [companyRepresentativeLastName.name]: "White",
-  [companyRepresentativeEmail.name]: "A@w.ca",
-  [marketingRepresentativeFirstName.name]: "",
-  [marketingRepresentativeLastName.name]: "",
-  [marketingRepresentativeEmail.name]: "",
-  [accountingRepresentativeFirstName.name]: "",
-  [accountingRepresentativeLastName.name]: "",
-  [accountingRepresentativeEmail.name]: "",
-  [membershipLevel.name]: "l2",
-  [workingGroup.name]: "",
-  [participationLevel.name]: "",
-  [effectiveDate.name]: null,
-  [wgRepresentativeFirstName.name]: "",
-  [wgRepresentativeLastName.name]: "",
-  [wgRepresentativeJobTitle.name]: "",
-  [wgRepresentativeEmail.name]: "",
-  [signingAuthority.name]: "",
-  [signingAuthorityFirstName.name]: "",
-  [signingAuthorityLastName.name]: "",
-  [signingAuthorityJobTitile.name]: "",
-  [signingAuthorityEmail.name]: ""
+
+  // Step1: company Info
+  organization: {
+    legalName: "company A",
+    address: {
+      street: "111 Abc Street",
+      city: "Ottawa",
+      provinceOrState: "Ontario",
+      country: "Canada",
+      postalCode: "K1S 6N5"
+    },
+    twitterHandle: "@companyA",
+  },
+
+  // Step1: Company Representative
+  companyRepresentative: {
+    representative: {
+      firstName: "Annie",
+      lastName: "Blair",
+      jobtitle: "Marketing Lead",
+      email: "Annie@marketing.com"
+    },
+
+    marketingRepresentative: {
+      firstName: "",
+      lastName: "",
+      jobtitle: "",
+      email: ""
+    },
+
+    accounting: {
+      firstName: "",
+      lastName: "",
+      jobtitle: "",
+      email: ""
+    }
+  },
+
+  // Step 2
+  membershipLevel: "l2",
+
+  // Step 3: working groups
+  workingGroup: "",
+  participationLevel: "",
+  effectiveDate: "",
+  wgRepresentative: {
+    firstName: "",
+    lastName: "",
+    jobtitle: "",
+    email: ""
+  },
+
+  signingAuthority: "",
+
+  signingAuthorityRepresentative: {
+    firstName: "",
+    lastName: "",
+    jobtitle: "",
+    email: ""
+  }
+
 };

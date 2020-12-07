@@ -3,9 +3,9 @@ import Select from './Inputs/Select';
 import MembershipFeeTable from './MembershipFeeTable';
 
 const MembershipLevel = ({ formField }) => {
-  const {
-    membershipLevel
-  } = formField;
+  // const {
+  //   membershipLevel
+  // } = formField;
 
   const dropdownOptions = [
     { name: 'Select a level', value: '' },
@@ -19,8 +19,8 @@ const MembershipLevel = ({ formField }) => {
     <>
       <h4>What is your intended Membership Level? </h4>
       <Select
-        label={membershipLevel.label}
-        name={membershipLevel.name}
+        label="Membership Level"
+        name="membershipLevel"
         options={dropdownOptions}
       />
       <p>The table is from here https://www.eclipse.org/membership/documents/membership-prospectus.pdf</p>

@@ -18,19 +18,21 @@ const CustomSelectWrapper = ({ name, srcData, isExistingMember, setDisableInput 
 
 const CustomSelect = (props) => {
 
+  // if (props.isExistingMember && hasCompanyValues) {
+
+  // }
+
   const handleSelect = (option, action) => {
-    props.form.setFieldValue(props.field.name, option);
+    props.form.setFieldValue(props.field.name, option)
     if (option.address) {
-      props.form.setFieldValue('street', option.address.street);
-      props.form.setFieldValue('city', option.address.city);
-      props.form.setFieldValue('provinceOrState', option.address.provinceOrState);
-      props.form.setFieldValue('country', option.address.country);
-      props.form.setFieldValue('postalCode', option.address.postalCode);
+      for(const property in option.address) {
+        props.form.setFieldValue(`organization.address.${property}`, option.address[property])
+      }
       props.setDisableInput(true)
       
     }
     if (option.twitter) {
-      props.form.setFieldValue('twitterHandle', option.twitter);
+      props.form.setFieldValue('organization.twitterHandle', option.twitter);
     }
   }
 
@@ -61,10 +63,10 @@ const CustomSelect = (props) => {
           }
           if (data.working_groups) {
             if (props.isExistingMember) {
-              return data.working_groups.map(item => ({ value: item.name, label: item.name }));
+              return data.working_groups.map(item => ({ value: item.name, label: item.name, participation_levels: item.participation_levels}));
             }
             else {
-              let tempData = data.working_groups.map(item => ({ value: item.id, label: item.name }))
+              let tempData = data.working_groups.map(item => ({ value: item.id, label: item.name, participation_levels: item.participation_levels }))
               tempData.push({ label: 'I do not want to join a working group at this time', value: '' })
               return tempData
             }
