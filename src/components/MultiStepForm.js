@@ -19,7 +19,7 @@ const MultiStepForm = ({ defineInitialData, step, setStep }) => {
   const handleSubmit = (values) => {  // This is for final submit, after preview
       console.log(values)
   }
-
+  
   return (
     <>
       <FormikStepper

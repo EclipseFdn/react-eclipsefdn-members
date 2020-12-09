@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useFormikContext } from 'formik';
 import MembershipContext from "../MembershipContext";
-import CustomSelectWrapper from "./Inputs/CustomSelectWrapper";
+import CustomSelectWrapper from "./Inputs/CustomSelect";
 import ParticipationLevel from './ParticipationLevel';
 import EffectiveDate from './EffectiveDate';
 import WorkingGroupsRepresentative from './WorkingGroupRepresentative';

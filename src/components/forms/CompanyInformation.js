@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
-import CustomSelectWrapper from "./Inputs/CustomSelectWrapper";
+import CustomSelectWrapper from "./Inputs/CustomSelect";
 import MembershipContext from "../MembershipContext";
 import Input from './Inputs/Input';
 import { mapField } from '../formModels/formFieldModel';
 
-const CompanyInformation = ({ formField, label, skipped, addMKTRepre, setAddMKTRepre, addACCRepre, setAddACCRepre }) => {
+const CompanyInformation = ({ formField, label, skipped, addMKTRepre, setAddMKTRepre, addACCRepre, setAddACCRepre, ...props }) => {
 
   const { organization, companyRepresentative } = formField
 
@@ -26,7 +26,13 @@ const CompanyInformation = ({ formField, label, skipped, addMKTRepre, setAddMKTR
       <h3>Confirm/Complete your Company’s Information</h3>
       <hr />
       <h4> Organizations </h4>
-      <CustomSelectWrapper name="organization.legalName" srcData="companies" isExistingMember={isExistingMember} setDisableInput={setDisableInput} />
+      <CustomSelectWrapper
+        name="organization.legalName"
+        srcData="companies"
+        isExistingMember={isExistingMember}
+        setDisableInput={setDisableInput}
+        {...props}
+      />
       <hr />
       <h5>Address</h5>
       { mapField(organization.address).map(el => <Input name={`organization.address.${el}`} labelName={el} placeholder={el} key={el} disableInput={disableInput} />) }

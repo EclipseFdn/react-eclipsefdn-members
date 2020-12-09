@@ -13,7 +13,7 @@ const Input = ({ name, labelName, placeholder, disableInput }) => {
         meta,
       }) => (
         <div>
-          <input className="form-control" type="text" {...field} placeholder={placeholder} disabled={disableInput} />
+          <input {...field} className="form-control" type="text" placeholder={placeholder} disabled={disableInput} />
           {meta.touched && meta.error && (
             <div className="error">{meta.error}</div>
           )}

@@ -1,7 +1,7 @@
 import React from 'react';
 import AsyncCreatableSelect from 'react-select/async-creatable';
 import AsyncSelect from 'react-select/async';
-import { Field } from "formik";
+import { Field } from 'formik';
 
 const CustomSelectWrapper = ({ name, srcData, isExistingMember, setDisableInput }) => {
 
@@ -18,21 +18,32 @@ const CustomSelectWrapper = ({ name, srcData, isExistingMember, setDisableInput 
 
 const CustomSelect = (props) => {
 
-  // if (props.isExistingMember && hasCompanyValues) {
+  // if (isExistingMember && hasCompanyValues) {
 
   // }
 
+
   const handleSelect = (option, action) => {
-    props.form.setFieldValue(props.field.name, option)
-    if (option.address) {
-      for(const property in option.address) {
-        props.form.setFieldValue(`organization.address.${property}`, option.address[property])
+
+    if (option && !option.__isNew__ && action !== "clear") {
+      if (props.srcData === "companies") {
+        props.form.setFieldValue("organization.legalName", option.value)
+        props.form.setFieldValue("organization.address", option.address)
+        props.form.setFieldValue('organization.twitterHandle', option.twitterHandle);
+        props.setDisableInput(true)
       }
-      props.setDisableInput(true)
-      
+
+      if (props.srcData === "workingGroups") {
+        props.form.setFieldValue("workingGroup", option)
+      }
     }
-    if (option.twitter) {
-      props.form.setFieldValue('organization.twitterHandle', option.twitter);
+
+    if (action.action === "clear") {
+      if (props.srcData === "companies") {
+        props.form.setFieldValue("organization", "")
+        props.setDisableInput(false)
+      }
+
     }
   }
 
@@ -59,11 +70,11 @@ const CustomSelect = (props) => {
         .then(resp => resp.json())
         .then((data) => {
           if (data.companies) {
-            return data.companies.map(item => ({ value: item.name, label: item.name, address: item.address, twitter: item.twitter }));
+            return data.companies.map(item => ({ value: item.legalName, label: item.legalName, address: item.address, twitterHandle: item.twitterHandle }));
           }
           if (data.working_groups) {
             if (props.isExistingMember) {
-              return data.working_groups.map(item => ({ value: item.name, label: item.name, participation_levels: item.participation_levels}));
+              return data.working_groups.map(item => ({ value: item.id, label: item.name, participation_levels: item.participation_levels}));
             }
             else {
               let tempData = data.working_groups.map(item => ({ value: item.id, label: item.name, participation_levels: item.participation_levels }))
@@ -78,7 +89,7 @@ const CustomSelect = (props) => {
   if (props.srcData === "companies") {
     return (
       <AsyncCreatableSelect
-        {...props.field}
+        isClearable
         cacheOptions
         defaultOptions
         loadOptions={promiseOptions}
@@ -91,7 +102,7 @@ const CustomSelect = (props) => {
 
   return (
     <AsyncSelect
-      {...props.field}
+      isClearable
       cacheOptions
       defaultOptions
       loadOptions={promiseOptions}
