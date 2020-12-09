@@ -22,12 +22,11 @@ const CustomSelect = (props) => {
 
   // }
 
-
   const handleSelect = (option, action) => {
 
     if (option && !option.__isNew__ && action !== "clear") {
       if (props.srcData === "companies") {
-        props.form.setFieldValue("organization.legalName", option.value)
+        props.form.setFieldValue("organization.legalName", option)
         props.form.setFieldValue("organization.address", option.address)
         props.form.setFieldValue('organization.twitterHandle', option.twitterHandle);
         props.setDisableInput(true)
@@ -93,11 +92,12 @@ const CustomSelect = (props) => {
         cacheOptions
         defaultOptions
         loadOptions={promiseOptions}
+        defaultValue={props.field.value}
         onChange={(option, action) => {
           handleSelect(option, action)
         }}
       />
-    );
+    )
   }
 
   return (
@@ -106,6 +106,7 @@ const CustomSelect = (props) => {
       cacheOptions
       defaultOptions
       loadOptions={promiseOptions}
+      defaultValue={props.field.value}
       onChange={(option, action) => {
         handleSelect(option, action)
       }}
