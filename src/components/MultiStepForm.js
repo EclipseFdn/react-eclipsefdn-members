@@ -16,6 +16,8 @@ const MultiStepForm = ({ defineInitialData, step, setStep }) => {
   const [addMKTRepre, setAddMKTRepre] = useState(false)
   const [addACCRepre, setAddACCRepre] = useState(false)
 
+  const [disableInput, setDisableInput] = useState(false)
+
   const handleSubmit = (values) => {  // This is for final submit, after preview
       console.log(values)
   }
@@ -39,6 +41,8 @@ const MultiStepForm = ({ defineInitialData, step, setStep }) => {
           setAddMKTRepre={setAddMKTRepre}
           addACCRepre={addACCRepre}
           setAddACCRepre={setAddACCRepre}
+          disableInput={disableInput}
+          setDisableInput={setDisableInput}
         />
 
         <MembershipLevel

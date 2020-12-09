@@ -1,6 +1,5 @@
 import React from "react";
 import Input from './Inputs/Input';
-import { mapField } from '../formModels/formFieldModel';
 
 const WorkingGroupRepresentative = ({ formField }) => {
 
@@ -12,7 +11,7 @@ const WorkingGroupRepresentative = ({ formField }) => {
     <>
       <h3>Who is the working group representative?</h3>
       <hr />
-      { mapField(wgRepresentative).map(el => <Input name={`wgRepresentative.${el}`} labelName={el} placeholder={el} key={el} />) }
+      { wgRepresentative.map(el => <Input name={el.name} labelName={el.label} placeholder={el.placeholder} key={el.name} />) }
     </>
   );
 };

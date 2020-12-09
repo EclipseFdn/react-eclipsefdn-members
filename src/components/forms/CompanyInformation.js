@@ -1,15 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import CustomSelectWrapper from "./Inputs/CustomSelect";
 import MembershipContext from "../MembershipContext";
 import Input from './Inputs/Input';
 
-const CompanyInformation = ({ formField, label, skipped, addMKTRepre, setAddMKTRepre, addACCRepre, setAddACCRepre }) => {
+const CompanyInformation = ({ formField, label, skipped, addMKTRepre, setAddMKTRepre, addACCRepre, setAddACCRepre, disableInput, setDisableInput }) => {
 
   const { organizationAddress, companyRepresentative, marketingRepresentative, accounting } = formField
 
   const {isExistingMember} = useContext(MembershipContext)
-
-  const [disableInput, setDisableInput] = useState(false)
 
   const toggleMKTRepreContacts = () => {
 
