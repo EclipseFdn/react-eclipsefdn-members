@@ -42,7 +42,11 @@ const CustomSelect = (props) => {
         props.form.setFieldValue("organization", "")
         props.setDisableInput(false)
       }
+    }
 
+    if (option && option.__isNew__) {
+      props.form.setFieldValue("organization.legalName", option)
+      props.setDisableInput(false)
     }
   }
 

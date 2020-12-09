@@ -1,18 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MembershipContext from "./MembershipContext";
 
 const MembershipProvider = ({ children }) => {
 
     const [isExistingMember, setIsExistingMember] = useState(false)
+    const [membershipData, setMembershipData] = useState('')
+    const [organiazationData, setOrganiazationData] = useState('')
+    const [contactData, setContactData] = useState('')
 
     // useEffect(() => {
         // If has login data, can put here to set if is existing member
     // })
 
+    //Choosing form_id 402880987648e2ad017648e2e3cf0000 to have a test
+    useEffect(() => {
+      fetch('membership_data/organizations.json',{
+        headers : {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+       }})
+      .then(resp => resp.json())
+      .then(data => {
+        setOrganiazationData(data.find(el => el.form_id === "402880987648e2ad017648e2e3cf0000"))
+      })
+    }, [])
+
     return (
         <MembershipContext.Provider value={{
             isExistingMember,
-            setIsExistingMember: (val) => setIsExistingMember(val)
+            setIsExistingMember: (val) => setIsExistingMember(val),
+            membershipData,
+            setMembershipData: (val) => setMembershipData(val),
+            organiazationData,
+            setOrganiazationData: (val) => setOrganiazationData(val),
+            contactData,
+            setContactData: (val) => setContactData(val)
         }}>
             {children}
         </MembershipContext.Provider>

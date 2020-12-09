@@ -24,6 +24,8 @@ const MockFirstStep = ({ setStep }) => {
       <h2> Are you existing member? </h2>
         <button onClick={isMember}>Yes</button>
         <button onClick={newMember}>No</button>
+
+        <a className="btn btn-primary margin-10" href="http://localhost:8090/login">Login</a>
     </>
   )
 }

@@ -1,10 +1,3 @@
-// const firstName = "First Name"
-// const lastName = "Last Name"
-// const email = "Email Address"
-// const orgName = "Organization Name"
-// const jobtitle = "Job Title"
-// const requiredErrorMsg = "is required"
-
 export const initialValues = {
 
   // Step1: company Info
@@ -279,4 +272,26 @@ export const formField = {
       placeholder: email,
     }
   ]
+}
+
+export function defineExistingInitialValues(initialValues, existingData) {
+  if(existingData && existingData.address) {
+    initialValues.organization.address.street = existingData.address.street
+    initialValues.organization.address.city = existingData.address.city
+    initialValues.organization.address.country = existingData.address.country
+    initialValues.organization.address.postalCode = existingData.address.postal_code
+    initialValues.organization.address.provinceOrState = existingData.address.province_state
+  }
+
+  if(existingData && existingData.legal_name) {
+    initialValues.organization.legalName =  {
+      value: existingData.legal_name,
+      label: existingData.legal_name,
+      address: initialValues.organization.address,
+      twitterHandle: initialValues.organization.twitterHandle
+    }
+  }
+
+  return initialValues
+
 }
