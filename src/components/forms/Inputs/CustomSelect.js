@@ -3,7 +3,7 @@ import AsyncCreatableSelect from 'react-select/async-creatable';
 import AsyncSelect from 'react-select/async';
 import { Field } from 'formik';
 
-const CustomSelectWrapper = ({ name, srcData, isExistingMember, setDisableInput }) => {
+const CustomSelectWrapper = ({ name, srcData, isExistingMember, setDisableInput, organiazationData }) => {
 
   return (
     <Field
@@ -12,15 +12,20 @@ const CustomSelectWrapper = ({ name, srcData, isExistingMember, setDisableInput 
       srcData={srcData}
       isExistingMember={isExistingMember}
       setDisableInput={setDisableInput}
+      organiazationData={organiazationData}
     />
   )
 }
 
 const CustomSelect = (props) => {
 
-  // if (isExistingMember && hasCompanyValues) {
+  // useEffect(() => {
+  //   if (props.isExistingMember && props.organiazationData && props.organiazationData.legal_name && props.organiazationData.address && props.field.value) {
+  //     props.setDisableInput(true)
+  //   }
+  // }, [props])
 
-  // }
+  // console.log(props.field.value)
 
   const handleSelect = (option, action) => {
 
@@ -39,7 +44,12 @@ const CustomSelect = (props) => {
 
     if (action.action === "clear") {
       if (props.srcData === "companies") {
-        props.form.setFieldValue("organization", "")
+        props.form.setFieldValue("organization.legalName", "")
+        props.form.setFieldValue("organization.address.street", "")
+        props.form.setFieldValue("organization.address.city", "")
+        props.form.setFieldValue("organization.address.provinceOrState", "")
+        props.form.setFieldValue("organization.address.country", "")
+        props.form.setFieldValue("organization.address.postalCode", "")
         props.setDisableInput(false)
       }
     }
@@ -96,7 +106,7 @@ const CustomSelect = (props) => {
         cacheOptions
         defaultOptions
         loadOptions={promiseOptions}
-        defaultValue={props.field.value}
+        defaultValue={props.field.value || ""}
         onChange={(option, action) => {
           handleSelect(option, action)
         }}

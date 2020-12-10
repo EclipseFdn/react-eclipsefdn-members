@@ -6,7 +6,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import { initialValues, defineExistingInitialValues } from './formModels/formFieldModel';
+import { initialValues, defineExistingInitialValues_II } from './formModels/formFieldModel';
 import MembershipContext from "./MembershipContext";
 
 const FormWrapper = () => {
@@ -14,8 +14,8 @@ const FormWrapper = () => {
     const [step, setStep] = useState(0)
 
     const { organiazationData } = useContext(MembershipContext)
-
-    console.log(organiazationData)
+    const { contactData } = useContext(MembershipContext)
+    const { membershipData } = useContext(MembershipContext)
 
     return (
         <Router>
@@ -25,7 +25,7 @@ const FormWrapper = () => {
             <MockFirstStep setStep={setStep} />
           </Route>
           <Route path="/form">
-          { isExistingMember && <MultiStepForm defineInitialData={defineExistingInitialValues(initialValues, organiazationData)} step={step} setStep={setStep} /> }
+          { isExistingMember && <MultiStepForm defineInitialData={defineExistingInitialValues_II(organiazationData, contactData, membershipData)} step={step} setStep={setStep} /> }
           { !isExistingMember && <MultiStepForm defineInitialData={initialValues} step={step} setStep={setStep} /> }
           </Route>
         </Switch>

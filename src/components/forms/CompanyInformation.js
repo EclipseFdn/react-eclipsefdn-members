@@ -7,7 +7,7 @@ const CompanyInformation = ({ formField, label, skipped, addMKTRepre, setAddMKTR
 
   const { organizationAddress, companyRepresentative, marketingRepresentative, accounting } = formField
 
-  const {isExistingMember} = useContext(MembershipContext)
+  const { isExistingMember, organiazationData } = useContext(MembershipContext)
 
   const toggleMKTRepreContacts = () => {
 
@@ -28,6 +28,7 @@ const CompanyInformation = ({ formField, label, skipped, addMKTRepre, setAddMKTR
         srcData="companies"
         isExistingMember={isExistingMember}
         setDisableInput={setDisableInput}
+        organiazationData={organiazationData}
       />
       <hr />
       <h5>Address</h5>

@@ -4,6 +4,7 @@ import MembershipContext from "./MembershipContext";
 const MembershipProvider = ({ children }) => {
 
     const [isExistingMember, setIsExistingMember] = useState(false)
+    const [allMembershipData, setAllMembershipData] = useState([])
     const [membershipData, setMembershipData] = useState('')
     const [organiazationData, setOrganiazationData] = useState('')
     const [contactData, setContactData] = useState('')
@@ -12,16 +13,15 @@ const MembershipProvider = ({ children }) => {
         // If has login data, can put here to set if is existing member
     // })
 
-    //Choosing form_id 402880987648e2ad017648e2e3cf0000 to have a test
     useEffect(() => {
-      fetch('membership_data/organizations.json',{
+      fetch('membership_data/membership.json',{
         headers : {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
        }})
       .then(resp => resp.json())
       .then(data => {
-        setOrganiazationData(data.find(el => el.form_id === "402880987648e2ad017648e2e3cf0000"))
+        setAllMembershipData(data)
       })
     }, [])
 
@@ -34,7 +34,9 @@ const MembershipProvider = ({ children }) => {
             organiazationData,
             setOrganiazationData: (val) => setOrganiazationData(val),
             contactData,
-            setContactData: (val) => setContactData(val)
+            setContactData: (val) => setContactData(val),
+            allMembershipData,
+            setAllMembershipData: (val) => setAllMembershipData(val),
         }}>
             {children}
         </MembershipContext.Provider>

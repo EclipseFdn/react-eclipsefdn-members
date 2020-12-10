@@ -6,6 +6,7 @@ import Stepper from "../steppers/Stepper";
 import Step from "../steppers/Step";
 
 const FormikStepper = ({ step, setStep, children, ...props }) => {
+
   const childrenArray = React.Children.toArray(children)
   const currentChild = childrenArray[step]
   // const currentValidationSchema = validationSchema[step]
@@ -16,22 +17,6 @@ const FormikStepper = ({ step, setStep, children, ...props }) => {
   function isLastStep() {
     return step === childrenArray.length - 1
   }
-  // function isWorkingGroupStep() {
-  //   return step === 2
-  // }
-  // function isEffectiveDateStep() {
-  //   return step === 4
-  // }
-
-  //////////////////////////////////
-  // const handleSkip = () => {
-  //   setStep((s) => s + 1)
-  //   setSkipped((prevSkipped) => {
-  //     const newSkipped = new Set(prevSkipped.values())
-  //     newSkipped.add(step)
-  //     return newSkipped
-  //   })
-  // }
 
   const handleComplete = () => {
     const newCompleted = new Set(completed)
@@ -39,26 +24,8 @@ const FormikStepper = ({ step, setStep, children, ...props }) => {
     setCompleted(newCompleted)
   }
 
-  // const skippedSteps = () => {
-  //   return skipped.size
-  // }
-
-  // const completedSteps = () => {
-  //   return completed.size
-  // }
-  //////////////////////////////////////////
-
   const handleOnSubmit = async (values, helpers, action) => {
-    // if (isWorkingGroupStep() && values.workingGroup.value === "") { // If not select working groups
-    //   handleComplete()
-    //   handleSkip()
-    //   // setStep((s) => s + 1) // skip participation level step
-    // }
-    // if (isEffectiveDateStep() && values.workingGroup === "") { // If not select working groups
-    //   handleComplete()
-    //   handleSkip()
-    //   // setStep((s) => s + 1) // skip working group representative step
-    // }
+
     if (isLastStep()) {
       await props.onSubmit(values)
     } 

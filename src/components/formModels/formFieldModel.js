@@ -274,24 +274,105 @@ export const formField = {
   ]
 }
 
-export function defineExistingInitialValues(initialValues, existingData) {
-  if(existingData && existingData.address) {
-    initialValues.organization.address.street = existingData.address.street
-    initialValues.organization.address.city = existingData.address.city
-    initialValues.organization.address.country = existingData.address.country
-    initialValues.organization.address.postalCode = existingData.address.postal_code
-    initialValues.organization.address.provinceOrState = existingData.address.province_state
+export function defineExistingInitialValues(initialValues, existingOrganizationData, existingContactData, existingMembershipData) {
+  if(existingOrganizationData && existingOrganizationData.address) {
+    initialValues.organization.address.street = existingOrganizationData.address.street || ""
+    initialValues.organization.address.city = existingOrganizationData.address.city || ""
+    initialValues.organization.address.country = existingOrganizationData.address.country || ""
+    initialValues.organization.address.postalCode = existingOrganizationData.address.postal_code || ""
+    initialValues.organization.address.provinceOrState = existingOrganizationData.address.province_state || ""
   }
 
-  if(existingData && existingData.legal_name) {
+  if(existingOrganizationData && existingOrganizationData.legal_name) {
     initialValues.organization.legalName =  {
-      value: existingData.legal_name,
-      label: existingData.legal_name,
+      value: existingOrganizationData.legal_name,
+      label: existingOrganizationData.legal_name,
       address: initialValues.organization.address,
       twitterHandle: initialValues.organization.twitterHandle
-    }
+    } || ""
+  }
+
+  if(existingContactData) {
+    initialValues.companyRepresentative.representative.firstName = existingContactData.first_name || ""
+    initialValues.companyRepresentative.representative.lastName = existingContactData.last_name || ""
+    initialValues.companyRepresentative.representative.jobtitle = existingContactData.title || ""
+    initialValues.companyRepresentative.representative.email = existingContactData.email || ""
+  }
+
+  if (existingMembershipData) {
+    initialValues.membershipLevel = existingMembershipData.membership_level || ""
   }
 
   return initialValues
 
+}
+
+export function defineExistingInitialValues_II(existingOrganizationData, existingContactData, existingMembershipData) {
+
+  return {
+  // Step1: company Info
+  organization: {
+    legalName: {
+      value: existingOrganizationData?.legal_name || "",
+      label: existingOrganizationData?.legal_name || "",
+      address: existingOrganizationData?.address || "",
+      twitterHandle: existingOrganizationData?.twitterHandle || ""
+    } || "",
+    address: {
+      street: existingOrganizationData?.address.street || "",
+      city: existingOrganizationData?.address.city || "",
+      provinceOrState: existingOrganizationData?.address.province_state || "",
+      country: existingOrganizationData?.address.country || "",
+      postalCode: existingOrganizationData?.address.postal_code || "",
+    },
+    twitterHandle: existingOrganizationData?.twitterHandle || "",  
+  },
+
+  // Step1: Company Representative
+  companyRepresentative: {
+    representative: {
+      firstName: existingContactData?.first_name || "",
+      lastName: existingContactData?.last_name || "",
+      jobtitle: existingContactData?.title || "",
+      email: existingContactData?.email || ""
+    },
+
+    marketingRepresentative: {
+      firstName: "",
+      lastName: "",
+      jobtitle: "",
+      email: ""
+    },
+
+    accounting: {
+      firstName: "",
+      lastName: "",
+      jobtitle: "",
+      email: ""
+    }
+  },
+
+  // Step 2
+  membershipLevel: existingMembershipData?.membership_level || "",
+
+  // Step 3: working groups
+  workingGroup: "",
+  participationLevel: "",
+  effectiveDate: "",
+  wgRepresentative: {
+    firstName: "",
+    lastName: "",
+    jobtitle: "",
+    email: ""
+  },
+
+  signingAuthority: "",
+
+  signingAuthorityRepresentative: {
+    firstName: "",
+    lastName: "",
+    jobtitle: "",
+    email: ""
+  }
+  }
 }

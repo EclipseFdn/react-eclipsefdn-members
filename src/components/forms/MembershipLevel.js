@@ -3,16 +3,13 @@ import Select from './Inputs/Select';
 import MembershipFeeTable from './MembershipFeeTable';
 
 const MembershipLevel = ({ formField }) => {
-  // const {
-  //   membershipLevel
-  // } = formField;
 
   const dropdownOptions = [
     { name: 'Select a level', value: '' },
-    { name: 'Strategic Members', value: 'l1' },
-    { name: 'Contributing Members (formerly referred to as Solutions Members)', value: 'l2' },
-    { name: 'Associate Members', value: 'l3' },
-    { name: 'Committer Members', value: 'l4' }
+    { name: 'Strategic Members', value: 'strategic' },
+    { name: 'Contributing Members (formerly referred to as Solutions Members)', value: 'contributing' },
+    { name: 'Associate Members', value: 'associate' },
+    { name: 'Committer Members', value: 'committer' }
   ]
 
   return (
