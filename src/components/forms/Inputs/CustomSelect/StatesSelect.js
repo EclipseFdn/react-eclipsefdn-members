@@ -16,7 +16,7 @@ const StatesSelect = (props) => {
           })
           .then(res => res.json())
           .then(data => {
-            let tempData = data.states?.filter(el => el.country_id == values.organization.address.country.value)
+            let tempData = data.states?.filter(el => el.country_id === values.organization.address.country.value.toString())
             setStateData(tempData?.map(item => ({ value: item.id, label: item.name })))
           })
       }
