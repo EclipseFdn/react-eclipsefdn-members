@@ -1,11 +1,14 @@
 import React, { useContext } from "react";
-import CustomSelectWrapper from "./Inputs/CustomSelect";
+import CustomSelectWrapper from "./Inputs/CustomSelect/CustomSelectWrapper";
+import StatesSelect from "./Inputs/CustomSelect/StatesSelect";
+import CountrySelect from "./Inputs/CustomSelect/CountrySelect";
+import CustomAsyncSelect from "./Inputs/CustomSelect/CustomAsyncSelect";
 import MembershipContext from "../MembershipContext";
 import Input from './Inputs/Input';
 
 const CompanyInformation = ({ formField, label, skipped, addMKTRepre, setAddMKTRepre, addACCRepre, setAddACCRepre, disableInput, setDisableInput }) => {
 
-  const { organizationAddress, companyRepresentative, marketingRepresentative, accounting } = formField
+  const { companyRepresentative, marketingRepresentative, accounting } = formField
 
   const { isExistingMember, organiazationData } = useContext(MembershipContext)
 
@@ -29,10 +32,42 @@ const CompanyInformation = ({ formField, label, skipped, addMKTRepre, setAddMKTR
         isExistingMember={isExistingMember}
         setDisableInput={setDisableInput}
         organiazationData={organiazationData}
+        renderComponent={CustomAsyncSelect}
       />
       <hr />
       <h5>Address</h5>
-      { organizationAddress.map(el => <Input name={el.name} labelName={el.label} placeholder={el.placeholder} key={el.name} disableInput={disableInput} />) }
+      <Input name="organization.address.street" labelName="Street" placeholder="Street" disableInput={disableInput} />
+      <Input name="organization.address.postalCode" labelName="Postal Code" placeholder="Postal Code" disableInput={disableInput} />
+      <Input name="organization.address.city" labelName="City" placeholder="City" disableInput={disableInput} />
+
+      {
+        disableInput ? 
+        <>
+          <Input name="organization.address.provinceOrState" labelName="Province Or State" placeholder="province Or State" disableInput={disableInput} />
+          <Input name="organization.address.city" labelName="City" placeholder="City" disableInput={disableInput} />
+        </>
+        : 
+        <>
+          <label htmlFor="organization.address.provinceOrState">Province / State</label>
+          <CustomSelectWrapper
+            name="organization.address.provinceOrState"
+            srcData="provinceOrState"
+            isExistingMember={isExistingMember}
+            setDisableInput={setDisableInput}
+            organiazationData={organiazationData}
+            renderComponent={StatesSelect}
+          />
+          <label htmlFor="organization.address.country">Country</label>
+          <CustomSelectWrapper
+            name="organization.address.country"
+            srcData="country"
+            isExistingMember={isExistingMember}
+            setDisableInput={setDisableInput}
+            organiazationData={organiazationData}
+            renderComponent={CountrySelect}
+          />        
+        </>
+      }
       <Input name="organization.twitterHandle" labelName="Twitter" placeholder="Twitter" disableInput={disableInput} />
 
       <hr />

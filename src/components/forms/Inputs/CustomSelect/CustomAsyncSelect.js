@@ -1,39 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AsyncCreatableSelect from 'react-select/async-creatable';
 import AsyncSelect from 'react-select/async';
-import { Field } from 'formik';
 
-const CustomSelectWrapper = ({ name, srcData, isExistingMember, setDisableInput, organiazationData }) => {
+const CustomAsyncSelect = (props) => {
 
-  return (
-    <Field
-      name={name}
-      component={CustomSelect}
-      srcData={srcData}
-      isExistingMember={isExistingMember}
-      setDisableInput={setDisableInput}
-      organiazationData={organiazationData}
-    />
-  )
-}
-
-const CustomSelect = (props) => {
-
-  // useEffect(() => {
-  //   if (props.isExistingMember && props.organiazationData && props.organiazationData.legal_name && props.organiazationData.address && props.field.value) {
-  //     props.setDisableInput(true)
-  //   }
-  // }, [props])
-
-  // console.log(props.field.value)
+  useEffect(() => {
+    // When has initial data and has not been changed, show prefilled address data and disable input
+    if (props.isExistingMember && props.organiazationData && props.field.value && props.field.value.value === props.organiazationData.legal_name) {
+      props.setDisableInput(true)
+    }
+  }, [props])
 
   const handleSelect = (option, action) => {
 
     if (option && !option.__isNew__ && action !== "clear") {
       if (props.srcData === "companies") {
+        // Prefill existing data to selected companies
         props.form.setFieldValue("organization.legalName", option)
-        props.form.setFieldValue("organization.address", option.address)
-        props.form.setFieldValue('organization.twitterHandle', option.twitterHandle);
+        props.form.setFieldValue("organization.address.street", option.address.street)
+        props.form.setFieldValue("organization.address.postalCode", option.address.postalCode)
+        props.form.setFieldValue("organization.address.city", option.address.city)
+        props.form.setFieldValue('organization.twitterHandle', option.twitterHandle)
         props.setDisableInput(true)
       }
 
@@ -43,6 +30,7 @@ const CustomSelect = (props) => {
     }
 
     if (action.action === "clear") {
+      // Clear prefilled data when clear the selection
       if (props.srcData === "companies") {
         props.form.setFieldValue("organization.legalName", "")
         props.form.setFieldValue("organization.address.street", "")
@@ -55,6 +43,7 @@ const CustomSelect = (props) => {
     }
 
     if (option && option.__isNew__) {
+      // When create new organization that are not in our data
       props.form.setFieldValue("organization.legalName", option)
       props.setDisableInput(false)
     }
@@ -70,6 +59,7 @@ const CustomSelect = (props) => {
       src_data = "workingGroups.json"
     }
 
+    // Will use this if the api supports search
     // if(inputValue) {
     //   src_data = src_data + `?search=${inputValue}`
     // }
@@ -129,4 +119,4 @@ const CustomSelect = (props) => {
 
 }
 
-export default CustomSelectWrapper
+export default CustomAsyncSelect
