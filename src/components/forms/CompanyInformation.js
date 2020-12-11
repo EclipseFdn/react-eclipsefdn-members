@@ -44,7 +44,7 @@ const CompanyInformation = ({ formField, label, skipped, addMKTRepre, setAddMKTR
         disableInput ? 
         <>
           <Input name="organization.address.provinceOrState" labelName="Province Or State" placeholder="province Or State" disableInput={disableInput} />
-          <Input name="organization.address.city" labelName="City" placeholder="City" disableInput={disableInput} />
+          <Input name="organization.address.country" labelName="Country" placeholder="Country" disableInput={disableInput} />
         </>
         : 
         <>
