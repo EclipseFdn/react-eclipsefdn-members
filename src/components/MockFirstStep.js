@@ -12,7 +12,7 @@ const MockFirstStep = ({ setStep }) => {
   const { setContactData } = useContext(MembershipContext)
 
   const [currentSelection, setCurrentSelection] = useState("")
-
+  
   const isMember = () => {
     setIsExistingMember(true)
     setMembershipData(allMembershipData.find(el => el.user_id === currentSelection))
@@ -28,6 +28,7 @@ const MockFirstStep = ({ setStep }) => {
 
   const selectOnChange = (e) => {
     setCurrentSelection(e.target.value)
+    console.log(allMembershipData.find(el => el.user_id === e.target.value))
     let pool = [fetch('membership_data/organizations.json'), fetch('membership_data/contacts.json')]
     Promise.all(pool)
             .then((res) => 
@@ -35,8 +36,8 @@ const MockFirstStep = ({ setStep }) => {
             )
             .then(data => {
               let form = allMembershipData.find(el => el.user_id === e.target.value)
-              setOrganiazationData(data[0].find(el => el.form_id === form.form_id))
-              setContactData(data[1].find(el => el.form_id === form.form_id))
+              setOrganiazationData(data[0].find(el => el.form_id === form?.form_id))
+              setContactData(data[1].filter(el => el.form_id === form?.form_id))
             })
   }
 
@@ -48,6 +49,7 @@ const MockFirstStep = ({ setStep }) => {
         <option value="" label="select one">Select...</option>
       { allMembershipData.map(el => <option value={el.user_id} key={el.user_id} label={el.user_id}></option>)}
       </select>
+
       <button onClick={isMember}>Yes</button>
 
       <h2> Click here if you are new </h2>

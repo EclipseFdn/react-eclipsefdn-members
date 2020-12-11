@@ -7,7 +7,7 @@ const MembershipProvider = ({ children }) => {
     const [allMembershipData, setAllMembershipData] = useState([])
     const [membershipData, setMembershipData] = useState('')
     const [organiazationData, setOrganiazationData] = useState('')
-    const [contactData, setContactData] = useState('')
+    const [contactData, setContactData] = useState([])
 
     // useEffect(() => {
         // If has login data, can put here to set if is existing member

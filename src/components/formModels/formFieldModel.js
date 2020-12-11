@@ -1,3 +1,4 @@
+// Probably to be deleted
 export const initialValues = {
 
   // Step1: company Info
@@ -274,6 +275,7 @@ export const formField = {
   ]
 }
 
+// Probably to be deleted
 export function defineExistingInitialValues(initialValues, existingOrganizationData, existingContactData, existingMembershipData) {
   if(existingOrganizationData && existingOrganizationData.address) {
     initialValues.organization.address.street = existingOrganizationData.address.street || ""
@@ -307,7 +309,13 @@ export function defineExistingInitialValues(initialValues, existingOrganizationD
 
 }
 
+// Probably keep this one
 export function defineExistingInitialValues_II(existingOrganizationData, existingContactData, existingMembershipData) {
+
+  let existingCompanyContact = existingContactData.find(el => el.type === "company")
+  let existingMarketingContact = existingContactData.find(el => el.type === "marketing")
+  let existingAccoutingContact = existingContactData.find(el => el.type === "accounting")
+  let existingWGContact = existingContactData.find(el => el.type === "working_group")
 
   return {
   // Step1: company Info
@@ -331,24 +339,24 @@ export function defineExistingInitialValues_II(existingOrganizationData, existin
   // Step1: Company Representative
   companyRepresentative: {
     representative: {
-      firstName: existingContactData?.first_name || "",
-      lastName: existingContactData?.last_name || "",
-      jobtitle: existingContactData?.title || "",
-      email: existingContactData?.email || ""
+      firstName: existingCompanyContact?.first_name || "",
+      lastName: existingCompanyContact?.last_name || "",
+      jobtitle: existingCompanyContact?.title || "",
+      email: existingCompanyContact?.email || ""
     },
 
     marketingRepresentative: {
-      firstName: "",
-      lastName: "",
-      jobtitle: "",
-      email: ""
+      firstName: existingMarketingContact?.first_name || "",
+      lastName: existingMarketingContact?.last_name || "",
+      jobtitle: existingMarketingContact?.title || "",
+      email: existingMarketingContact?.email || ""
     },
 
     accounting: {
-      firstName: "",
-      lastName: "",
-      jobtitle: "",
-      email: ""
+      firstName: existingAccoutingContact?.first_name || "",
+      lastName: existingAccoutingContact?.last_name || "",
+      jobtitle: existingAccoutingContact?.title || "",
+      email: existingAccoutingContact?.email || ""
     }
   },
 
@@ -359,11 +367,12 @@ export function defineExistingInitialValues_II(existingOrganizationData, existin
   workingGroup: "",
   participationLevel: "",
   effectiveDate: "",
+
   wgRepresentative: {
-    firstName: "",
-    lastName: "",
-    jobtitle: "",
-    email: ""
+    firstName: existingWGContact?.first_name || "",
+    lastName: existingWGContact?.last_name || "",
+    jobtitle: existingWGContact?.title || "",
+    email: existingWGContact?.email || ""
   },
 
   signingAuthority: "",

@@ -6,6 +6,8 @@ const CountrySelect = (props) => {
   const [stateData, setStateData] = useState([])
 
   useEffect(() => {
+    let isSubscribed = true;
+
     fetch("countries_states/countries.json", {
         headers : { 
           'Content-Type': 'application/json',
@@ -14,8 +16,13 @@ const CountrySelect = (props) => {
       })
       .then(res => res.json())
       .then(data => {
-        setStateData(data.countries?.map(item => ({ value: item.id, label: item.name })))
+        if (isSubscribed) {
+          setStateData(data.countries?.map(item => ({ value: item.id, label: item.name })))
+        }
       })
+
+    // cancel subscription to useEffect
+    return () => (isSubscribed = false)
   }, [])
 
   const handleSelect = (option, action) => {

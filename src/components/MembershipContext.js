@@ -7,7 +7,7 @@ const MembershipContext = React.createContext({
     setMembershipData: () => {},
     organiazationData: {},
     setOrganiazationData: () => {},
-    contactData: {},
+    contactData: [],
     setContactData: () => {},
     allMembershipData: [],
     setAllMembershipData: () => {}
