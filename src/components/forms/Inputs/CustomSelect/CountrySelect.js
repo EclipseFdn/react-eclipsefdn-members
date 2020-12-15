@@ -44,6 +44,7 @@ const CountrySelect = (props) => {
       onChange={(option, action) => {
         handleSelect(option, action)
       }}
+      onBlur={props.form.handleBlur(props.field.name)}
     />
   )
 

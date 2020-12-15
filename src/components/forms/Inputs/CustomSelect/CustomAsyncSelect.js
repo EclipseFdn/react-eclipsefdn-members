@@ -1,8 +1,13 @@
 import React, { useEffect } from 'react';
 import AsyncCreatableSelect from 'react-select/async-creatable';
 import AsyncSelect from 'react-select/async';
+// import { useField } from 'formik';
 
 const CustomAsyncSelect = (props) => {
+
+  // const [field, meta, helpers] = useField(props.field.name);  //// or props.field, must contain name key
+  // console.log(field)
+  // console.log(meta)
 
   useEffect(() => {
     // When has initial data and has not been changed, show prefilled address data and disable input
@@ -102,6 +107,7 @@ const CustomAsyncSelect = (props) => {
         onChange={(option, action) => {
           handleSelect(option, action)
         }}
+        onBlur={props.form.handleBlur(props.field.name)}
       />
     )
   }
@@ -116,6 +122,7 @@ const CustomAsyncSelect = (props) => {
       onChange={(option, action) => {
         handleSelect(option, action)
       }}
+      onBlur={props.form.handleBlur(props.field.name)}
     />
   )
 

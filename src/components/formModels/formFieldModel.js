@@ -63,6 +63,7 @@ export const initialValues = {
 
 }
 
+// Probably to be deleted
 export function mapField(object) {
   let arr = []
   for(const property in object) {
@@ -77,7 +78,7 @@ const lastName = "Last Name"
 const email = "Email Address"
 const orgName = "Organization Name"
 const jobtitle = "Job Title"
-const requiredErrorMsg = "is required"
+export const requiredErrorMsg = "is required"
 
 export const formField = {
   organizationName: {

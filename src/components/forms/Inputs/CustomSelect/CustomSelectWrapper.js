@@ -1,9 +1,10 @@
 import React from 'react';
-import { Field } from 'formik';
+import { Field, ErrorMessage } from 'formik';
 
 const CustomSelectWrapper = ({ name, srcData, isExistingMember, setDisableInput, organiazationData, renderComponent }) => {
 
   return (
+    <>
     <Field
       name={name}
       component={renderComponent}
@@ -12,6 +13,8 @@ const CustomSelectWrapper = ({ name, srcData, isExistingMember, setDisableInput,
       setDisableInput={setDisableInput}
       organiazationData={organiazationData}
     />
+    <ErrorMessage className="error" component="div" name={name} />
+    </>
   )
 }
 

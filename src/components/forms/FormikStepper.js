@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Formik, Form } from "formik";
 import CustomStepButton from "./CustomStepButton";
-// import { validationSchema } from '../formModels/ValidationSchema';
+import { validationSchema } from '../formModels/ValidationSchema';
 import Stepper from "../steppers/Stepper";
 import Step from "../steppers/Step";
 
@@ -9,7 +9,7 @@ const FormikStepper = ({ step, setStep, children, ...props }) => {
 
   const childrenArray = React.Children.toArray(children)
   const currentChild = childrenArray[step]
-  // const currentValidationSchema = validationSchema[step]
+  const currentValidationSchema = validationSchema[step]
 
   const [completed, setCompleted] = useState(new Set())
   const [skipped] = useState(new Set())
@@ -67,7 +67,7 @@ const FormikStepper = ({ step, setStep, children, ...props }) => {
     <Formik
       {...props}
       onSubmit={handleOnSubmit}
-      // validationSchema={currentValidationSchema}
+      validationSchema={currentValidationSchema}
     >
       {
       
