@@ -14,7 +14,7 @@ import { requiredErrorMsg } from './formFieldModel';
 // } = initialValues;
 
 export const validationSchema = [
-  // First step
+  // First step - company Info
   yup.object().shape({
     organization: yup.object().shape({
         legalName: yup.string().required(`${requiredErrorMsg}`),
@@ -35,19 +35,32 @@ export const validationSchema = [
             email: yup.string().required(`${requiredErrorMsg}`).email('Invalid email address') 
         })
     }),
+  }),
+
+  // Second step - membership level
+  yup.object().shape({
+    membershipLevel: yup.string().required(`${requiredErrorMsg}`)
+  }),
+
+  // Third step - working groups
+  yup.object().shape({
+    workingGroup: yup.object().required(`${requiredErrorMsg}`),
+    participationLevel: yup.string().when("workingGroup", {
+      is: value => !!value?.value,
+      then: yup.string().required(`${requiredErrorMsg}`)
+    }),
+    effectiveDate: yup.date().nullable().when("workingGroup", {
+      is: value => !!value?.value,
+      then: yup.date().required(`${requiredErrorMsg}`)
+    }),
+    wgRepresentative:yup.object().shape({
+      firstName: yup.string().required(`${requiredErrorMsg}`),
+      lastName: yup.string().required(`${requiredErrorMsg}`),
+      jobtitle: yup.string().required(`${requiredErrorMsg}`),
+      email: yup.string().required(`${requiredErrorMsg}`).email('Invalid email address') 
+    })
   })
-    // Yup.object({
-    //   [organization.legalName]: Yup.string().required(`${requiredErrorMsg}`),
-    //   [organization.address.street]: Yup.string().required(`${requiredErrorMsg}`),
-    //   [organization.address.city]: Yup.string().required(`${requiredErrorMsg}`),
-    //   [organization.address.provinceOrState]: Yup.string().required(`${requiredErrorMsg}`),
-    //   [organization.address.country]: Yup.string().required(`${requiredErrorMsg}`),
-    //   [organization.address.postalCode]: Yup.string().required(`${requiredErrorMsg}`),
-    //   [representative.firstName]: Yup.string().required(`${requiredErrorMsg}`),
-    //   [representative.lastName]: Yup.string().required(`${requiredErrorMsg}`),
-    //   [representative.jobtitle]: Yup.string().required(`${requiredErrorMsg}`),
-    //   [representative.email]: Yup.string().required(`${requiredErrorMsg}`).email('Invalid email address')
-    // }),
+
 
     // // Second
     // Yup.object({

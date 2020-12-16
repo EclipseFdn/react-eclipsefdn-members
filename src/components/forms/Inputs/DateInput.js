@@ -20,7 +20,12 @@ const DateInput = (props) => {
               {...field}
               {...rest}
               selected={(value && new Date(value)) || null}
-              onChange={val => setFieldValue(name, new Date(val).toLocaleDateString())}
+              onChange={val => setFieldValue(name, val)}
+              peekNextMonth
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
+              className="form-control"
             />
             {meta.touched && meta.error && (
               <div className="error">{meta.error}</div>

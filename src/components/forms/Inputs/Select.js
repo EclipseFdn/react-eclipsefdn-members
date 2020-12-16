@@ -1,13 +1,51 @@
 import React from "react";
 import { Field, ErrorMessage } from "formik";
-import TextError from './TextError';
 
 const Select = (props) => {
-  const { label, name, options, ...rest } = props
+  const { label, name, options, /*...rest*/ } = props
   return (
     <>
-      <label htmlFor={name}>{label}</label>
-      <Field as='select' id={name} name={name} {...rest}>
+    <label htmlFor={name}>{label}</label>
+    <Field name={name}>
+      {({
+        field, // { name, value, onChange, onBlur }
+        form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+        meta,
+      }) => {
+        if (name === "membershipLevel") {
+          return (
+            <select {...field} className="form-control">
+              {options.map(option => 
+                (
+                  <option key={option.value} value={option.value}>
+                    {option.name}
+                  </option>
+                )
+              )}
+            </select>
+          )
+        }
+
+        if (name === "participationLevel") {
+          return (
+            <select {...field} className="form-control">
+              <option value="" key="none">Please select</option>
+              {options.map(option => 
+                (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                )
+              )}
+            </select>
+          )
+        }
+        return (
+          <></>
+        )
+      }}
+    </Field>
+      {/* <Field as='select' id={name} name={name} {...rest}>
         {options.map(option => {
           return (
             <option key={option.value} value={option.value}>
@@ -15,8 +53,8 @@ const Select = (props) => {
             </option>
           )
         })}
-      </Field>
-      <ErrorMessage component={TextError} name={name} />
+      </Field> */}
+      <ErrorMessage className="error" component="div" name={name} />
     </>
   )
 }
