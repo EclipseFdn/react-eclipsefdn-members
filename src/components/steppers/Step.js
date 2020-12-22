@@ -68,6 +68,7 @@ export default class Step extends Component {
       barHeight,
       onClick,
       completed,
+      stepReached
     } = this.props
 
     return {
@@ -115,7 +116,7 @@ export default class Step extends Component {
         lineHeight: `${size + circleFontSize / 4}px`,
         color: circleFontColor,
         fontFamily: fontFamily,
-        cursor: completed && onClick ? 'pointer' : 'default',
+        cursor: (completed || stepReached) && onClick ? 'pointer' : 'default',
       },
       activeIndex: {
         lineHeight: `${size + circleFontSize / 4}px`,
@@ -178,9 +179,9 @@ export default class Step extends Component {
   }
 
   getInnerContent() {
-    const { active, completed, checkIcon, index, onClick } = this.props
+    const { active, completed, checkIcon, index, onClick, stepReached } = this.props
     const styles = this.getStyles()
-
+    
     const handleClick = e => onClick(index)
 
     if (active) {
@@ -191,8 +192,8 @@ export default class Step extends Component {
       )
     }
 
-    if (completed) {
-      if (checkIcon) {
+    if (completed || stepReached) {
+      if (completed && checkIcon) {
         return (
           <span onClick={handleClick} style={styles.index}>
             {checkIcon}

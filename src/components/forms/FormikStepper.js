@@ -12,7 +12,8 @@ const FormikStepper = ({ step, setStep, children, ...props }) => {
   const currentValidationSchema = validationSchema[step]
 
   const [completed, setCompleted] = useState(new Set())
-  const [skipped] = useState(new Set())
+  // const [skipped] = useState(new Set())
+  const [reached, setReached] = useState(new Set())
 
   function isLastStep() {
     return step === childrenArray.length - 1
@@ -24,7 +25,13 @@ const FormikStepper = ({ step, setStep, children, ...props }) => {
     setCompleted(newCompleted)
   }
 
-  const handleOnSubmit = async (values, helpers, action) => {
+  const handleReached = (currentStep) => {
+    const newReached = new Set(reached)
+    newReached.add(currentStep)
+    setReached(newReached)
+  }
+
+  const handleOnSubmit = async (values, formikBag) => {
 
     if (isLastStep()) {
       await props.onSubmit(values)
@@ -41,8 +48,11 @@ const FormikStepper = ({ step, setStep, children, ...props }) => {
   function isStepComplete(step) {
     return completed.has(step)
   }
-  const isStepSkipped = (step) => {
-    return skipped.has(step)
+  // const isStepSkipped = (step) => {
+  //   return skipped.has(step)
+  // }
+  const isStepReached = (step) => {
+    return reached.has(step)
   }
   ////////////////////////////////////////
 
@@ -54,13 +64,12 @@ const FormikStepper = ({ step, setStep, children, ...props }) => {
     <>
     <Stepper activeStep={step} chidlrenSteps={childrenArray} handleOnClick={setStep} checkIcon={checkIcon()}>
     {childrenArray.map((child, index) => {
-      const stepProps = {}
-      if (isStepSkipped(index-1)) {
-        stepProps.completed = true
-      }
-
+      // const stepProps = {}
+      // if (isStepSkipped(index)) {
+      //   stepProps.completed = true
+      // }
       return (
-        <Step key={index} width={100 / childrenArray.length} title={child.props.label} onClick={setStep} active={index === step} completed={isStepComplete(index) || child.props.skipped || stepProps.completed} first={index === 0} isLast={index === childrenArray.length - 1} index={index} checkIcon={checkIcon()} />
+        <Step key={index} width={100 / childrenArray.length} title={child.props.label} onClick={setStep} active={index === step} completed={isStepComplete(index) || child.props.skipped} first={index === 0} isLast={index === childrenArray.length - 1} index={index} checkIcon={checkIcon()} stepReached={isStepComplete(index-1) || childrenArray[index-1]?.props.skipped } />
       )
     })}
     </Stepper>
