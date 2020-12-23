@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Formik, Form } from "formik";
-import CustomStepButton from "./CustomStepButton";
+import { Formik } from "formik";
 import { validationSchema } from '../formModels/ValidationSchema';
 import Stepper from "../steppers/Stepper";
 import Step from "../steppers/Step";
+import FormComponent from "./FormComponent";
 
 const FormikStepper = ({ step, setStep, children, ...props }) => {
 
@@ -12,9 +12,6 @@ const FormikStepper = ({ step, setStep, children, ...props }) => {
   const currentValidationSchema = validationSchema[step]
 
   const [completed, setCompleted] = useState(new Set())
-  // const [skipped] = useState(new Set())
-  const [reached, setReached] = useState(new Set())
-
   function isLastStep() {
     return step === childrenArray.length - 1
   }
@@ -25,17 +22,11 @@ const FormikStepper = ({ step, setStep, children, ...props }) => {
     setCompleted(newCompleted)
   }
 
-  const handleReached = (currentStep) => {
-    const newReached = new Set(reached)
-    newReached.add(currentStep)
-    setReached(newReached)
-  }
-
   const handleOnSubmit = async (values, formikBag) => {
 
     if (isLastStep()) {
       await props.onSubmit(values)
-    } 
+    }
     else {
       props.setFormDataStates(values)
       handleComplete()
@@ -48,12 +39,6 @@ const FormikStepper = ({ step, setStep, children, ...props }) => {
   function isStepComplete(step) {
     return completed.has(step)
   }
-  // const isStepSkipped = (step) => {
-  //   return skipped.has(step)
-  // }
-  const isStepReached = (step) => {
-    return reached.has(step)
-  }
   ////////////////////////////////////////
 
   const checkIcon = () => (
@@ -62,41 +47,40 @@ const FormikStepper = ({ step, setStep, children, ...props }) => {
 
   return (
     <>
-    <Stepper activeStep={step} chidlrenSteps={childrenArray} handleOnClick={setStep} checkIcon={checkIcon()}>
-    {childrenArray.map((child, index) => {
-      // const stepProps = {}
-      // if (isStepSkipped(index)) {
-      //   stepProps.completed = true
-      // }
-      return (
-        <Step key={index} width={100 / childrenArray.length} title={child.props.label} onClick={setStep} active={index === step} completed={isStepComplete(index) || child.props.skipped} first={index === 0} isLast={index === childrenArray.length - 1} index={index} checkIcon={checkIcon()} stepReached={isStepComplete(index-1) || childrenArray[index-1]?.props.skipped } />
-      )
-    })}
-    </Stepper>
-    <Formik
-      {...props}
-      onSubmit={handleOnSubmit}
-      validationSchema={currentValidationSchema}
-    >
-      {
-      
-        (formik) => {
-        return (
-          <Form>
-            {currentChild}
-            <CustomStepButton
-              values={formik.values}
-              step={step}
-              isSubmitting={formik.isSubmitting}
-              setStep={setStep}
-              isLastStep={isLastStep}
-            />
-          </Form>
-        )
+
+      <Formik
+        {...props}
+        onSubmit={handleOnSubmit}
+        validationSchema={currentValidationSchema}
+      >
+        {
+          (formik) =>
+            <>
+              <Stepper activeStep={step} chidlrenSteps={childrenArray} handleOnClick={setStep} checkIcon={checkIcon()}>
+                {childrenArray.map((child, index) => {
+                  return (
+                    <Step
+                      key={index}
+                      width={100 / childrenArray.length}
+                      title={child.props.label}
+                      onClick={setStep}
+                      active={index === step}
+                      completed={isStepComplete(index) || child.props.skipped}
+                      first={index === 0}
+                      isLast={index === childrenArray.length - 1}
+                      index={index}
+                      checkIcon={checkIcon()}
+                      stepReached={isStepComplete(index - 1) || childrenArray[index - 1]?.props.skipped}
+                      formikErrors={formik.errors}
+                    />
+                  )
+                })}
+              </Stepper>
+
+              <FormComponent formik={formik} currentChild={currentChild} step={step} setStep={setStep} isLastStep={isLastStep} />
+            </>
         }
-      
-      }
-    </Formik>
+      </Formik>
     </>
   )
 }

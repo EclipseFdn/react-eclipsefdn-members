@@ -23,166 +23,49 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { getStyles } from "./stepHelpers";
 
-export default class Step extends Component {
-  constructor() {
-    super()
-    this.getStyles = this.getStyles.bind(this)
-  }
+const Step = (props) => {
 
-  getStyles() {
-    const {
-      activeColor,
-      completeColor,
-      defaultColor,
-      circleFontColor,
-      activeTitleColor,
-      completeTitleColor,
-      defaultTitleColor,
-      size,
-      circleFontSize,
-      titleFontSize,
-      circleTop,
-      titleTop,
-      width,
-      completeOpacity,
-      activeOpacity,
-      defaultOpacity,
-      completeTitleOpacity,
-      activeTitleOpacity,
-      defaultTitleOpacity,
-      barStyle,
-      defaultBarColor,
-      completeBarColor,
-      defaultBorderColor,
-      completeBorderColor,
-      activeBorderColor,
-      defaultBorderStyle,
-      completeBorderStyle,
-      activeBorderStyle,
-      activeCircleFontColor,
-      fontFamily,
-      circleCursor,
-      barHeight,
-      onClick,
-      completed,
-      stepReached
-    } = this.props
+  const [fieldError, setFieldError] = useState(false)
 
-    return {
-      step: {
-        width: `${width}%`,
-        display: 'table-cell',
-        position: 'relative',
-        paddingTop: circleTop,
-      },
-      circle: {
-        width: size,
-        height: size,
-        margin: '0 auto',
-        backgroundColor: defaultColor,
-        borderRadius: '50%',
-        textAlign: 'center',
-        fontSize: circleFontSize,
-        color: circleFontColor,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        opacity: defaultOpacity,
-        borderWidth: defaultBorderColor ? 3 : 0,
-        borderColor: defaultBorderColor,
-        borderStyle: defaultBorderStyle,
-        cursor: circleCursor,
-      },
-      activeCircle: {
-        backgroundColor: activeColor,
-        opacity: activeOpacity,
-        borderWidth: activeBorderColor ? 3 : 0,
-        borderColor: activeBorderColor,
-        borderStyle: activeBorderStyle,
-        cursor: circleCursor,
-      },
-      completedCircle: {
-        backgroundColor: completeColor,
-        opacity: completeOpacity,
-        borderWidth: completeBorderColor ? 3 : 0,
-        borderColor: completeBorderColor,
-        borderStyle: completeBorderStyle,
-        cursor: circleCursor,
-      },
-      index: {
-        lineHeight: `${size + circleFontSize / 4}px`,
-        color: circleFontColor,
-        fontFamily: fontFamily,
-        cursor: (completed || stepReached) && onClick ? 'pointer' : 'default',
-      },
-      activeIndex: {
-        lineHeight: `${size + circleFontSize / 4}px`,
-        color: activeCircleFontColor,
-        fontFamily: fontFamily,
-      },
-      title: {
-        marginTop: titleTop,
-        fontSize: titleFontSize,
-        fontWeight: '300',
-        textAlign: 'center',
-        display: 'block',
-        color: defaultTitleColor,
-        opacity: defaultTitleOpacity,
-        fontFamily: fontFamily,
-        cursor: 'default',
-      },
-      activeTitle: {
-        color: activeTitleColor,
-        opacity: activeTitleOpacity,
-        fontFamily: fontFamily,
-      },
-      completedTitle: {
-        color: completeTitleColor,
-        opacity: completeTitleOpacity,
-        fontFamily: fontFamily,
-        cursor: onClick ? 'pointer' : 'default',
-      },
-      leftBar: {
-        position: 'absolute',
-        top: circleTop + size / 2,
-        height: 1,
-        borderTopStyle: barStyle,
-        borderTopWidth: barHeight || 1,
-        borderTopColor: defaultBarColor,
-        left: 0,
-        right: '50%',
-        marginRight: size / 2,
-        opacity: defaultOpacity,
-      },
-      rightBar: {
-        position: 'absolute',
-        top: circleTop + size / 2,
-        height: 1,
-        borderTopStyle: barStyle,
-        borderTopWidth: barHeight || 1,
-        borderTopColor: defaultBarColor,
-        right: 0,
-        left: '50%',
-        marginLeft: size / 2,
-        opacity: defaultOpacity,
-      },
-      completedBar: {
-        borderTopStyle: barStyle,
-        borderTopWidth: barHeight || 1,
-        borderTopColor: completeBarColor,
-        opacity: completeOpacity,
-      },
+  useEffect(() => {
+    if (Object.keys(props.formikErrors).length !== 0) {
+      setFieldError(true)
+    } else setFieldError(false)
+  }, [props.formikErrors])
+
+  const { active, completed, checkIcon, index, onClick, stepReached, title, first, isLast } = props
+  const styles = getStyles(props)
+
+  const circleStyle = Object.assign(
+    styles.circle,
+    completed ? styles.completedCircle : {},
+    active ? styles.activeCircle : {},
+  )
+  const titleStyle = Object.assign(
+    styles.title,
+    completed ? styles.completedTitle : {},
+    active ? styles.activeTitle : {},
+  )
+  const leftStyle = Object.assign(
+    styles.leftBar,
+    active || completed ? styles.completedBar : {},
+  )
+  const rightStyle = Object.assign(
+    styles.rightBar,
+    completed ? styles.completedBar : {},
+  )
+  function getInnerContent() {
+
+    const handleClick = e => {
+      console.log(fieldError)
+      if (!fieldError) {
+        onClick(index)
+      }
     }
-  }
-
-  getInnerContent() {
-    const { active, completed, checkIcon, index, onClick, stepReached } = this.props
-    const styles = this.getStyles()
-    
-    const handleClick = e => onClick(index)
 
     if (active) {
       return (
@@ -203,7 +86,7 @@ export default class Step extends Component {
       return (
         <span
           style={Object.assign({}, styles.index, {
-            color: this.props.defaultCircleFontColor || styles.index.color,
+            color: props.defaultCircleFontColor || styles.index.color,
           })}
           onClick={handleClick}
         >
@@ -215,45 +98,23 @@ export default class Step extends Component {
     return <span style={styles.index}>{index + 1}</span>
   }
 
-  render() {
-    const { title, active, completed, first, isLast } = this.props
-
-    const styles = this.getStyles()
-    const circleStyle = Object.assign(
-      styles.circle,
-      completed ? styles.completedCircle : {},
-      active ? styles.activeCircle : {},
-    )
-    const titleStyle = Object.assign(
-      styles.title,
-      completed ? styles.completedTitle : {},
-      active ? styles.activeTitle : {},
-    )
-    const leftStyle = Object.assign(
-      styles.leftBar,
-      active || completed ? styles.completedBar : {},
-    )
-    const rightStyle = Object.assign(
-      styles.rightBar,
-      completed ? styles.completedBar : {},
-    )
-
-    return (
-      <div style={styles.step}>
-        <div style={circleStyle}>{this.getInnerContent()}</div>
-        {completed ? (
-          <div style={titleStyle}>
-            {title}
-          </div>
-        ) : (
+  return (
+    <div style={styles.step}>
+      <div style={circleStyle}>{getInnerContent()}</div>
+      {completed ? (
+        <div style={titleStyle}>
+          {title}
+        </div>
+      ) : (
           <div style={titleStyle}>{title}</div>
         )}
-        {!first && <div style={leftStyle} />}
-        {!isLast && <div style={rightStyle} />}
-      </div>
-    )
-  }
+      {!first && <div style={leftStyle} />}
+      {!isLast && <div style={rightStyle} />}
+    </div>
+  )
 }
+
+export default Step
 
 Step.defaultProps = {
   activeColor: '#5096FF',
