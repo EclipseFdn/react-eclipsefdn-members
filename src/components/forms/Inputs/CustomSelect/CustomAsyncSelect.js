@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import AsyncCreatableSelect from 'react-select/async-creatable';
+import AsyncCreatable from 'react-select/async-creatable';
 import AsyncSelect from 'react-select/async';
 // import { useField } from 'formik';
 
@@ -8,6 +8,35 @@ const CustomAsyncSelect = (props) => {
   // const [field, meta, helpers] = useField(props.field.name);  //// or props.field, must contain name key
   // console.log(field)
   // console.log(meta)
+
+  // selectorStyles object
+  const companyCustomStyles = {
+    option: (styles, state) => ({
+      ...styles,
+      cursor: "pointer"
+    }),
+    control: (styles) => ({
+      ...styles,
+      cursor: "text"
+    }),
+    clearIndicator: (styles) => ({
+      ...styles,
+      cursor: "pointer"
+    })
+  };
+
+
+  const wgCustomStyles = {
+    option: (styles, state) => ({
+      ...styles,
+      cursor: "pointer"
+    }),
+    clearIndicator: (styles) => ({
+      ...styles,
+      cursor: "pointer"
+    })
+  };
+
 
   useEffect(() => {
     // When has initial data and has not been changed, show prefilled address data and disable input
@@ -45,7 +74,14 @@ const CustomAsyncSelect = (props) => {
         props.form.setFieldValue("organization.address.provinceOrState", "")
         props.form.setFieldValue("organization.address.country", "")
         props.form.setFieldValue("organization.address.postalCode", "")
+        props.form.setFieldValue('organization.twitterHandle', "")
         props.setDisableInput(false)
+      }
+
+      // Clear when it's for working groups
+      if (props.srcData === "workingGroups") {
+        props.form.setFieldValue("workingGroup", "")
+        props.form.setFieldValue("participationLevel", "")
       }
     }
 
@@ -98,7 +134,7 @@ const CustomAsyncSelect = (props) => {
 
   if (props.srcData === "companies") {
     return (
-      <AsyncCreatableSelect
+      <AsyncCreatable
         isClearable
         cacheOptions
         defaultOptions
@@ -108,11 +144,13 @@ const CustomAsyncSelect = (props) => {
           handleSelect(option, action)
         }}
         onBlur={props.form.handleBlur(props.field.name)}
+        styles={companyCustomStyles}
+        noOptionsMessage={() => "Type to Search..."}
       />
     )
   }
 
-  return (
+  else return (
     <AsyncSelect
       isClearable
       cacheOptions
@@ -123,6 +161,7 @@ const CustomAsyncSelect = (props) => {
         handleSelect(option, action)
       }}
       onBlur={props.form.handleBlur(props.field.name)}
+      styles={wgCustomStyles}
     />
   )
 

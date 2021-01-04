@@ -59,53 +59,31 @@ export const validationSchema = [
       jobtitle: yup.string().required(`${requiredErrorMsg}`),
       email: yup.string().required(`${requiredErrorMsg}`).email('Invalid email address') 
     })
+  }),
+
+  // Forth, signing Authority
+  yup.object().shape({
+    signingAuthority: yup.string().required(`${requiredErrorMsg}`),
+    signingAuthorityRepresentative:yup.object().shape({
+      firstName: yup.string().when("signingAuthority", {
+        is: value => value === "noSigningAuthority",
+        then: yup.string().required(`${requiredErrorMsg}`)
+      }),
+      lastName: yup.string().when("signingAuthority", {
+        is: value => value === "noSigningAuthority",
+        then: yup.string().required(`${requiredErrorMsg}`)
+      }),
+      jobtitle: yup.string().when("signingAuthority", {
+        is: value => value === "noSigningAuthority",
+        then: yup.string().required(`${requiredErrorMsg}`)
+      }),
+      email: yup.string().when("signingAuthority", {
+        is: value => value === "noSigningAuthority",
+        then: yup.string().required(`${requiredErrorMsg}`).email('Invalid email address') 
+      })
+    })
   })
 
-
-    // // Second
-    // Yup.object({
-    //   [membershipLevel.name]: Yup.string().required('Required')
-    // }),
-
-    // //Third
-    // Yup.object({
-    //   [workingGroup.name]: Yup.string().required('Required'),
-    //   // [effectiveDate.name]: Yup.string().nullable().when(`${workingGroup.name}`, {
-    //   //   is: (value) => value.value !== "",
-    //   //   then: Yup.string().required("Required")
-    //   // }),
-    //   // [wgRepresentativeFirstName.name]: Yup.string().when(`${workingGroup.name}`, {
-    //   //   is: (value) => value.value !== "",
-    //   //   then: Yup.string().required("Required")
-    //   // }),
-    //   // [wgRepresentativeLastName.name]: Yup.string().when(`${workingGroup.name}`, {
-    //   //   is: (value) => value.value !== "",
-    //   //   then: Yup.string().required("Required")
-    //   // }),
-    //   // [wgRepresentativeJobTitle.name]: Yup.string().when(`${workingGroup.name}`, {
-    //   //   is: (value) => value.value !== "",
-    //   //   then: Yup.string().required("Required")
-    //   // }),
-    //   // [wgRepresentativeEmail.name]: Yup.string().when(`${workingGroup.name}`, {
-    //   //   is: (value) => value.value !== "",
-    //   //   then: Yup.string().required("Required")
-    //   // }),
-    // }),
-
-    // // Forth
-    // Yup.object({
-    //   [signingAuthority.name]: Yup.string().required('Required'),
-    //   [signingAuthorityFirstName.name]: Yup.string().when(`${signingAuthority.name}`, {
-    //     is: (value) => value === "noSigningAuthority",
-    //     then: Yup.string().required("Please provide signing author")
-    //   }),
-    //   [signingAuthorityLastName.name]: Yup.string(),
-    //   [signingAuthorityJobTitile.name]: Yup.string(),
-    //   [signingAuthorityEmail.name]: Yup.string().when(`${signingAuthority.name}`, {
-    //     is: (value) => value === "noSigningAuthority",
-    //     then: Yup.string().required("Please provide signing author")
-    //   }),
-    // }),
 
     // //Fifth
     // Yup.object({}),
