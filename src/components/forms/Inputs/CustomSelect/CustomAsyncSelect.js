@@ -93,43 +93,49 @@ const CustomAsyncSelect = (props) => {
   }
 
   const promiseOptions = async (inputValue) => {
-    let src_data
-    if (props.srcData === "companies") {
-      src_data = "companies.json"
-    }
+
+    if (inputValue) {
+      let src_data
+      if (props.srcData === "companies") {
+        src_data = "companies.json"
+      }
+    
+      if (props.srcData === "workingGroups") {
+        src_data = "workingGroups.json"
+      }
   
-    if (props.srcData === "workingGroups") {
-      src_data = "workingGroups.json"
+      // Will use this if the api supports search
+      // if(inputValue) {
+      //   src_data = src_data + `?search=${inputValue}`
+      // }
+  
+      return fetch(src_data, {
+          headers : { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+           }
+        })
+          .then(resp => resp.json())
+          .then((data) => {
+            if (data.companies) {
+              return data.companies.map(item => ({ value: item.legalName, label: item.legalName, address: item.address, twitterHandle: item.twitterHandle }));
+            }
+            else if (data.working_groups) {
+              if (props.isExistingMember) {
+                return data.working_groups.map(item => ({ value: item.id, label: item.name, participation_levels: item.participation_levels}));
+              }
+              else {
+                let tempData = data.working_groups.map(item => ({ value: item.id, label: item.name, participation_levels: item.participation_levels }))
+                tempData.push({ label: 'I do not want to join a working group at this time', value: '' })
+                return tempData
+              }
+            }
+
+        })
     }
 
-    // Will use this if the api supports search
-    // if(inputValue) {
-    //   src_data = src_data + `?search=${inputValue}`
-    // }
+    else return props.field.value? [{value: props.field.value, label: props.field.value}] : []
 
-    return fetch(src_data, {
-        headers : { 
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-         }
-      })
-        .then(resp => resp.json())
-        .then((data) => {
-          if (data.companies) {
-            return data.companies.map(item => ({ value: item.legalName, label: item.legalName, address: item.address, twitterHandle: item.twitterHandle }));
-          }
-          if (data.working_groups) {
-            if (props.isExistingMember) {
-              return data.working_groups.map(item => ({ value: item.id, label: item.name, participation_levels: item.participation_levels}));
-            }
-            else {
-              let tempData = data.working_groups.map(item => ({ value: item.id, label: item.name, participation_levels: item.participation_levels }))
-              tempData.push({ label: 'I do not want to join a working group at this time', value: '' })
-              return tempData
-            }
-          }
-          else return []
-      })
   }
 
   if (props.srcData === "companies") {

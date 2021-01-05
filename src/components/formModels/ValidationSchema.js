@@ -83,14 +83,4 @@ export const validationSchema = [
       })
     })
   })
-
-
-    // //Fifth
-    // Yup.object({}),
-
-    // //Sixth
-    // Yup.object({}),
-
-    // // Seventh
-    // Yup.object({}),
-  ] 
+] 

@@ -61,13 +61,10 @@ const Step = (props) => {
           //   onClick(index)
           // }
         }
-
       }
-
       else if(index < currentStep) {
         onClick(index)
       }
-
       // if (Object.keys(props.formikErrors).length === 0) {
       //   onClick(index)
       // }
