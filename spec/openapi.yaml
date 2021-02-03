@@ -11,8 +11,14 @@ servers:
 tags:
 -  name: Membership form
    description: Definitions related to membership form data in the database
+-  name: Contacts
+   description: Definitions related to membership form designated contacts
+-  name: Organizations
+   description: Definitions related to membership form organizations
+-  name: Working Groups
+   description: Definitions related to membership form working group targets
 paths:
-   /membership:
+   /form:
       get:
          tags:
          - Membership form
@@ -43,36 +49,8 @@ paths:
                description: Success
             403:
                description: Unauthorized
-   /membership/{userId}:
+   /form/{id}:
       parameters:
-      -  name: userId
-         in: path
-         description: Unique ID of the user that authored the form
-         required: true
-         schema:
-            $ref: '#/components/schemas/ObjectID'
-      get:
-         tags:
-         - Membership form
-         summary: Membership forms for user
-         description: Returns membership form entries for the user with matching ID
-         responses:
-            200:
-               description: Success
-               content:
-                  application/json:
-                     schema:
-                        $ref: '#/components/schemas/MembershipForms'
-            500:
-               description: Error while retrieving data
-   /membership/{userId}/{id}:
-      parameters:
-      -  name: userId
-         in: path
-         description: Unique ID of the user that authored the form
-         required: true
-         schema:
-            $ref: '#/components/schemas/ObjectID'
       -  name: id
          in: path
          description: Unique ID of the membership form entry
@@ -98,6 +76,44 @@ paths:
          - Membership form
          summary: Membership form delete
          description: Remove a membership form entry with the given ID
+         responses:
+            200:
+               description: Success
+            403:
+               description: Unauthorized
+   /form/{id}/working_groups:
+      parameters:
+      -  name: id
+         in: path
+         description: Unique ID of the membership form entry
+         required: true
+         schema:
+            $ref: '#/components/schemas/ObjectID'
+      get:
+         tags:
+         - Working Groups
+         summary: Working Groups list
+         description: Returns a list of tracked Working Groups for membership form
+         responses:
+            200:
+               description: Success
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/MembershipForms'
+            500:
+               description: Error while retrieving data
+      put:
+         tags:
+         - Membership form
+         summary: Membership form update
+         description: Using the passed form object, updates or inserts are made to save the data.
+         requestBody:
+            description: The form to be updated or inserted into the data set.
+            content:
+               application/json:
+                  schema:
+                     $ref: '#/components/schemas/MembershipForm'
          responses:
             200:
                description: Success
@@ -134,9 +150,9 @@ paths:
                description: Success
             403:
                description: Unauthorized
-   /contacts/{formId}:
+   /contacts/{transactionId}:
       parameters:
-      -  name: formId
+      -  name: transactionId
          in: path
          description: Unique ID of the membership form entry
          required: true
@@ -156,9 +172,9 @@ paths:
                         $ref: '#/components/schemas/Contacts'
             500:
                description: Error while retrieving data
-   /contacts/{formId}/{id}:
+   /contacts/{transactionId}/{id}:
       parameters:
-      -  name: formId
+      -  name: transactionId
          in: path
          description: Unique ID of the membership form entry
          required: true
@@ -225,9 +241,9 @@ paths:
                description: Success
             403:
                description: Unauthorized
-   /organizations/{formId}:
+   /organizations/{transactionId}:
       parameters:
-      -  name: formId
+      -  name: transactionId
          in: path
          description: Unique ID of the membership form entry
          required: true
@@ -257,6 +273,7 @@ paths:
                description: Success
             403:
                description: Unauthorized
+
 components:
    schemas:
       ObjectID:
@@ -283,21 +300,20 @@ components:
                $ref: '#/components/schemas/ObjectID'
             first_name:
                type: string
-               description: Placeholder
+               description: First name of the contact
             last_name:
                type: string
-               description: Placeholder
+               description: Last name of the contact
             email:
                type: string
-               description: Placeholder
+               description: Professional email address at which the individual can be reached at
             job_title:
                type: string
-               description: Placeholder
+               description: Job title of the contact
             type:
                type: string
-               description: Placeholder
-               
-               
+               description: The type of contact that is being stored
+
       Organizations:
          type: array
          items:
@@ -315,25 +331,25 @@ components:
                description: Legal Name of the Organization
             twitter:
                type: string
-               description: Placeholder
+               description: The Twitter handle of the organization
             address:
                type: object
                properties:
                   street:
                      type: string
-                     description: Placeholder
+                     description: Street address of the organization
                   city:
                      type: string
-                     description: Placeholder
+                     description: The ciy in which the organization is based
                   province_state:
                      type: string
-                     description: Placeholder
+                     description: The province/state in which the organization is based
                   country:
                      type: string
-                     description: Placeholder
+                     description: The country in which the organization is based
                   postal_code:
                      type: string
-                     description: Placeholder
+                     description: The postal code of the physical address of the organization
       MembershipForms:
          type: array
          items:
@@ -345,17 +361,30 @@ components:
                $ref: '#/components/schemas/ObjectID'
             user_id:
                $ref: '#/components/schemas/ObjectID'
-            working_group:
-               type: string
-               description: Placeholder
             membership_level:
                type: string
-               description: Placeholder
-            participation_level:
-               type: string
-               description: Placeholder
-            effective_date:
-               $ref: '#/components/schemas/DateTime'
+               description: The level of membership with the Eclipse Foundation that is being targeted.
             signing_authority:
                type: boolean
-               description: Placeholder
+               description: Whether the currently submitting user has signing authority for membership contracts.
+
+      WorkingGroups:
+         type: array
+         items:
+            $ref: '#/components/schemas/WorkingGroup'
+      WorkingGroup:
+         type: object
+         properties:
+            id:
+               $ref: '#/components/schemas/ObjectID'
+            working_group:
+               type: string
+               description: The ID of the working group relationship to be formed
+            participation_level:
+               type: string
+               description: The desired participation level desired within the new working group
+            effective_date:
+               $ref: '#/components/schemas/DateTime'
+            contact:
+               $ref: '#/components/schemas/Contact'
+         
