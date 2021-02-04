@@ -69,6 +69,8 @@ paths:
                   application/json:
                      schema:
                         $ref: '#/components/schemas/MembershipForm'
+            403:
+               description: Unauthorized
             500:
                description: Error while retrieving data
       delete:
@@ -101,19 +103,61 @@ paths:
                   application/json:
                      schema:
                         $ref: '#/components/schemas/MembershipForms'
+            403:
+               description: Unauthorized
             500:
                description: Error while retrieving data
       put:
          tags:
-         - Membership form
-         summary: Membership form update
-         description: Using the passed form object, updates or inserts are made to save the data.
+         - Working Groups
+         summary: Working Groups update
+         description: Using the passed Working Groups object, updates or inserts are made to save the data.
          requestBody:
             description: The form to be updated or inserted into the data set.
             content:
                application/json:
                   schema:
                      $ref: '#/components/schemas/MembershipForm'
+         responses:
+            200:
+               description: Success
+            403:
+               description: Unauthorized
+   /form/{id}/working_groups/{workingGroupID}:
+      parameters:
+      -  name: id
+         in: path
+         description: Unique ID of the membership form entry
+         required: true
+         schema:
+            $ref: '#/components/schemas/ObjectID'
+      -  name: workingGroupID
+         in: path
+         description: Unique ID of the working group relationship within a form
+         required: true
+         schema:
+            $ref: '#/components/schemas/ObjectID'
+      get:
+         tags:
+         - Working Groups
+         summary: Working Group
+         description: Returns a membership form entry that has a matching ID
+         responses:
+            200:
+               description: Success
+               content:
+                  application/json:
+                     schema:
+                        $ref: '#/components/schemas/MembershipForm'
+            403:
+               description: Unauthorized
+            500:
+               description: Error while retrieving data
+      delete:
+         tags:
+         - Working Groups
+         summary: Working Groups delete
+         description: Remove a membership form entry with the given ID
          responses:
             200:
                description: Success
@@ -170,6 +214,8 @@ paths:
                   application/json:
                      schema:
                         $ref: '#/components/schemas/Contacts'
+            403:
+               description: Unauthorized
             500:
                description: Error while retrieving data
    /contacts/{transactionId}/{id}:
@@ -198,6 +244,8 @@ paths:
                   application/json:
                      schema:
                         $ref: '#/components/schemas/Contact'
+            403:
+               description: Unauthorized
             500:
                description: Error while retrieving data
       delete:
@@ -261,6 +309,8 @@ paths:
                   application/json:
                      schema:
                         $ref: '#/components/schemas/Organization'
+            403:
+               description: Unauthorized
             500:
                description: Error while retrieving data
       delete:
