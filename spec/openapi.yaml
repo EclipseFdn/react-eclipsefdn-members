@@ -102,7 +102,7 @@ paths:
                content:
                   application/json:
                      schema:
-                        $ref: '#/components/schemas/MembershipForms'
+                        $ref: '#/components/schemas/WorkingGroups'
             403:
                description: Unauthorized
             500:
@@ -117,7 +117,7 @@ paths:
             content:
                application/json:
                   schema:
-                     $ref: '#/components/schemas/MembershipForm'
+                     $ref: '#/components/schemas/WorkingGroup'
          responses:
             200:
                description: Success
@@ -141,14 +141,14 @@ paths:
          tags:
          - Working Groups
          summary: Working Group
-         description: Returns a membership form entry that has a matching ID
+         description: Returns a working group entry that has a matching ID 
          responses:
             200:
                description: Success
                content:
                   application/json:
                      schema:
-                        $ref: '#/components/schemas/MembershipForm'
+                        $ref: '#/components/schemas/WorkingGroup'
             403:
                description: Unauthorized
             500:
@@ -157,7 +157,7 @@ paths:
          tags:
          - Working Groups
          summary: Working Groups delete
-         description: Remove a membership form entry with the given ID
+         description: Remove a working group form entry with the given ID
          responses:
             200:
                description: Success
