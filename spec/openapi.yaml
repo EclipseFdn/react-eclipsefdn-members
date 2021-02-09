@@ -43,7 +43,7 @@ paths:
             content:
                application/json:
                   schema:
-                     $ref: '#/components/schemas/MembershipForm'
+                     $ref: '#/components/schemas/MembershipFormPush'
          responses:
             200:
                description: Success
@@ -87,7 +87,7 @@ paths:
             content:
                application/json:
                   schema:
-                     $ref: '#/components/schemas/MembershipForm'
+                     $ref: '#/components/schemas/MembershipFormPush'
          responses:
             200:
                description: Success
@@ -139,7 +139,7 @@ paths:
             content:
                application/json:
                   schema:
-                     $ref: '#/components/schemas/Contact'
+                     $ref: '#/components/schemas/ContactPush'
          responses:
             200:
                description: Success
@@ -189,7 +189,7 @@ paths:
             content:
                application/json:
                   schema:
-                     $ref: '#/components/schemas/Contact'
+                     $ref: '#/components/schemas/ContactPush'
          responses:
             200:
                description: Success
@@ -241,7 +241,7 @@ paths:
             content:
                application/json:
                   schema:
-                     $ref: '#/components/schemas/Organization'
+                     $ref: '#/components/schemas/OrganizationPush'
          responses:
             200:
                description: Success
@@ -276,7 +276,7 @@ paths:
             content:
                application/json:
                   schema:
-                     $ref: '#/components/schemas/Organization'
+                     $ref: '#/components/schemas/OrganizationPush'
          responses:
             200:
                description: Success
@@ -330,7 +330,7 @@ paths:
             content:
                application/json:
                   schema:
-                     $ref: '#/components/schemas/WorkingGroup'
+                     $ref: '#/components/schemas/WorkingGroupPush'
          responses:
             200:
                description: Success
@@ -380,7 +380,7 @@ paths:
             content:
                application/json:
                   schema:
-                     $ref: '#/components/schemas/WorkingGroup'
+                     $ref: '#/components/schemas/WorkingGroupPush'
          responses:
             200:
                description: Success
@@ -440,6 +440,24 @@ components:
             type:
                type: string
                description: The type of contact that is being stored
+      ContactPush:
+        type: object
+        properties:
+            first_name:
+               type: string
+               description: First name of the contact
+            last_name:
+               type: string
+               description: Last name of the contact
+            email:
+               type: string
+               description: Professional email address at which the individual can be reached at
+            job_title:
+               type: string
+               description: Job title of the contact
+            type:
+               type: string
+               description: The type of contact that is being stored
 
       Organizations:
          type: array
@@ -449,10 +467,37 @@ components:
       Organization:
          type: object
          properties:
+            id:
+               $ref: '#/components/schemas/ObjectID'
             form_id:
                $ref: '#/components/schemas/ObjectID'
-            organization_id:
-               $ref: '#/components/schemas/ObjectID'
+            legal_name:
+               type: string
+               description: Legal Name of the Organization
+            twitter:
+               type: string
+               description: The Twitter handle of the organization
+            address:
+               type: object
+               properties:
+                  street:
+                     type: string
+                     description: Street address of the organization
+                  city:
+                     type: string
+                     description: The ciy in which the organization is based
+                  province_state:
+                     type: string
+                     description: The province/state in which the organization is based
+                  country:
+                     type: string
+                     description: The country in which the organization is based
+                  postal_code:
+                     type: string
+                     description: The postal code of the physical address of the organization
+      OrganizationPush:
+         type: object
+         properties:
             legal_name:
                type: string
                description: Legal Name of the Organization
@@ -494,6 +539,15 @@ components:
             signing_authority:
                type: boolean
                description: Whether the currently submitting user has signing authority for membership contracts.
+      MembershipFormPush:
+         type: object
+         properties:
+            membership_level:
+               type: string
+               description: The level of membership with the Eclipse Foundation that is being targeted.
+            signing_authority:
+               type: boolean
+               description: Whether the currently submitting user has signing authority for membership contracts.
 
       WorkingGroups:
          type: array
@@ -504,6 +558,19 @@ components:
          properties:
             id:
                $ref: '#/components/schemas/ObjectID'
+            working_group:
+               type: string
+               description: The ID of the working group relationship to be formed
+            participation_level:
+               type: string
+               description: The desired participation level desired within the new working group
+            effective_date:
+               $ref: '#/components/schemas/DateTime'
+            contact:
+               $ref: '#/components/schemas/Contact'
+      WorkingGroupPush:
+         type: object
+         properties:
             working_group:
                type: string
                description: The ID of the working group relationship to be formed
