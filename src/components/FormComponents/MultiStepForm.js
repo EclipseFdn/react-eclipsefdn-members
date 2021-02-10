@@ -7,9 +7,8 @@ import SigningAuthority from './SigningAuthority/SigningAuthority';
 import Preview from "./Preview/Preview";
 import { formField } from './formModels/formFieldModel';
 
-const MultiStepForm = ({ defineInitialData }) => {
+const MultiStepForm = ({ initialValues }) => {
 
-  const [formDataStates, setFormDataStates] = useState(defineInitialData)  // Do I still need this State?
   const [step, setStep] = useState(0)
 
   const handleSubmit = (values) => {  // This is for final submit, after preview
@@ -20,10 +19,8 @@ const MultiStepForm = ({ defineInitialData }) => {
     <>
       <FormikStepper
         enableReinitialize
-        initialValues={formDataStates}
+        initialValues={initialValues}
         onSubmit={handleSubmit}
-        formDataStates={formDataStates}
-        setFormDataStates={setFormDataStates}
         step={step}
         setStep={setStep}
       >
@@ -44,11 +41,10 @@ const MultiStepForm = ({ defineInitialData }) => {
 
         <SigningAuthority
           formField={formField}
-          formDataStates={formDataStates}
           label="Signing Authority" 
         />
         
-        <Preview formField={formField} previewData={formDataStates} label="Preview" />
+        <Preview formField={formField} label="Preview" />
 
       </FormikStepper>
     </>

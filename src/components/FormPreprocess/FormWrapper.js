@@ -20,7 +20,7 @@ const FormWrapper = () => {
           <SignIn />
         </Route>
         <Route path="/form">
-          { !currentUser ? <Redirect to="/" /> : <MultiStepForm defineInitialData={initialValues} /> }
+          { !currentUser ? <Redirect to="/" /> : <MultiStepForm initialValues={initialValues} /> }
         </Route>
       </Switch>
       </div>
