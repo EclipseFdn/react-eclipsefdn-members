@@ -1,12 +1,12 @@
 import React from "react";
-import { Field } from "formik";
+import { FastField } from "formik";
 
 const Input = ({ name, labelName, placeholder, disableInput }) => {
 
   return (
     <>
     <label htmlFor={name}>{labelName}</label><br />
-    <Field name={name}>
+    <FastField name={name}>
       {({
         field, // { name, value, onChange, onBlur }
         form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
@@ -22,7 +22,7 @@ const Input = ({ name, labelName, placeholder, disableInput }) => {
           )} */}
         </>
       )}}
-    </Field>
+    </FastField>
     </>
   )
 }

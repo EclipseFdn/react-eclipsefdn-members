@@ -20,7 +20,7 @@ const MultiStepForm = () => {
   return (
     <>
       <FormikStepper
-        enableReinitialize
+        enableReinitialize={true}
         initialValues={initials}
         onSubmit={handleSubmit}
         step={step}

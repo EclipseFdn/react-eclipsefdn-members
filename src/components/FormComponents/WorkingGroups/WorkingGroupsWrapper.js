@@ -3,15 +3,18 @@ import MembershipContext from "../../../Context/MembershipContext";
 import { FieldArray } from 'formik';
 import WorkingGroup from './WorkingGroup';
 import { matchWorkingGroupFields } from '../../../Utils/formFunctionHelpers';
+import { initialValues } from '../../FormComponents/formModels/formFieldModel';
 
 const WorkingGroupsWrapper = ({ formField, setInitials, ...otherProps }) => {
   const { currentFormId } = useContext(MembershipContext);
 
   const [loading, setLoading] = useState(true);
 
+  // console.log("how many renders of working groups")
+
   // Fetch data only once and prefill data, behaves as componentDidMount
   useEffect(() => {
-
+    console.log("how many useEffect of working groups")
     if(currentFormId) {
       fetch(`membership_data/${currentFormId}/workingGroups.json`,{
         headers : {
@@ -22,7 +25,8 @@ const WorkingGroupsWrapper = ({ formField, setInitials, ...otherProps }) => {
       .then(data => {
         // If have an array, I'll use iterate it
         if(data.length) {
-          otherProps.parentState.formik.setFieldValue(`workingGroups`, matchWorkingGroupFields(data))
+          // otherProps.parentState.formik.setFieldValue(`workingGroups`, matchWorkingGroupFields(data))
+          setInitials({...initialValues, workingGroups: matchWorkingGroupFields(data)})
         }
 
         setLoading(false);

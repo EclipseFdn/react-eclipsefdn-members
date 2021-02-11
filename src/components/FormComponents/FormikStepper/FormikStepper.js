@@ -72,7 +72,6 @@ const FormikStepper = ({ step, setStep, children, ...props }) => {
 
     <Formik
       {...props}
-      // enableReinitialize
       onSubmit={handleOnSubmit}
       validationSchema={currentValidationSchema}
       innerRef={formRef}
