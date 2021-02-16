@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Stepper from "./Stepper";
 import Step from "./Step";
 
-const StepperComponent = ({ step, setStep, childrenArray, completed, formRef, setCurrentFormId }) => {
+const StepperComponent = ({ step, setStep, childrenArray, completed, setCurrentFormId }) => {
 
     const history = useHistory();
 
@@ -38,10 +38,7 @@ const StepperComponent = ({ step, setStep, childrenArray, completed, formRef, se
           index = {0}
           completed={true}
           stepReached={true}
-          formikErrors={formRef?.current?.errors}
           currentStep={step}
-          validateForm={formRef?.current?.validateForm}
-          formRef={formRef}
         />
         {/* For real form steps */}
         {childrenArray.map((child, index) => {
@@ -55,10 +52,10 @@ const StepperComponent = ({ step, setStep, childrenArray, completed, formRef, se
               completed={isStepComplete(index)}
               index={index + 1}
               stepReached={isStepComplete(index-1)}
-              formikErrors={formRef?.current?.errors}
+              // formikErrors={formRef?.current?.errors}
               currentStep={step}
-              validateForm={formRef?.current?.validateForm}
-              formRef={formRef}
+              // validateForm={formRef?.current?.validateForm}
+              // formRef={formRef}
             />
           )
         })}

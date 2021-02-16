@@ -6,11 +6,10 @@ import WorkingGroupsWrapper from "./WorkingGroups/WorkingGroupsWrapper";
 import SigningAuthority from './SigningAuthority/SigningAuthority';
 import Preview from "./Preview/Preview";
 import { formField } from './formModels/formFieldModel';
-import {initialValues} from '../FormComponents/formModels/formFieldModel';
+// import { initialValues } from '../FormComponents/formModels/formFieldModel';
 
 const MultiStepForm = () => {
 
-  const [ initials, setInitials ] = useState(initialValues)
   const [step, setStep] = useState(0)
 
   const handleSubmit = (values) => {  // This is for final submit, after preview
@@ -20,34 +19,27 @@ const MultiStepForm = () => {
   return (
     <>
       <FormikStepper
-        enableReinitialize={true}
-        initialValues={initials}
         onSubmit={handleSubmit}
         step={step}
         setStep={setStep}
-        setInitials={setInitials}
       >
         <CompanyInformation
           formField={formField}
-          setInitials={setInitials}
           label="Company Information"
         />
 
         <MembershipLevel
           formField={formField}
-          setInitials={setInitials}
           label="Membership Level"
         />
 
         <WorkingGroupsWrapper
           formField={formField}
-          setInitials={setInitials}
           label="Working Groups"
         />
 
         <SigningAuthority
           formField={formField}
-          setInitials={setInitials}
           label="Signing Authority" 
         />
         

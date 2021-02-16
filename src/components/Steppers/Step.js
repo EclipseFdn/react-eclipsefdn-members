@@ -4,7 +4,7 @@ import { getStyles } from "./stepHelpers";
 
 const Step = (props) => {
 
-  const { active, completed, index, onClick, stepReached, title, currentStep, formRef } = props
+  const { active, completed, index, onClick, stepReached, title, /*currentStep, formRef*/ } = props
   const styles = getStyles(props)
 
     const handleClick = e => {
@@ -12,27 +12,19 @@ const Step = (props) => {
       if (index === 0) {
         onClick();
       }
-
-      // If go back to sign in page, reset the form
-      // if (index === 0) {
-      //   onClick(index);
-      //   formRef.current.resetForm();
+      else {
+        onClick(index-1);
+      }
+      // if (index-1 > currentStep) {
+      //   if (formRef.current) {
+      //     formRef.current.validateForm()
+      //     if (Object.keys(formRef.current.errors).length === 0) {
+      //       onClick(index-1)
+      //     }
+      //   }
       // }
-
-      // else {
-        if (index-1 > currentStep) {
-          if (formRef.current) {
-            // formRef.current.handleSubmit()
-            // onClick(index-2)
-            formRef.current.validateForm()
-            if (Object.keys(formRef.current.errors).length === 0) {
-              onClick(index-1)
-            }
-          }
-        }
-        else if(index-1 <= currentStep) {
-          onClick(index-1)
-        }
+      // else if(index-1 <= currentStep) {
+      //   onClick(index-1)
       // }
     }
 

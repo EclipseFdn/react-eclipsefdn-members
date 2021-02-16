@@ -2,10 +2,11 @@ import React from "react";
 import Input from '../Inputs/Input';
 import CustomCheckbox from '../Inputs/CustomCheckbox';
 
-const Contacts = ({formValues, formField}) => {
+const Contacts = ({initialValues, formField}) => {
 
-  const mktSame = formValues.companyRepresentative.marketingRepresentative.sameAsCompany;
-  const accSame = formValues.companyRepresentative.accounting.sameAsCompany;
+  const mktSame = initialValues.companyRepresentative.mktSame;
+  const accSame = initialValues.companyRepresentative.accSame;
+
   const { companyRepresentative, marketingRepresentative, accounting } = formField;
   
   const generateContacts = (representatives, prefix, disableInput) => {

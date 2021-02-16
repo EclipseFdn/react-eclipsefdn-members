@@ -1,13 +1,59 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MembershipContext from "../../../Context/MembershipContext";
 import { matchCompanyFields, matchContactFields } from '../../../Utils/formFunctionHelpers';
 import Company from './Company';
 import Contacts from './Contacts';
+import { validationSchema } from '../formModels/ValidationSchema';
+import { Formik, Form } from 'formik';
+import CustomStepButton from "../CustomStepButton";
 
 const CompanyInformation = ({ formField, ...otherProps }) => {
   
   const {currentFormId} = useContext(MembershipContext);
-  const formValues = otherProps.parentState.formik.values;
+
+  const [ initialValues, setInitialValues ] = useState({
+    organization: {
+      id: "",
+      legalName: "",
+      address: {
+        street: "",
+        city: "",
+        provinceOrState: "",
+        country: "",
+        postalCode: ""
+      },
+      twitterHandle: "",
+    },
+  
+    // Step1: Company Representative
+    companyRepresentative: {
+      mktSame: false,
+      accSame: false,
+      representative: {
+        id: "",
+        firstName: "",
+        lastName: "",
+        jobtitle: "",
+        email: ""
+      },
+  
+      marketingRepresentative: {
+        id: "",
+        firstName: "",
+        lastName: "",
+        jobtitle: "",
+        email: ""
+      },
+  
+      accounting: {
+        id: "",
+        firstName: "",
+        lastName: "",
+        jobtitle: "",
+        email: ""
+      }
+    }
+  });
 
   // Fetch data only once and prefill data, behaves as componentDidMount
   useEffect(() => {
@@ -29,32 +75,54 @@ const CompanyInformation = ({ formField, ...otherProps }) => {
         )
         .then(([organizations, contacts]) => {
           // Matching the field data
-          if (organizations[0]) {
+          if (organizations[0] && contacts.length) {
             let tempOrg = matchCompanyFields(organizations[0])
-            otherProps.parentState.formik.setFieldValue('organization.legalName', tempOrg.organization.legalName)
-            otherProps.parentState.formik.setFieldValue('organization.address', tempOrg.organization.address)
-            // Store Organization_Id for my PUT later
-            otherProps.parentState.formik.setFieldValue('organization.id', tempOrg.organization.id)
-          }
-          if(contacts.length) {
             let tempContacts = matchContactFields(contacts)
-            // Prefill Data
-            otherProps.parentState.formik.setFieldValue('companyRepresentative.representative', tempContacts.companyRepresentative.representative)
-            // Store contact_id for my PUT later
-            otherProps.parentState.formik.setFieldValue('companyRepresentative.representative.id', tempContacts.companyRepresentative.representative.id)
+            setInitialValues({
+                ...tempOrg,
+              ...tempContacts
+            })
           }
         })
     }
     // eslint-disable-next-line
   }, [])
 
+  const handleOnSubmit = async (values, formikBag) => {
+    console.log(values)
+    otherProps.parentState.handleComplete()
+    otherProps.parentState.setStep(s=> s+1)
+  }
+
+  // console.log(initialValues)
+
   return (
     <>
       <h2 className="fw-600">Company Information</h2>
       <p>Please complete your company information below. This should be the legal name and address of your organization. Committer members do not need to provide this information unless it differs from the information provided with their Individual Committer Agreement.</p>
       <div className="align-center">
-        <Company />
-        <Contacts formValues={formValues} formField={formField} />
+        <Formik
+          enableReinitialize
+          initialValues={initialValues}
+          validationSchema={validationSchema[0]}
+          onSubmit={handleOnSubmit}
+        >
+          {
+            (formik) => (
+              <Form>
+              <Company />
+              <Contacts initialValues={initialValues} formField={formField} />
+              <CustomStepButton
+                step={otherProps.parentState.step}
+                // isSubmitting={formik.isSubmitting}
+                setStep={otherProps.parentState.setStep}
+                isLastStep={otherProps.parentState.isLastStep}
+                // formikSubmit={formik.submitForm}
+              />
+              </Form>
+            )
+          }
+        </Formik>
       </div>
     </>
   );

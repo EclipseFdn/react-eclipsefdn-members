@@ -1,9 +1,6 @@
 import React from 'react';
-import { useFormikContext } from 'formik'
 
 const Preview = () => {
-
-  const { values } = useFormikContext()
 
   //Check if has signing auth, if has, hide the signing auth info, and remove the info if has when submitting
 
@@ -14,7 +11,7 @@ const Preview = () => {
       <h2 className="fw-600">Review and Submit your Completed Application</h2>
       <p> Please review your completed Membership Application Form. If you would like to make changes to the information, please click the back button.</p>
       <p>Please click <strong>submit</strong> when ready.</p>
-      <div className="margin-top-30">
+      {/* <div className="margin-top-30">
         <h3 className="fw-600">Company Information</h3>
         <div className="row">
           <div className="col-md-16"><div className="margin-top-25 fake-input">{values.organization.legalName.value}</div></div>
@@ -83,7 +80,7 @@ const Preview = () => {
           <div className="col-md-12"><label>Email</label><div className="fake-input">{values.signingAuthorityRepresentative.email}</div></div>
         </div>
 
-      </div>
+      </div> */}
     </>
   );
 };

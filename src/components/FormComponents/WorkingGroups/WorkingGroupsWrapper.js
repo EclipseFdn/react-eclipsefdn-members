@@ -1,14 +1,33 @@
 import React, { useState, useContext, useEffect } from "react";
 import MembershipContext from "../../../Context/MembershipContext";
-import { FieldArray } from 'formik';
+import { Formik, Form, FieldArray } from 'formik';
 import WorkingGroup from './WorkingGroup';
 import { matchWorkingGroupFields } from '../../../Utils/formFunctionHelpers';
-import { initialValues } from '../../FormComponents/formModels/formFieldModel';
+import { validationSchema } from '../formModels/ValidationSchema';
+import CustomStepButton from "../CustomStepButton";
 
-const WorkingGroupsWrapper = ({ formField, setInitials, ...otherProps }) => {
+const WorkingGroupsWrapper = ({ formField, ...otherProps }) => {
   const { currentFormId } = useContext(MembershipContext);
 
   const [loading, setLoading] = useState(true);
+
+  const [ initialValues, setInitialValues ] = useState({
+    workingGroups: [
+      {
+        id: "",
+        workingGroup: "",
+        participationLevel: "",
+        effectiveDate: "",
+        workingGroupRepresentative: {
+          firstName: "",
+          lastName: "",
+          jobtitle: "",
+          email: "",
+          id: ""
+        }
+      }
+    ]  
+  });
 
   // console.log("how many renders of working groups")
 
@@ -25,10 +44,8 @@ const WorkingGroupsWrapper = ({ formField, setInitials, ...otherProps }) => {
       .then(data => {
         // If have an array, I'll use iterate it
         if(data.length) {
-          // otherProps.parentState.formik.setFieldValue(`workingGroups`, matchWorkingGroupFields(data))
-          setInitials({...initialValues, workingGroups: matchWorkingGroupFields(data)})
+          setInitialValues({workingGroups: matchWorkingGroupFields(data)});
         }
-
         setLoading(false);
       })
     } else {
@@ -36,6 +53,13 @@ const WorkingGroupsWrapper = ({ formField, setInitials, ...otherProps }) => {
     }
     // eslint-disable-next-line
   }, [])
+
+  const handleOnSubmit = async (values, formikBag) => {
+    console.log(values)
+    otherProps.parentState.handleComplete()
+    otherProps.parentState.setStep(s=> s+1)
+  }
+
 
   if(loading) {
     return "Loading..."
@@ -46,15 +70,35 @@ const WorkingGroupsWrapper = ({ formField, setInitials, ...otherProps }) => {
     <h2 className="fw-600">Working Group</h2>
     <p>Please complete the following details for joining a Working Group</p>
     <div id="working-groups-page" className="align-center margin-top-50 margin-bottom-30">
-    <FieldArray
-      name="workingGroups"
-      render={arrayHelpers => {
-        return(
-            <WorkingGroup formField={formField} arrayHelpers={arrayHelpers} formikProps={otherProps.parentState.formik} />
-        )
-      }}
-    >
-    </FieldArray>
+      <Formik
+        enableReinitialize
+        initialValues={initialValues}
+        validationSchema={validationSchema[2]}
+        onSubmit={handleOnSubmit}
+      >
+        {
+          (formik) => (
+            <Form>
+              <FieldArray
+                name="workingGroups"
+                render={arrayHelpers => {
+                  return(
+                      <WorkingGroup formField={formField} arrayHelpers={arrayHelpers} formikProps={otherProps.parentState.formik} />
+                  )
+                }}
+              >
+              </FieldArray>
+              <CustomStepButton
+                step={otherProps.parentState.step}
+                // isSubmitting={formik.isSubmitting}
+                setStep={otherProps.parentState.setStep}
+                isLastStep={otherProps.parentState.isLastStep}
+                // formikSubmit={formik.submitForm}
+              />
+            </Form>
+          )
+        }
+    </Formik>
     </div>
     </>
   );
