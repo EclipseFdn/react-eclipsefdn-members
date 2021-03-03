@@ -438,8 +438,10 @@ components:
                type: string
                description: Job title of the contact
             type:
-               type: string
-               description: The type of contact that is being stored
+               type: array
+               items:
+                  type: string
+                  description: The type of contact that is being stored
       ContactPush:
         type: object
         properties:
@@ -456,8 +458,10 @@ components:
                type: string
                description: Job title of the contact
             type:
-               type: string
-               description: The type of contact that is being stored
+               type: array
+               items:
+                  type: string
+                  description: The type of contact that is being stored
 
       Organizations:
          type: array
@@ -539,6 +543,8 @@ components:
             signing_authority:
                type: boolean
                description: Whether the currently submitting user has signing authority for membership contracts.
+            updated_date:
+               $ref: '#/components/schemas/DateTime'
       MembershipFormPush:
          type: object
          properties:
