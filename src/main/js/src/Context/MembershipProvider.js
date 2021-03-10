@@ -1,32 +1,23 @@
 import React, { useState } from "react";
 import MembershipContext from "./MembershipContext";
 
+/**
+ * User and form Id context shared among the whole App
+ * 
+ * For more about context, please refer to: https://reactjs.org/docs/context.html 
+ * 
+ * It is simliar to state, but you can export and import anywhere, no need to pass all the way down to the child component 
+ * 
+ * It will provide the values to all the chidlren wrapped inside
+ * **/
+
 const MembershipProvider = ({ children }) => {
 
-    const [isExistingMember, setIsExistingMember] = useState(false)
     const [currentUser, setCurrentUser] = useState(null)
     const [currentFormId, setCurrentFormId] = useState("")
 
-    // useEffect(() => {
-        // If has login data, can put here to set if is existing member
-    // })
-
-    // useEffect(() => {
-    //   fetch('membership_data/fake_user.json',{
-    //     headers : {
-    //     'Content-Type': 'application/json',
-    //     'Accept': 'application/json'
-    //    }})
-    //   .then(resp => resp.json())
-    //   .then(data => {
-    //     setCurrentUser(data);
-    //   })
-    // }, [])
-
     return (
         <MembershipContext.Provider value={{
-            isExistingMember,
-            setIsExistingMember: (val) => setIsExistingMember(val),
             currentUser,
             setCurrentUser: (val) => setCurrentUser(val),
             currentFormId,
