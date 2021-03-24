@@ -20,13 +20,19 @@ export default makeStyles((theme) => ({
     justifyContent: 'flex-end',
     padding: '0 8px',
     ...theme.mixins.toolbar,
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
   },
   appBar: {
+    color: 'white',
     zIndex: theme.zIndex.drawer + 1,
+    backgroundColor: 'black',
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
   },
   appBarShift: {
     marginLeft: drawerWidth,

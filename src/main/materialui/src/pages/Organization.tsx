@@ -12,7 +12,6 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 
@@ -21,8 +20,8 @@ interface OrganizationProps {
 };
 
 export default function Organization(props: OrganizationProps) {
-  const classes = StylesBase();
   const theme = useTheme();
+  const classes = StylesBase();
   
   const [name, setName] = useState('');
   const [id, setID] = useState(0);

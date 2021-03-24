@@ -25,7 +25,7 @@ export default function Employees(props: EmployeeProps) {
   useEffect(() => {
     if (rows.length === 0)
       setRows([
-        { id: '0', firstName: 'Matt', lastName: 'Mercer', organization: 'Critical Role', role: 'Dungeon Master' },
+        { id: '0', firstName: 'Matt', lastName: 'Mercer', organization: 'Critical Role', role: 'Dungeon Master'},
         { id: '1', firstName: 'Laura', lastName: 'Bailey', organization: 'Critical Role', role: 'Cleric' },
         { id: '2', firstName: 'Travis', lastName: 'Willingham', organization: 'Critical Role', role: 'Warlock' },
         { id: '3', firstName: 'Philip', lastName: 'Defranco', organization: 'Rogue Rocket', role: 'Host' },
