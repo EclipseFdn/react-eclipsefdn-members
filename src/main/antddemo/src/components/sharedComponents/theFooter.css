@@ -1,0 +1,12 @@
+.the-footer {
+  margin: 24px 0;
+}
+
+.the-footer p {
+  text-align: center;
+  color: var(--text-color-lightGray);
+}
+
+.the-footer p a {
+  color: var(--text-color-lightGray);
+}

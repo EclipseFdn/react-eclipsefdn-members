@@ -1,0 +1,50 @@
+.floating-all-ctn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+  height: 76px;
+}
+
+.card-ctn input {
+  border: none;
+  border-bottom: 1px solid var(--text-color-lightGray);
+  width: 100%;
+  padding-bottom: 5px;
+  font-size: 18px;
+  background-color: rgba(0, 0, 0, 0);
+  transition: all 0.3s ease-out;
+}
+
+.organization-card input:focus {
+  transition: all 0.3s ease-out;
+  border-bottom: 1px solid orange;
+  outline-width: 0;
+}
+
+.floating-all-ctn label {
+  font-size: 18px;
+  z-index: 0;
+  color: var(--text-color-lightGray);
+  position: absolute;
+  top: 20px;
+  transition: all 0.3s ease-out;
+}
+
+label.floating-label {
+  top: 0px;
+  color: orange;
+  font-size: 12px;
+  transition: all 0.3s ease-out;
+}
+
+.floating-input-ctn {
+  z-index: 10;
+}
+
+.floating-input-ctn p {
+  margin: 0;
+  text-align: start;
+  color: var(--text-color-lightGray);
+}

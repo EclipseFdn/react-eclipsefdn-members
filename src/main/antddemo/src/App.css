@@ -1,0 +1,32 @@
+:root {
+  --header-background-color: #000;
+  --main-content-background: #fafafa;
+  --text-color-white: #fff;
+  --text-color-lightGray: rgb(125, 125, 125);
+  --shadow: 1px 1px 15px rgba(0, 0, 0, 0.09);
+}
+
+section.ant-layout {
+  background-color: var(--main-content-background);
+}
+
+.main-content {
+  margin: 24px;
+}
+
+.card-ctn {
+  border-radius: 5px;
+  padding: 32px;
+  box-shadow: var(--shadow);
+  background-color: white;
+}
+
+.card-ctn h2 {
+  font-size: 3.75rem;
+  font-weight: 400;
+  margin-bottom: 24px;
+}
+
+.card-ctn p {
+  text-align: center;
+}

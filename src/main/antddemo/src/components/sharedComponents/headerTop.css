@@ -1,0 +1,11 @@
+.header-top {
+  height: 80px;
+  background-color: var(--header-background-color);
+  display: flex;
+  align-items: center;
+}
+
+.eclipse-foundation-white-orange {
+  width: 123px;
+  margin-left: 24px;
+}

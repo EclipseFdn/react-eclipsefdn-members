@@ -17,12 +17,12 @@ import CardMedia from '@material-ui/core/CardMedia';
 
 interface OrganizationProps {
   text?: string;
-};
+}
 
 export default function Organization(props: OrganizationProps) {
   const theme = useTheme();
   const classes = StylesBase();
-  
+
   const [name, setName] = useState('');
   const [id, setID] = useState(0);
   const [street, setStreet] = useState('');
@@ -32,17 +32,21 @@ export default function Organization(props: OrganizationProps) {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
-        <Paper style={{ padding: theme.spacing(4)}}>
-          <Typography variant="h2" component="h2" style={{ paddingBottom: theme.spacing(2)}}>
+        <Paper style={{ padding: theme.spacing(4) }}>
+          <Typography
+            variant="h2"
+            component="h2"
+            style={{ paddingBottom: theme.spacing(2) }}
+          >
             Organization
           </Typography>
           <Grid container spacing={3}>
             <Grid item xs={12} md={9} direction="column">
-              <div style={{padding: theme.spacing(1)}}>
+              <div style={{ padding: theme.spacing(1) }}>
                 <TextField
                   id="organization-name"
                   label="Organization Name"
-                  onChange={e => setName(e.target.value)}
+                  onChange={(e) => setName(e.target.value)}
                   placeholder="Name"
                   helperText="Legal name of the organization"
                   fullWidth
@@ -59,14 +63,14 @@ export default function Organization(props: OrganizationProps) {
                 />
               </div>
               <Divider />
-              <div style={{padding: theme.spacing(1)}}>
+              <div style={{ padding: theme.spacing(1) }}>
                 <Grid item>
                   <TextField
                     id="organization-street"
                     label="Organization Street address"
                     helperText="The physical location of the organization"
                     value={street}
-                    onChange={e => setStreet(e.target.value)}
+                    onChange={(e) => setStreet(e.target.value)}
                   />
                 </Grid>
                 <Grid item>
@@ -75,7 +79,7 @@ export default function Organization(props: OrganizationProps) {
                     label="Organization Postal/ZIP code"
                     helperText="The postal or Zip code for the organization"
                     value={po}
-                  onChange={e => setPO(e.target.value)}
+                    onChange={(e) => setPO(e.target.value)}
                   />
                 </Grid>
                 <Grid item>
@@ -84,41 +88,49 @@ export default function Organization(props: OrganizationProps) {
                     label="Organization City"
                     helperText="The origin city of the organization"
                     value={city}
-                    onChange={e => setCity(e.target.value)}
+                    onChange={(e) => setCity(e.target.value)}
                   />
                 </Grid>
               </div>
-              <div style={{padding: theme.spacing(1)}}>
-                <Button 
+              <div style={{ padding: theme.spacing(1) }}>
+                <Button
                   variant="contained"
-                  onClick={() => { alert('clicked') }}>
-                    Update
+                  onClick={() => {
+                    alert('clicked');
+                  }}
+                >
+                  Update
                 </Button>
-                </div>
+              </div>
             </Grid>
             <Grid xs={12} md={3} justify="center" alignItems="center">
               <Box mx="auto">
-              <Card className={classes.root}>
-                <CardActionArea>
-                <CardMedia
-                className={classes.media}
-                  image="https://via.placeholder.com/512"
-                  title="Contemplative Reptile"
-                />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            Logo
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Lorem ispum!
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      </Card>
+                <Card className={classes.root}>
+                  <CardActionArea>
+                    <CardMedia
+                      className={classes.media}
+                      image="https://via.placeholder.com/512"
+                      title="Contemplative Reptile"
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        Logo
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="p"
+                      >
+                        Lorem ispum!
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
               </Box>
             </Grid>
           </Grid>
         </Paper>
+      </Grid>
     </Grid>
-  </Grid>);
-};
+  );
+}
