@@ -4,8 +4,8 @@ import {
   matchCompanyFields,
   matchContactFields,
 } from '../../../Utils/formFunctionHelpers';
-import Company from './CompanyInformationCompany';
-import Contacts from './CompanyInformationContacts';
+import CompanyInformationCompany from './CompanyInformationCompany';
+import CompanyInformationContacts from './CompanyInformationContacts';
 import Loading from '../../UIComponents/Loading/Loading';
 import {
   end_point,
@@ -127,8 +127,11 @@ const CompanyInformation = ({ formField, ...otherProps }) => {
         name and address of your organization.
       </p>
       <div className="align-center">
-        <Company />
-        <Contacts formValues={formValues} formField={formField} />
+        <CompanyInformationCompany />
+        <CompanyInformationContacts
+          formValues={formValues}
+          formField={formField}
+        />
       </div>
     </>
   );

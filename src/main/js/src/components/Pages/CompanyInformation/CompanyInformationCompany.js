@@ -15,11 +15,8 @@ import { companies } from '../../../Constants/Constants';
  * correct country list names)
  */
 const Company = () => {
-  const {
-    organizationName,
-    organizationTwitter,
-    organizationAddress,
-  } = formField;
+  const { organizationName, organizationTwitter, organizationAddress } =
+    formField;
   // get country list library and map as option pass to the React-Select
   const countryList = require('country-list')
     .getNames()
