@@ -1,18 +1,20 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import './dateInput.css';
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    margin: 0,
-  },
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     width: '100%',
+  },
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    margin: 0,
+    '& div.MuiInputBase-root': {
+      fontSize: 14,
+    },
   },
 }));
 
@@ -24,7 +26,7 @@ const DateInput = (props) => {
 
   return (
     <div className="date-input">
-      <form className={classes.container} noValidate>
+      <form className={classes.root} noValidate>
         <TextField
           id="date"
           type="date"
