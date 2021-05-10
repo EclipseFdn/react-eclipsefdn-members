@@ -5,6 +5,8 @@ import CustomAsyncSelect from '../../UIComponents/Inputs/CustomSelect/CustomAsyn
 import Input from '../../UIComponents/Inputs/Input';
 import { formField } from '../../UIComponents/FormComponents/formModels/formFieldModel';
 import { companies } from '../../../Constants/Constants';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import { makeStyles, TextField } from '@material-ui/core';
 
 /**
  * Render Oraganization selector (used React-Select)
@@ -14,6 +16,15 @@ import { companies } from '../../../Constants/Constants';
  * and country-list library of updated
  * correct country list names)
  */
+
+const useStyles = makeStyles(() => ({
+  root: {
+    marginBottom: 14,
+    marginTop: 6,
+    backgroundColor: 'white',
+  },
+}));
+
 const Company = () => {
   const { organizationName, organizationTwitter, organizationAddress } =
     formField;
@@ -22,11 +33,11 @@ const Company = () => {
     .getNames()
     .map((item) => ({ label: item, value: item }));
 
+  const classes = useStyles();
   return (
     <>
       <h2 className="fw-600 h4" id={organizationName.name}>
-        {' '}
-        Organization <span className="orange-star">*</span>{' '}
+        Organization <span className="orange-star">*</span>
       </h2>
       <CustomSelectWrapper
         name={organizationName.name}
@@ -66,13 +77,21 @@ const Company = () => {
 
       <div className="row margin-bottom-40">
         <div className="col-md-8">
-          <label id={organizationAddress.country.name}>Country</label>
-          <span className="orange-star margin-left-5">*</span>
-          <CustomSelectWrapper
-            name={organizationAddress.country.name}
-            ariaLabel={organizationAddress.country.name}
-            renderComponent={DefaultSelect}
+          <Autocomplete
             options={countryList}
+            getOptionLabel={(option) => option.label}
+            fullWidth={true}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Country"
+                placeholder="Country"
+                variant="outlined"
+                size="small"
+                required={true}
+                className={classes.root}
+              />
+            )}
           />
         </div>
         <div className="col-md-8">
