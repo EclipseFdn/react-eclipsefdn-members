@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
 const today = new Date().toISOString().substring(0, 10);
 
 const DateInput = (props) => {
-  const { label, name, ...rest } = props;
   const classes = useStyles();
 
   return (
