@@ -1,5 +1,9 @@
 /* Compiled from App.less */
 
+html {
+  font-size: 14px;
+}
+
 .eclipseFdn-membership-webform {
   /* Stepper */
 }

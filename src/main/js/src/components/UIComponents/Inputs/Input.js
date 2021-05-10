@@ -21,9 +21,6 @@ const useStyles = makeStyles(() => ({
     marginBottom: 14,
     marginTop: 6,
     backgroundColor: 'white',
-    '& div.MuiInputBase-root, & label.MuiFormLabel-root': {
-      fontSize: 14,
-    },
   },
 }));
 
