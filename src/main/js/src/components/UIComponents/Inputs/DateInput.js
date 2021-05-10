@@ -2,16 +2,9 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
-const useStyles = makeStyles((theme) => ({
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: '100%',
-  },
+const useStyles = makeStyles(() => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    margin: 0,
+    width: '100%',
     '& div.MuiInputBase-root': {
       fontSize: 14,
     },
@@ -25,14 +18,12 @@ const DateInput = (props) => {
 
   return (
     <div className="date-input">
-      <form className={classes.root} noValidate>
-        <TextField
-          id="date"
-          type="date"
-          defaultValue={today}
-          className={classes.textField}
-        />
-      </form>
+      <TextField
+        id="date"
+        type="date"
+        defaultValue={today}
+        className={classes.root}
+      />
     </div>
   );
 };
