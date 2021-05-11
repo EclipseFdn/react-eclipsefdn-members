@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field } from 'formik';
+// import { Field } from 'formik';
 import { TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -26,13 +26,13 @@ const useStyles = makeStyles(() => ({
 
 export default function Input(props) {
   const {
-    name,
+    // name,
     labelName,
-    ariaLabel,
+    // ariaLabel,
     placeholder,
     disableInput,
     requiredMark,
-    inputProps,
+    // inputProps,
   } = props;
   const classes = useStyles();
 
