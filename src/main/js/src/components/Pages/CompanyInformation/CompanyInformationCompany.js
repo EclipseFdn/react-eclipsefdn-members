@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import CustomSelectWrapper from '../../UIComponents/Inputs/CustomSelect/CustomSelectWrapper';
 import DefaultSelect from '../../UIComponents/Inputs/CustomSelect/DefaultSelect';
 import CustomAsyncSelect from '../../UIComponents/Inputs/CustomSelect/CustomAsyncSelect';
 import Input from '../../UIComponents/Inputs/Input';
 import { formField } from '../../UIComponents/FormComponents/formModels/formFieldModel';
-import { companies } from '../../../Constants/Constants';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import { FETCH_HEADER } from '../../../Constants/Constants';
+import Autocomplete, {
+  createFilterOptions,
+} from '@material-ui/lab/Autocomplete';
 import { makeStyles, TextField } from '@material-ui/core';
 
 /**
@@ -18,33 +20,130 @@ import { makeStyles, TextField } from '@material-ui/core';
  */
 
 const useStyles = makeStyles(() => ({
-  root: {
+  textField: {
     marginBottom: 14,
     marginTop: 6,
     backgroundColor: 'white',
   },
 }));
+const filter = createFilterOptions();
 
-const Company = () => {
+const CompanyInformationCompany = () => {
+  const [companyInputValue, setCompanyInputValue] = useState('');
+  const [companyList, setCompanyList] = useState([]);
+  const classes = useStyles();
   const { organizationName, organizationTwitter, organizationAddress } =
     formField;
+
   // get country list library and map as option pass to the React-Select
   const countryList = require('country-list')
     .getNames()
     .map((item) => ({ label: item, value: item }));
 
-  const classes = useStyles();
+  const getCompanyList = () => {
+    let src_data = 'companies.json';
+    fetch(src_data, { headers: FETCH_HEADER })
+      .then((resp) => resp.json())
+      .then((data) => {
+        if (data.companies) {
+          const theCompanyList = data.companies.map((item) => ({
+            value: item.legalName,
+            label: item.legalName,
+            address: item.address,
+            twitterHandle: item.twitterHandle,
+          }));
+          setCompanyList(theCompanyList);
+        }
+      });
+  };
+
+  const renderAutocompleteForCompanies = () => (
+    <Autocomplete
+      value={companyInputValue}
+      options={companyList}
+      freeSolo
+      fullWidth={true}
+      selectOnFocus
+      clearOnBlur
+      // getOptionLabel={(option) => option.label}
+      getOptionLabel={(option) => {
+        // Value selected with enter, right from the input
+        if (typeof option === 'string') {
+          return option;
+        }
+        // Add "xxx" option created dynamically
+        if (option.inputValue) {
+          return option.inputValue;
+        }
+        // Regular option
+        return option.label;
+      }}
+      renderOption={(option) => option.label}
+      onChange={(event, newValue) => {
+
+        if (typeof newValue === 'string') {
+          setCompanyInputValue({
+            label: newValue,
+          });
+        } else if (newValue && newValue.inputValue) {
+          // Create a new value from the user input
+          setCompanyInputValue({
+            label: newValue.inputValue,
+          });
+        } else {
+          setCompanyInputValue(newValue);
+        }
+      }}
+      filterOptions={(options, params) => {
+        const filtered = filter(options, params);
+        const companyExists = !!companyList.find(
+          (company) => company.label === params.inputValue
+        );
+        // Suggest the creation of a new value
+        if (params.inputValue !== '' && !companyExists) {
+          filtered.push({
+            inputValue: params.inputValue,
+            label: `Add "${params.inputValue}"`,
+          });
+        }
+
+        return filtered;
+      }}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label="Select"
+          placeholder="Select..."
+          variant="outlined"
+          size="small"
+          required={true}
+          className={classes.textField}
+        />
+      )}
+    />
+  );
+
+  useEffect(() => {
+    // Not sure why we should do this.
+    // Like only show the company options when user type in something,
+    // instead of showing everything when user focus on the input.
+    // promiseOptions(companyInputValue);
+
+    getCompanyList();
+  }, []);
+
   return (
     <>
       <h2 className="fw-600 h4" id={organizationName.name}>
         Organization <span className="orange-star">*</span>
       </h2>
-      <CustomSelectWrapper
+      {/* <CustomSelectWrapper
         name={organizationName.name}
         ariaLabel={organizationName.name}
         srcData={companies}
         renderComponent={CustomAsyncSelect}
-      />
+      /> */}
+      {renderAutocompleteForCompanies()}
       <div className="row">
         <div className="col-md-8">
           <Input
@@ -89,7 +188,7 @@ const Company = () => {
                 variant="outlined"
                 size="small"
                 required={true}
-                className={classes.root}
+                className={classes.textField}
               />
             )}
           />
@@ -115,4 +214,4 @@ const Company = () => {
   );
 };
 
-export default Company;
+export default CompanyInformationCompany;
