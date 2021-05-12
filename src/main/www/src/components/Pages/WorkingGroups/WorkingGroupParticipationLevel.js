@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import DefaultSelect from '../../UIComponents/Inputs/CustomSelect/DefaultSelect';
 import CustomSelectWrapper from '../../UIComponents/Inputs/CustomSelect/CustomSelectWrapper';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import { makeStyles, TextField } from '@material-ui/core';
 
 /**
  * Render Participation level selector component (React-Select)
@@ -10,22 +12,39 @@ import CustomSelectWrapper from '../../UIComponents/Inputs/CustomSelect/CustomSe
  *
  *   - workingGroup: selected working group
  */
+
+const useStyles = makeStyles(() => ({
+  textField: {
+    marginBottom: 14,
+    marginTop: 6,
+    backgroundColor: 'white',
+  },
+}));
+
 const ParticipationLevel = ({ name, workingGroup }) => {
   const workingGroupsData = JSON.parse(
     sessionStorage.getItem('workingGroupsData')
   );
+  const classes = useStyles();
+
   const [participationLevels, setParticipationLevels] = useState([]);
 
-  useEffect(() => {
-    // If have selected working group, find this working group's
-    // participation levels, and pass to the react-select option
-    if (workingGroupsData) {
-      let temp = workingGroupsData?.find(
-        (item) => workingGroup.value === item.value
-      );
-      setParticipationLevels(temp?.participation_levels);
-    }
-  }, [workingGroupsData, workingGroup.value]);
+  useEffect(
+    () => {
+      // If have selected working group, find this working group's
+      // participation levels, and pass to the react-select option
+      if (workingGroupsData) {
+        let temp = workingGroupsData?.find(
+          (item) => workingGroup.value === item.value
+        );
+        setParticipationLevels(temp?.participation_levels);
+      }
+    },
+    [
+      // workingGroupsData, workingGroup.value
+      // comment out for now to eliminate the Maximum update depth exceeded warning.
+    ]
+  );
 
   // Need to have {label: foo, value: foo} format for react-select v2
   // to work properly, please refer to: https://react-select.com/home
@@ -41,11 +60,28 @@ const ParticipationLevel = ({ name, workingGroup }) => {
       </h3>
       <div className="row">
         <div className="col-md-12">
-          <CustomSelectWrapper
+          {/* <CustomSelectWrapper
             name={name}
             renderComponent={DefaultSelect}
             options={renderOptions(participationLevels)}
             ariaLabel={name}
+          /> */}
+          <Autocomplete
+            aria-labelledby={name}
+            options={participationLevels}
+            getOptionLabel={(option) => option}
+            fullWidth={true}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Select a level"
+                placeholder="Select a level"
+                variant="outlined"
+                size="small"
+                required={true}
+                className={classes.textField}
+              />
+            )}
           />
         </div>
       </div>

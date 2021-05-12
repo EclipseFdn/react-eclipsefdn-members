@@ -26,7 +26,6 @@ export const FETCH_HEADER = {
 };
 
 export const membership_levels = [
-  { label: 'Select a level', value: '' },
   { label: 'Strategic Member', value: 'strategic' },
   {
     label: 'Contributing Member (formerly referred to as Solutions Members)',

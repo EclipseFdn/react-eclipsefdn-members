@@ -12,6 +12,8 @@ import {
   workingGroups,
 } from '../../../Constants/Constants';
 import DefaultSelect from '../../UIComponents/Inputs/CustomSelect/DefaultSelect';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import { makeStyles, TextField } from '@material-ui/core';
 
 /**
  * Wrapper for Working Group Selector,
@@ -25,9 +27,19 @@ import DefaultSelect from '../../UIComponents/Inputs/CustomSelect/DefaultSelect'
  *
  *    - formField: the form field in formModels/formFieldModel.js
  */
+
+const useStyles = makeStyles(() => ({
+  textField: {
+    marginBottom: 14,
+    marginTop: 6,
+    backgroundColor: 'white',
+  },
+}));
+
 const WorkingGroup = ({ formField, workingGroupsData, arrayHelpers }) => {
   const { values } = useFormikContext();
   const { currentFormId } = useContext(MembershipContext);
+  const classes = useStyles();
 
   const each_workingGroupField = {
     id: '',
@@ -63,11 +75,12 @@ const WorkingGroup = ({ formField, workingGroupsData, arrayHelpers }) => {
           <div key={index}>
             <h2
               className="h4 fw-600"
-              id={`${workingGroups}.${index}.workingGroup`}>
+              id={`${workingGroups}.${index}.workingGroup`}
+            >
               Which working group would you like to join?{' '}
               <span className="orange-star">*</span>{' '}
             </h2>
-            <CustomSelectWrapper
+            {/* <CustomSelectWrapper
               label={WORKING_GROUPS}
               name={`${workingGroups}.${index}.workingGroup`}
               participationLevel={`${workingGroups}.${index}.participationLevel`}
@@ -75,6 +88,24 @@ const WorkingGroup = ({ formField, workingGroupsData, arrayHelpers }) => {
               options={workingGroupsData}
               renderComponent={DefaultSelect}
               ariaLabel={`${workingGroups}.${index}.workingGroup`}
+            /> */}
+            <Autocomplete
+              aria-labelledby={`${workingGroups}.${index}.workingGroup`}
+              options={workingGroupsData}
+              getOptionLabel={(option) => option.label}
+              defaultValue={workingGroupsData[0]}
+              fullWidth={true}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Select a group"
+                  placeholder="Select a group"
+                  variant="outlined"
+                  size="small"
+                  required={true}
+                  className={classes.textField}
+                />
+              )}
             />
 
             {workingGroup.workingGroup &&
@@ -106,7 +137,8 @@ const WorkingGroup = ({ formField, workingGroupsData, arrayHelpers }) => {
                       index,
                       values.workingGroups[index].id
                     )
-                  }>
+                  }
+                >
                   Remove this group
                 </button>
               </div>
@@ -117,7 +149,8 @@ const WorkingGroup = ({ formField, workingGroupsData, arrayHelpers }) => {
         <button
           className="btn btn-secondary padding-15"
           type="button"
-          onClick={() => arrayHelpers.push(each_workingGroupField)}>
+          onClick={() => arrayHelpers.push(each_workingGroupField)}
+        >
           Add another working group
         </button>
       </div>

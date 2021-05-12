@@ -14,6 +14,8 @@ import {
   MODE_REACT_ONLY,
   MODE_REACT_API,
 } from '../../../Constants/Constants';
+import { makeStyles, TextField } from '@material-ui/core';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 /**
  * Render membership select component (use React-Select), with fetch and prefill data operation
@@ -22,10 +24,20 @@ import {
  *    -  otherProps: any other props passing down from MultiStepForm and FormikStepper components, including formik props of formik library (such as "formik.values", "formik.setFieldValue");
  *    - formField: the form field in formModels/formFieldModel.js;
  */
+
+const useStyles = makeStyles(() => ({
+  textField: {
+    marginBottom: 14,
+    marginTop: 6,
+    backgroundColor: 'white',
+  },
+}));
+
 const MembershipLevel = ({ formField, ...otherProps }) => {
   const { currentFormId } = useContext(MembershipContext);
   const { setFieldValue } = otherProps.parentState.formik;
   const { membershipLevel } = formField;
+  const classes = useStyles();
 
   const [loading, setLoading] = useState(true);
 
@@ -86,11 +98,28 @@ const MembershipLevel = ({ formField, ...otherProps }) => {
         </h2>
         <div className="row">
           <div className="col-md-12">
-            <CustomSelectWrapper
+            {/* <CustomSelectWrapper
               name={membershipLevel.name}
               renderComponent={DefaultSelect}
               options={membership_levels}
               ariaLabel={membershipLevel.name}
+            /> */}
+            <Autocomplete
+              aria-labelledby={membershipLevel.name}
+              options={membership_levels}
+              getOptionLabel={(option) => option.label}
+              fullWidth={true}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Select a level"
+                  placeholder="Select a level"
+                  variant="outlined"
+                  size="small"
+                  required={true}
+                  className={classes.textField}
+                />
+              )}
             />
           </div>
         </div>
