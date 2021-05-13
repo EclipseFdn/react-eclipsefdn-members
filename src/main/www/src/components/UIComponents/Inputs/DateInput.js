@@ -10,7 +10,7 @@ const useStyles = makeStyles(() => ({
 
 const today = new Date().toISOString().substring(0, 10);
 
-const DateInput = (props) => {
+const DateInput = ({ ariaLabel }) => {
   const classes = useStyles();
 
   return (
@@ -20,6 +20,11 @@ const DateInput = (props) => {
         type="date"
         defaultValue={today}
         className={classes.root}
+        InputProps={{
+          inputProps: {
+            'aria-labelledby': ariaLabel,
+          },
+        }}
       />
     </div>
   );

@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import { useFormikContext } from 'formik';
 import MembershipContext from '../../../Context/MembershipContext';
 // import CustomSelectWrapper from '../../UIComponents/Inputs/CustomSelect/CustomSelectWrapper';
-import ParticipationLevel from './WorkingGroupParticipationLevel';
-import EffectiveDate from './WorkingGroupEffectiveDate';
+import WorkingGroupParticipationLevel from './WorkingGroupParticipationLevel';
+import WorkingGroupEffectiveDate from './WorkingGroupEffectiveDate';
 import WorkingGroupsRepresentative from './WorkingGroupRepresentative';
 import { deleteData } from '../../../Utils/formFunctionHelpers';
 import {
@@ -17,7 +17,7 @@ import { makeStyles, TextField } from '@material-ui/core';
 
 /**
  * Wrapper for Working Group Selector,
- * Participation Level selector, EffectiveDate input,
+ * Participation Level selector, WorkingGroupEffectiveDate input,
  * and WorkingGroups Representative inputs components
  *
  *  - Props:
@@ -90,32 +90,38 @@ const WorkingGroup = ({ formField, workingGroupsData, arrayHelpers }) => {
               ariaLabel={`${workingGroups}.${index}.workingGroup`}
             /> */}
             <Autocomplete
-              aria-labelledby={`${workingGroups}.${index}.workingGroup`}
               options={workingGroupsData}
               getOptionLabel={(option) => option.label}
               defaultValue={workingGroupsData[0]}
               fullWidth={true}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label={WORKING_GROUPS}
-                  placeholder="Select a group"
-                  variant="outlined"
-                  size="small"
-                  required={true}
-                  className={classes.textField}
-                />
-              )}
+              renderInput={(params) => {
+                params.inputProps = {
+                  ...params.inputProps,
+                  'aria-labelledby': `${workingGroups}.${index}.workingGroup`,
+                };
+
+                return (
+                  <TextField
+                    {...params}
+                    label={WORKING_GROUPS}
+                    placeholder="Select a group"
+                    variant="outlined"
+                    size="small"
+                    required={true}
+                    className={classes.textField}
+                  />
+                );
+              }}
             />
 
             {workingGroup.workingGroup &&
             workingGroup.workingGroup.value !== '' ? (
               <>
-                <ParticipationLevel
+                <WorkingGroupParticipationLevel
                   name={`${workingGroups}.${index}.participationLevel`}
                   workingGroup={workingGroup.workingGroup}
                 />
-                <EffectiveDate
+                <WorkingGroupEffectiveDate
                   name={`${workingGroups}.${index}.effectiveDate`}
                   label="Effective Date"
                 />

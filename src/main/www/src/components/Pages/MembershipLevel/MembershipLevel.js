@@ -105,21 +105,26 @@ const MembershipLevel = ({ formField, ...otherProps }) => {
               ariaLabel={membershipLevel.name}
             /> */}
             <Autocomplete
-              aria-labelledby={membershipLevel.name}
               options={membership_levels}
               getOptionLabel={(option) => option.label}
               fullWidth={true}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Select a level"
-                  placeholder="Select a level"
-                  variant="outlined"
-                  size="small"
-                  required={true}
-                  className={classes.textField}
-                />
-              )}
+              renderInput={(params) => {
+                params.inputProps = {
+                  ...params.inputProps,
+                  'aria-labelledby': membershipLevel.name,
+                };
+                return (
+                  <TextField
+                    {...params}
+                    label="Select a level"
+                    placeholder="Select a level"
+                    variant="outlined"
+                    size="small"
+                    required={true}
+                    className={classes.textField}
+                  />
+                );
+              }}
             />
           </div>
         </div>

@@ -28,7 +28,7 @@ export default function Input(props) {
   const {
     // name,
     labelName,
-    // ariaLabel,
+    ariaLabel,
     placeholder,
     disableInput,
     requiredMark,
@@ -46,6 +46,11 @@ export default function Input(props) {
       label={labelName}
       fullWidth={true}
       placeholder={placeholder}
+      InputProps={{
+        inputProps: {
+          'aria-labelledby': ariaLabel,
+        },
+      }}
     />
   );
 }

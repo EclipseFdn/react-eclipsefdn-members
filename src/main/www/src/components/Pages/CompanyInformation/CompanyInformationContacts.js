@@ -36,11 +36,11 @@ const Contacts = ({ formValues, formField }) => {
     return (
       <>
         {representativeFields.map((el, index) => (
-          <div key={prefix + index} className="col-md-12">
+          <div key={prefix + index} className="col-md-12" id={el.name}>
             <Input
               name={el.name}
               labelName={el.label}
-              ariaLabel={prefix + el.label}
+              ariaLabel={prefix + ' ' + el.name}
               placeholder={el.placeholder}
               disableInput={disableInput}
             />
@@ -52,7 +52,7 @@ const Contacts = ({ formValues, formField }) => {
 
   return (
     <>
-      <h4 className="fw-600">
+      <h4 className="fw-600" id="company-rep">
         Company Member Representative
         <span className="orange-star margin-left-5">*</span>
       </h4>
@@ -68,26 +68,32 @@ const Contacts = ({ formValues, formField }) => {
         All formal communications from the Eclipse Foundation will be sent to
         the Member Representative.
       </p>
-      <div className="row">{generateContacts(company, 'company-', false)}</div>
+      <div className="row">
+        {generateContacts(company, 'company-rep', false)}
+      </div>
 
-      <h4 className="fw-600">Company Marketing Representative</h4>
+      <h4 className="fw-600" id="marketing-rep">
+        Company Marketing Representative
+      </h4>
       <CustomCheckbox
         name="representative.marketing.sameAsCompany"
         label="Same as member rep."
       />
       <div className="row">
-        {mktSame && generateContacts(company, 'marketing-', mktSame)}
-        {!mktSame && generateContacts(marketing, 'marketing-', mktSame)}
+        {mktSame && generateContacts(company, 'marketing-rep', mktSame)}
+        {!mktSame && generateContacts(marketing, 'marketing-rep', mktSame)}
       </div>
 
-      <h4 className="fw-600">Company Accounting Representative</h4>
+      <h4 className="fw-600" id="accounting-rep">
+        Company Accounting Representative
+      </h4>
       <CustomCheckbox
         name="representative.accounting.sameAsCompany"
         label="Same as member rep."
       />
       <div className="row">
-        {accSame && generateContacts(company, 'accounting-', accSame)}
-        {!accSame && generateContacts(accounting, 'accounting-', accSame)}
+        {accSame && generateContacts(company, 'accounting-rep', accSame)}
+        {!accSame && generateContacts(accounting, 'accounting-rep', accSame)}
       </div>
     </>
   );

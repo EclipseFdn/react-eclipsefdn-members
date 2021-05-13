@@ -65,7 +65,6 @@ const CompanyInformationCompany = () => {
       fullWidth={true}
       selectOnFocus
       clearOnBlur
-      // getOptionLabel={(option) => option.label}
       getOptionLabel={(option) => {
         // Value selected with enter, right from the input
         if (typeof option === 'string') {
@@ -80,7 +79,6 @@ const CompanyInformationCompany = () => {
       }}
       renderOption={(option) => option.label}
       onChange={(event, newValue) => {
-
         if (typeof newValue === 'string') {
           setCompanyInputValue({
             label: newValue,
@@ -109,17 +107,23 @@ const CompanyInformationCompany = () => {
 
         return filtered;
       }}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          label="Select"
-          placeholder="Select..."
-          variant="outlined"
-          size="small"
-          required={true}
-          className={classes.textField}
-        />
-      )}
+      renderInput={(params) => {
+        params.inputProps = {
+          ...params.inputProps,
+          'aria-labelledby': organizationName.name,
+        };
+        return (
+          <TextField
+            {...params}
+            label="Select"
+            placeholder="Select..."
+            variant="outlined"
+            size="small"
+            required={true}
+            className={classes.textField}
+          />
+        );
+      }}
     />
   );
 
@@ -150,11 +154,14 @@ const CompanyInformationCompany = () => {
             name={organizationTwitter.name}
             labelName={organizationTwitter.label}
             placeholder={organizationTwitter.placeholder}
+            ariaLabel={organizationName.name}
           />
         </div>
       </div>
 
-      <h4 className="fw-600">Address</h4>
+      <h4 className="fw-600" id={`${organizationName.name}-address`}>
+        Address
+      </h4>
       <div className="row">
         <div className="col-md-16">
           <Input
@@ -162,6 +169,7 @@ const CompanyInformationCompany = () => {
             labelName={organizationAddress.street.label}
             placeholder={organizationAddress.street.placeholder}
             requiredMark={true}
+            ariaLabel={`${organizationName.name}-address`}
           />
         </div>
         <div className="col-md-8">
@@ -170,6 +178,7 @@ const CompanyInformationCompany = () => {
             labelName={organizationAddress.city.label}
             placeholder={organizationAddress.city.placeholder}
             requiredMark={true}
+            ariaLabel={`${organizationName.name}-address`}
           />
         </div>
       </div>
@@ -180,17 +189,23 @@ const CompanyInformationCompany = () => {
             options={countryList}
             getOptionLabel={(option) => option.label}
             fullWidth={true}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Country"
-                placeholder="Country"
-                variant="outlined"
-                size="small"
-                required={true}
-                className={classes.textField}
-              />
-            )}
+            renderInput={(params) => {
+              params.inputProps = {
+                ...params.inputProps,
+                'aria-labelledby': `${organizationName.name}-address`,
+              };
+              return (
+                <TextField
+                  {...params}
+                  label="Country"
+                  placeholder="Country"
+                  variant="outlined"
+                  size="small"
+                  required={true}
+                  className={classes.textField}
+                />
+              );
+            }}
           />
         </div>
         <div className="col-md-8">
@@ -199,6 +214,7 @@ const CompanyInformationCompany = () => {
             labelName={organizationAddress.provinceOrState.label}
             placeholder={organizationAddress.provinceOrState.placeholder}
             requiredMark={true}
+            ariaLabel={`${organizationName.name}-address`}
           />
         </div>
         <div className="col-md-8">
@@ -207,6 +223,7 @@ const CompanyInformationCompany = () => {
             labelName={organizationAddress.postalCode.label}
             placeholder={organizationAddress.postalCode.placeholder}
             requiredMark={true}
+            ariaLabel={`${organizationName.name}-address`}
           />
         </div>
       </div>

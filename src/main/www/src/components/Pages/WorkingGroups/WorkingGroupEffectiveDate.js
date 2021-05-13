@@ -17,7 +17,7 @@ const EffectiveDate = ({ name }) => {
       </h3>
       <div className="row">
         <div className="col-md-12">
-          <DateInput label="EffectiveDate" name={name} />
+          <DateInput ariaLabel={name} label="EffectiveDate" name={name} />
         </div>
       </div>
     </>
