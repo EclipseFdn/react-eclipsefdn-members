@@ -38,9 +38,8 @@ const ParticipationLevel = ({ name, workingGroup }) => {
       );
       setParticipationLevels(temp?.participation_levels);
     }
-  }, []);
-  // [workingGroupsData, workingGroup.value]
-  // comment out and move them out from useEffect for now to eliminate the Maximum update depth exceeded warning.
+  }, [workingGroupsData, workingGroup.value]);
+  // This i causing the Maximum update depth exceeded warning.
 
   // Need to have {label: foo, value: foo} format for react-select v2
   // to work properly, please refer to: https://react-select.com/home
