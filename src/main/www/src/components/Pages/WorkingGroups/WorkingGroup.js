@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useFormikContext } from 'formik';
 import MembershipContext from '../../../Context/MembershipContext';
-import CustomSelectWrapper from '../../UIComponents/Inputs/CustomSelect/CustomSelectWrapper';
+// import CustomSelectWrapper from '../../UIComponents/Inputs/CustomSelect/CustomSelectWrapper';
 import ParticipationLevel from './WorkingGroupParticipationLevel';
 import EffectiveDate from './WorkingGroupEffectiveDate';
 import WorkingGroupsRepresentative from './WorkingGroupRepresentative';
@@ -11,7 +11,7 @@ import {
   WORKING_GROUPS,
   workingGroups,
 } from '../../../Constants/Constants';
-import DefaultSelect from '../../UIComponents/Inputs/CustomSelect/DefaultSelect';
+// import DefaultSelect from '../../UIComponents/Inputs/CustomSelect/DefaultSelect';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles, TextField } from '@material-ui/core';
 
@@ -98,7 +98,7 @@ const WorkingGroup = ({ formField, workingGroupsData, arrayHelpers }) => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Select a group"
+                  label={WORKING_GROUPS}
                   placeholder="Select a group"
                   variant="outlined"
                   size="small"

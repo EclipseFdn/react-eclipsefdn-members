@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import DefaultSelect from '../../UIComponents/Inputs/CustomSelect/DefaultSelect';
-import CustomSelectWrapper from '../../UIComponents/Inputs/CustomSelect/CustomSelectWrapper';
+// import DefaultSelect from '../../UIComponents/Inputs/CustomSelect/DefaultSelect';
+// import CustomSelectWrapper from '../../UIComponents/Inputs/CustomSelect/CustomSelectWrapper';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles, TextField } from '@material-ui/core';
 
@@ -29,28 +29,24 @@ const ParticipationLevel = ({ name, workingGroup }) => {
 
   const [participationLevels, setParticipationLevels] = useState([]);
 
-  useEffect(
-    () => {
-      // If have selected working group, find this working group's
-      // participation levels, and pass to the react-select option
-      if (workingGroupsData) {
-        let temp = workingGroupsData?.find(
-          (item) => workingGroup.value === item.value
-        );
-        setParticipationLevels(temp?.participation_levels);
-      }
-    },
-    [
-      // workingGroupsData, workingGroup.value
-      // comment out for now to eliminate the Maximum update depth exceeded warning.
-    ]
-  );
+  useEffect(() => {
+    // If have selected working group, find this working group's
+    // participation levels, and pass to the react-select option
+    if (workingGroupsData) {
+      let temp = workingGroupsData?.find(
+        (item) => workingGroup.value === item.value
+      );
+      setParticipationLevels(temp?.participation_levels);
+    }
+  }, []); 
+      // [workingGroupsData, workingGroup.value]
+      // comment out and move them out from useEffect for now to eliminate the Maximum update depth exceeded warning.
 
   // Need to have {label: foo, value: foo} format for react-select v2
   // to work properly, please refer to: https://react-select.com/home
-  const renderOptions = (array) => {
-    return array?.map((el) => ({ label: el, value: el }));
-  };
+  // const renderOptions = (array) => {
+  //   return array?.map((el) => ({ label: el, value: el }));
+  // };
 
   return (
     <>
