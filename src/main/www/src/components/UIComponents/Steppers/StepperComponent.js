@@ -1,5 +1,5 @@
 import React from "react";
-import Stepper from "./Stepper";
+// import Stepper from "./Stepper";
 import Step from "./Step";
 
 /**
@@ -54,7 +54,7 @@ const StepperComponent = ({
   };
 
   return (
-    <Stepper>
+    <div>
       {/* Special for Sign In page */}
       <Step
         width={100 / childrenArray.length + 1}
@@ -88,7 +88,7 @@ const StepperComponent = ({
           />
         );
       })}
-    </Stepper>
+    </div>
   );
 };
 

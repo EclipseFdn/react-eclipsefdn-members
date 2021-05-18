@@ -26,18 +26,18 @@ const useStyles = makeStyles(() => ({
 
 export default function Input(props) {
   const {
-    // name,
+    name,
     labelName,
     ariaLabel,
     placeholder,
     disableInput,
     requiredMark,
-    // inputProps,
   } = props;
   const classes = useStyles();
 
   return (
     <TextField
+      name={name}
       required={requiredMark}
       disabled={disableInput}
       size="small"

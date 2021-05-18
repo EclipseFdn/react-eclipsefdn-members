@@ -12,6 +12,14 @@ export const MEMBERSHIP_LEVEL = 'Membership Level';
 export const WORKING_GROUPS = 'Working Groups';
 export const SIGNING_AUTHORITY = 'Signing Authority';
 export const REVIEW = 'Review';
+export const PATH_NAMES = [
+  '/',
+  '/company-info',
+  '/membership-level',
+  '/working-groups',
+  '/signing-authority',
+  '/review',
+];
 
 export const FETCH_METHOD = {
   POST: 'POST',

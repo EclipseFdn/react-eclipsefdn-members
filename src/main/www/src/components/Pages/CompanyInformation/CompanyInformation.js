@@ -16,6 +16,8 @@ import {
   MODE_REACT_ONLY,
   MODE_REACT_API,
 } from '../../../Constants/Constants';
+import { NavLink } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 
 /**
  * Wrapper for Contacts and Company components
@@ -29,16 +31,13 @@ import {
  *      library (such as "formik.values", "formik.setFieldValue");
  *  - formField: the form field in formModels/formFieldModel.js
  */
-const CompanyInformation = ({ formField, ...otherProps }) => {
+const CompanyInformation = ({ formField, setCurrentPage, ...otherProps }) => {
   const { currentFormId } = useContext(MembershipContext); // current chosen form id
-  const formValues = otherProps.parentState.formik.values; // current form values
-  const { setFieldValue } = otherProps.parentState.formik;
+  const formValues = ''; // current form values
+  // const { setFieldValue } = otherProps.parentState.formik;
   const [loading, setLoading] = useState(true);
 
-  // Fetch data only once and prefill data,
-  // as long as currentFormId and setFieldValue
-  // Function does not change, will not cause re-render again
-  useEffect(() => {
+  const detectModeAndFetch = () => {
     // Once we have API set up ready, we don't need the
     // fake data anymore, and can remove these pre-process.
     // it is mainly for if running the application
@@ -94,7 +93,7 @@ const CompanyInformation = ({ formField, ...otherProps }) => {
             // organization field with the mapped data,
             // if nested, it will automatically map the
             // properties and values
-            setFieldValue('organization', tempOrg);
+            // setFieldValue('organization', tempOrg);
           }
           if (contacts.length) {
             // Call the the function to map the retrived contacts
@@ -104,14 +103,22 @@ const CompanyInformation = ({ formField, ...otherProps }) => {
             // Prefill Data --> Call the setFieldValue of Formik,
             // to set representative field with the mapped data,
             // if nested, it will automatically map the properties and values
-            setFieldValue('representative', tempContacts);
+            // setFieldValue('representative', tempContacts);
           }
           setLoading(false);
         });
     } else {
       setLoading(false);
     }
-  }, [currentFormId, setFieldValue]);
+  };
+
+  // Fetch data only once and prefill data,
+  // as long as currentFormId and setFieldValue
+  // Function does not change, will not cause re-render again
+  useEffect(() => {
+    detectModeAndFetch();
+    setCurrentPage(1);
+  }, [currentFormId]);
 
   // If it is in loading status,
   // only return a loading spinning
@@ -132,6 +139,13 @@ const CompanyInformation = ({ formField, ...otherProps }) => {
           formValues={formValues}
           formField={formField}
         />
+      </div>
+      <div className="button-container margin-top-20 margin-bottom-20">
+        <NavLink to="/membership-level">
+          <Button variant="contained" color="primary">
+            Next
+          </Button>
+        </NavLink>
       </div>
     </>
   );

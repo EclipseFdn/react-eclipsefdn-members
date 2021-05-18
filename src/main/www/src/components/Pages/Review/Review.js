@@ -1,8 +1,12 @@
 import React from 'react';
 import { useFormikContext } from 'formik';
+import { initialValues } from '../../UIComponents/FormComponents/formModels/formFieldModel';
+import { NavLink } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 
-const Preview = () => {
-  const { values } = useFormikContext();
+const Review = () => {
+  // const { values } = useFormikContext();
+  const values = initialValues;
 
   return (
     <>
@@ -234,8 +238,22 @@ const Preview = () => {
           </div>
         </div>
       </div>
+
+      <div className="button-container margin-top-20 margin-bottom-20">
+        <NavLink to="/signing-authority">
+          <Button variant="contained" color="primary">
+            Back
+          </Button>
+        </NavLink>
+
+        <NavLink to="/submitted">
+          <Button variant="contained" color="primary">
+            Submit
+          </Button>
+        </NavLink>
+      </div>
     </>
   );
 };
 
-export default Preview;
+export default Review;

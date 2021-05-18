@@ -14,6 +14,7 @@ import {
 // import DefaultSelect from '../../UIComponents/Inputs/CustomSelect/DefaultSelect';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles, TextField } from '@material-ui/core';
+import { initialValues } from '../../UIComponents/FormComponents/formModels/formFieldModel';
 
 /**
  * Wrapper for Working Group Selector,
@@ -37,9 +38,10 @@ const useStyles = makeStyles(() => ({
 }));
 
 const WorkingGroup = ({ formField, workingGroupsData, arrayHelpers }) => {
-  const { values } = useFormikContext();
+  const { workingGroups } = initialValues;
   const { currentFormId } = useContext(MembershipContext);
   const classes = useStyles();
+  console.log(workingGroupsData);
 
   const each_workingGroupField = {
     id: '',
@@ -69,9 +71,9 @@ const WorkingGroup = ({ formField, workingGroupsData, arrayHelpers }) => {
 
   return (
     <>
-      {values.workingGroups &&
-        values.workingGroups.length > 0 &&
-        values.workingGroups.map((workingGroup, index) => (
+      {workingGroups &&
+        workingGroups.length > 0 &&
+        workingGroups.map((workingGroup, index) => (
           <div key={index}>
             <h2
               className="h4 fw-600"
@@ -92,7 +94,7 @@ const WorkingGroup = ({ formField, workingGroupsData, arrayHelpers }) => {
             <Autocomplete
               options={workingGroupsData}
               getOptionLabel={(option) => option.label}
-              defaultValue={workingGroupsData[0]}
+              // defaultValue={workingGroupsData[0]}
               fullWidth={true}
               renderInput={(params) => {
                 params.inputProps = {
@@ -132,7 +134,7 @@ const WorkingGroup = ({ formField, workingGroupsData, arrayHelpers }) => {
                 />
               </>
             ) : null}
-            {values.workingGroups.length > 1 && (
+            {workingGroups.length > 1 && (
               <div className="text-center margin-bottom-20">
                 <button
                   className="btn btn-secondary padding-15"
@@ -141,7 +143,7 @@ const WorkingGroup = ({ formField, workingGroupsData, arrayHelpers }) => {
                     removeWorkingGroupCall(
                       arrayHelpers.remove,
                       index,
-                      values.workingGroups[index].id
+                      workingGroups[index].id
                     )
                   }
                 >

@@ -2,7 +2,6 @@ import React from 'react';
 import MembershipContext from '../../../Context/MembershipContext';
 import FormChooser from '../../UIComponents/FormPreprocess/FormChooser';
 import SignInIntroduction from './SignInIntroduction';
-import StepperComponent from '../../UIComponents/Steppers/StepperComponent';
 import {
   FETCH_HEADER,
   api_prefix,
@@ -12,6 +11,8 @@ import {
   MODE_REACT_ONLY,
   MODE_REACT_API,
 } from '../../../Constants/Constants';
+import Step from '../../UIComponents/Steppers/Step';
+import { NavLink } from 'react-router-dom';
 
 /**
  * - When it is only running React App without server, uses fake user in public/fake_user.json
@@ -46,6 +47,31 @@ class SignIn extends React.Component {
       });
   };
 
+  renderButtons = () => (
+    <div className="text-center margin-bottom-20">
+      {getCurrentMode() === MODE_REACT_ONLY && (
+        <NavLink to="/company-info">
+          <button
+            type="button"
+            onClick={this.getFakeUser}
+            className="btn btn-secondary"
+          >
+            React Only Login
+          </button>
+        </NavLink>
+      )}
+
+      {getCurrentMode() === MODE_REACT_API && (
+        <a href="/login" className="btn btn-secondary">
+          Sign In
+        </a>
+      )}
+      <a href="https://accounts.eclipse.org/" className="btn btn-secondary">
+        Create an account
+      </a>
+    </div>
+  );
+
   componentDidMount() {
     if (getCurrentMode() === MODE_REACT_API) {
       fetch(api_prefix + `/${end_point.userinfo}`, { headers: FETCH_HEADER })
@@ -59,47 +85,12 @@ class SignIn extends React.Component {
   }
 
   render() {
-    if (this.context.currentUser) {
-      return (
-        <MembershipContext.Consumer>
-          {(setCurrentUser) => (
-            <>
-              <SignInIntroduction />
-              <StepperComponent step={-1} childrenArray={fakeChildrenArray} />
-              <FormChooser />
-            </>
-          )}
-        </MembershipContext.Consumer>
-      );
-    }
-
+    console.log(this.context.currentUser);
     return (
       <MembershipContext.Consumer>
         {(setCurrentUser) => (
           <>
-            <SignInIntroduction />
-            <StepperComponent step={-1} childrenArray={fakeChildrenArray} />
-            <div className="text-center margin-bottom-20">
-              {getCurrentMode() === MODE_REACT_ONLY && (
-                <button
-                  type="button"
-                  onClick={this.getFakeUser}
-                  className="btn btn-secondary">
-                  React Only Login
-                </button>
-              )}
-
-              {getCurrentMode() === MODE_REACT_API && (
-                <a href="/login" className="btn btn-secondary">
-                  Sign In
-                </a>
-              )}
-              <a
-                href="https://accounts.eclipse.org/"
-                className="btn btn-secondary">
-                Create an account
-              </a>
-            </div>
+            {this.context.currentUser ? <FormChooser /> : this.renderButtons()}
           </>
         )}
       </MembershipContext.Consumer>

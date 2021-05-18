@@ -14,8 +14,9 @@ import {
   MODE_REACT_ONLY,
   MODE_REACT_API,
 } from '../../../Constants/Constants';
-import { makeStyles, TextField } from '@material-ui/core';
+import { Button, makeStyles, TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import { NavLink } from 'react-router-dom';
 
 /**
  * Render membership select component (use React-Select), with fetch and prefill data operation
@@ -35,7 +36,7 @@ const useStyles = makeStyles(() => ({
 
 const MembershipLevel = ({ formField, ...otherProps }) => {
   const { currentFormId } = useContext(MembershipContext);
-  const { setFieldValue } = otherProps.parentState.formik;
+  // const { setFieldValue } = otherProps.parentState.formik;
   const { membershipLevel } = formField;
   const classes = useStyles();
 
@@ -70,17 +71,17 @@ const MembershipLevel = ({ formField, ...otherProps }) => {
             // the retrived membership level backend data to fit frontend, and
             // setFieldValue(): Prefill Data --> Call the setFieldValue of
             // Formik, to set membershipLevel field with the mapped data
-            setFieldValue(
-              membershipLevel.name,
-              mapMembershipLevel(data[0]?.membership_level, membership_levels)
-            );
+            // setFieldValue(
+            //   membershipLevel.name,
+            //   mapMembershipLevel(data[0]?.membership_level, membership_levels)
+            // );
           }
           setLoading(false);
         });
     } else {
       setLoading(false);
     }
-  }, [currentFormId, setFieldValue, membershipLevel.name]);
+  }, [currentFormId, membershipLevel.name]);
 
   if (loading) {
     return <Loading />;
@@ -129,6 +130,19 @@ const MembershipLevel = ({ formField, ...otherProps }) => {
           </div>
         </div>
         <MembershipLevelFeeTable />
+      </div>
+      <div className="button-container margin-top-20 margin-bottom-20">
+        <NavLink to="/company-info">
+          <Button variant="contained" color="primary">
+            Back
+          </Button>
+        </NavLink>
+
+        <NavLink to="/working-groups">
+          <Button variant="contained" color="primary">
+            Next
+          </Button>
+        </NavLink>
       </div>
     </>
   );

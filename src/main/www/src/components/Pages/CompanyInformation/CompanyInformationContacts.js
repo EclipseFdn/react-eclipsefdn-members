@@ -1,6 +1,7 @@
 import React from 'react';
 import Input from '../../UIComponents/Inputs/Input';
 import CustomCheckbox from '../../UIComponents/Inputs/CustomCheckbox';
+import { Checkbox, FormControlLabel } from '@material-ui/core';
 
 /**
  * - 
@@ -19,9 +20,10 @@ import CustomCheckbox from '../../UIComponents/Inputs/CustomCheckbox';
  */
 const Contacts = ({ formValues, formField }) => {
   // the boolean form value of "is marketing Rep. the same as company Rep.?"
-  const mktSame = formValues.representative.marketing.sameAsCompany;
+  const mktSame = formValues?.representative?.marketing?.sameAsCompany || false;
   // the boolean form value of "is accounting Rep. the same as company Rep.?"
-  const accSame = formValues.representative.accounting.sameAsCompany;
+  const accSame =
+    formValues?.representative?.accounting?.sameAsCompany || false;
   const { company, marketing, accounting } = formField;
 
   /**
@@ -75,8 +77,8 @@ const Contacts = ({ formValues, formField }) => {
       <h4 className="fw-600" id="marketing-rep">
         Company Marketing Representative
       </h4>
-      <CustomCheckbox
-        name="representative.marketing.sameAsCompany"
+      <FormControlLabel
+        control={<Checkbox name="checkedB" color="primary" />}
         label="Same as member rep."
       />
       <div className="row">
@@ -87,8 +89,8 @@ const Contacts = ({ formValues, formField }) => {
       <h4 className="fw-600" id="accounting-rep">
         Company Accounting Representative
       </h4>
-      <CustomCheckbox
-        name="representative.accounting.sameAsCompany"
+      <FormControlLabel
+        control={<Checkbox name="checkedB" color="primary" />}
         label="Same as member rep."
       />
       <div className="row">

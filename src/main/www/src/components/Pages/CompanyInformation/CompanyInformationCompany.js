@@ -8,7 +8,10 @@ import { FETCH_HEADER } from '../../../Constants/Constants';
 import Autocomplete, {
   createFilterOptions,
 } from '@material-ui/lab/Autocomplete';
-import { makeStyles, TextField } from '@material-ui/core';
+import { Button, makeStyles, TextField } from '@material-ui/core';
+import { useFormik, yupToFormErrors } from 'formik';
+import { validationSchema } from '../../UIComponents/FormComponents/formModels/ValidationSchema';
+import * as yup from 'yup';
 
 /**
  * Render Oraganization selector (used React-Select)
@@ -127,6 +130,25 @@ const CompanyInformationCompany = () => {
     />
   );
 
+  const formik = useFormik({
+    initialValues: {
+      street: '',
+      email: '',
+    },
+
+    validationSchema: yup.object({
+      street: yup.string('').required('Street is required'),
+      email: yup
+        .string('Enter your email')
+        .email('Enter a valid email')
+        .required('Email is required'),
+    }),
+    onSubmit: (values) => {
+      console.log(values);
+      alert('haha');
+    },
+  });
+
   useEffect(() => {
     // Not sure why we should do this.
     // Like only show the company options when user type in something,
@@ -137,7 +159,7 @@ const CompanyInformationCompany = () => {
   }, []);
 
   return (
-    <>
+    <form onSubmit={formik.handleSubmit}>
       <h2 className="fw-600 h4" id={organizationName.name}>
         Organization <span className="orange-star">*</span>
       </h2>
@@ -171,6 +193,25 @@ const CompanyInformationCompany = () => {
             requiredMark={true}
             ariaLabel={`${organizationName.name}-address`}
           />
+
+          {/* <TextField
+            name="street"
+            size="small"
+            variant="outlined"
+            label={organizationAddress.street.label}
+            fullWidth={true}
+            placeholder={organizationAddress.street.placeholder}
+            value={formik.values.street}
+            onChange={formik.handleChange}
+            error={formik.touched.street && Boolean(formik.errors.street)}
+            helperText={formik.touched.street && formik.errors.street}
+            // InputProps={{
+            //   inputProps: {
+            //     'aria-labelledby': `${organizationName.name}-address`,
+            //   },
+            // }}
+          /> */}
+          
         </div>
         <div className="col-md-8">
           <Input
@@ -227,7 +268,7 @@ const CompanyInformationCompany = () => {
           />
         </div>
       </div>
-    </>
+    </form>
   );
 };
 
