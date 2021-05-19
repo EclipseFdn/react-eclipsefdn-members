@@ -38,6 +38,7 @@ const theme = createMuiTheme({
   palette: {
     primary: {
       main: '#f7941e',
+      contrastText: '#fff', // for button text color
     },
   },
 });
@@ -49,6 +50,7 @@ const PATH_NAMES = [
   '/working-groups',
   '/signing-authority',
   '/review',
+  '/submitted',
 ];
 
 const App = () => {

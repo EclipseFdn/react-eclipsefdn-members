@@ -1,10 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-// import DefaultSelect from '../../UIComponents/Inputs/CustomSelect/DefaultSelect';
-// import CustomSelectWrapper from '../../UIComponents/Inputs/CustomSelect/CustomSelectWrapper';
 import MembershipLevelFeeTable from './MembershipLevelFeeTable';
 import MembershipContext from '../../../Context/MembershipContext';
 import Loading from '../../UIComponents/Loading/Loading';
-import { mapMembershipLevel } from '../../../Utils/formFunctionHelpers';
+// import { mapMembershipLevel } from '../../../Utils/formFunctionHelpers';
 import {
   api_prefix_form,
   FETCH_HEADER,
@@ -14,9 +12,9 @@ import {
   MODE_REACT_ONLY,
   MODE_REACT_API,
 } from '../../../Constants/Constants';
-import { Button, makeStyles, TextField } from '@material-ui/core';
+import { makeStyles, TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { NavLink } from 'react-router-dom';
+import CustomStepButton from '../../UIComponents/Button/CustomStepButton';
 
 /**
  * Render membership select component (use React-Select), with fetch and prefill data operation
@@ -131,19 +129,11 @@ const MembershipLevel = ({ formField, ...otherProps }) => {
         </div>
         <MembershipLevelFeeTable />
       </div>
-      <div className="button-container margin-top-20 margin-bottom-20">
-        <NavLink to="/company-info">
-          <Button variant="contained" color="primary">
-            Back
-          </Button>
-        </NavLink>
 
-        <NavLink to="/working-groups">
-          <Button variant="contained" color="primary">
-            Next
-          </Button>
-        </NavLink>
-      </div>
+      <CustomStepButton
+        previousPage="/company-info"
+        nextPage="/working-groups"
+      />
     </>
   );
 };

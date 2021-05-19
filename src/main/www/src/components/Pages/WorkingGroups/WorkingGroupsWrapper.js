@@ -14,8 +14,7 @@ import {
   MODE_REACT_ONLY,
   MODE_REACT_API,
 } from '../../../Constants/Constants';
-import { Button } from '@material-ui/core';
-import { NavLink } from 'react-router-dom';
+import CustomStepButton from '../../UIComponents/Button/CustomStepButton';
 
 /**
  * Wrapper for FieldArray of WorkingGroup component,
@@ -260,19 +259,11 @@ const WorkingGroupsWrapper = ({ formField, ...otherProps }) => {
           }}
         ></FieldArray>
       </div>
-      <div className="button-container margin-top-20 margin-bottom-20">
-        <NavLink to="/membership-level">
-          <Button variant="contained" color="primary">
-            Back
-          </Button>
-        </NavLink>
 
-        <NavLink to="/signing-authority">
-          <Button variant="contained" color="primary">
-            Next
-          </Button>
-        </NavLink>
-      </div>
+      <CustomStepButton
+        previousPage="/membership-level"
+        nextPage="/signing-authority"
+      />
     </>
   );
 };

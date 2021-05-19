@@ -1,8 +1,7 @@
 import React from 'react';
-import { useFormikContext } from 'formik';
+// import { useFormikContext } from 'formik';
 import { initialValues } from '../../UIComponents/FormComponents/formModels/formFieldModel';
-import { NavLink } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import CustomStepButton from '../../UIComponents/Button/CustomStepButton';
 
 const Review = () => {
   // const { values } = useFormikContext();
@@ -239,19 +238,10 @@ const Review = () => {
         </div>
       </div>
 
-      <div className="button-container margin-top-20 margin-bottom-20">
-        <NavLink to="/signing-authority">
-          <Button variant="contained" color="primary">
-            Back
-          </Button>
-        </NavLink>
-
-        <NavLink to="/submitted">
-          <Button variant="contained" color="primary">
-            Submit
-          </Button>
-        </NavLink>
-      </div>
+      <CustomStepButton
+        previousPage="/signing-authority"
+        nextPage="/submitted"
+      />
     </>
   );
 };

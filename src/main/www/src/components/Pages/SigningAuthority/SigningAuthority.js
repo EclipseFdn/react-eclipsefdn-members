@@ -1,6 +1,5 @@
-import { Button } from '@material-ui/core';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import CustomStepButton from '../../UIComponents/Button/CustomStepButton';
 import Input from '../../UIComponents/Inputs/Input';
 
 /**
@@ -35,19 +34,8 @@ const SigningAuthority = ({ formField }) => {
           </div>
         ))}
       </div>
-      <div className="button-container margin-top-20 margin-bottom-20">
-        <NavLink to="/working-groups">
-          <Button variant="contained" color="primary">
-            Back
-          </Button>
-        </NavLink>
 
-        <NavLink to="/review">
-          <Button variant="contained" color="primary">
-            Next
-          </Button>
-        </NavLink>
-      </div>
+      <CustomStepButton previousPage="/working-groups" nextPage="/review" />
     </>
   );
 };

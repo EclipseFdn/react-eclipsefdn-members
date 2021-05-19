@@ -18,6 +18,7 @@ import {
 } from '../../../Constants/Constants';
 import { NavLink } from 'react-router-dom';
 import { Button } from '@material-ui/core';
+import CustomStepButton from '../../UIComponents/Button/CustomStepButton';
 
 /**
  * Wrapper for Contacts and Company components
@@ -140,13 +141,8 @@ const CompanyInformation = ({ formField, setCurrentPage, ...otherProps }) => {
           formField={formField}
         />
       </div>
-      <div className="button-container margin-top-20 margin-bottom-20">
-        <NavLink to="/membership-level">
-          <Button variant="contained" color="primary">
-            Next
-          </Button>
-        </NavLink>
-      </div>
+
+      <CustomStepButton previousPage="" nextPage="/membership-level" />
     </>
   );
 };

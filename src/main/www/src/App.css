@@ -136,6 +136,13 @@ html {
   background: #404040 50% no-repeat;
   color: #fff;
 }
+.eclipseFdn-membership-webform .button-container a {
+  text-decoration: none;
+}
+.eclipseFdn-membership-webform .button-container button {
+  width: 80px;
+  margin: 0 14px;
+}
 @media (min-width: 992px) {
   .eclipseFdn-membership-webform .step {
     width: calc(100% / 6);
