@@ -35,7 +35,7 @@ const SigningAuthority = ({ formField }) => {
         ))}
       </div>
 
-      <CustomStepButton previousPage="/working-groups" nextPage="/review" />
+      <CustomStepButton previousPage="/working-groups" nextPage="/review" pageIndex={4}/>
     </>
   );
 };

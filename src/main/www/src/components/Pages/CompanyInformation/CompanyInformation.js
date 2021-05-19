@@ -32,7 +32,7 @@ import CustomStepButton from '../../UIComponents/Button/CustomStepButton';
  *      library (such as "formik.values", "formik.setFieldValue");
  *  - formField: the form field in formModels/formFieldModel.js
  */
-const CompanyInformation = ({ formField, setCurrentPage, ...otherProps }) => {
+const CompanyInformation = ({ formField, ...otherProps }) => {
   const { currentFormId } = useContext(MembershipContext); // current chosen form id
   const formValues = ''; // current form values
   // const { setFieldValue } = otherProps.parentState.formik;
@@ -118,7 +118,6 @@ const CompanyInformation = ({ formField, setCurrentPage, ...otherProps }) => {
   // Function does not change, will not cause re-render again
   useEffect(() => {
     detectModeAndFetch();
-    setCurrentPage(1);
   }, [currentFormId]);
 
   // If it is in loading status,
@@ -142,7 +141,11 @@ const CompanyInformation = ({ formField, setCurrentPage, ...otherProps }) => {
         />
       </div>
 
-      <CustomStepButton previousPage="" nextPage="/membership-level" />
+      <CustomStepButton
+        previousPage=""
+        nextPage="/membership-level"
+        pageIndex={1}
+      />
     </>
   );
 };

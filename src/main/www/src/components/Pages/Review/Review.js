@@ -241,6 +241,7 @@ const Review = () => {
       <CustomStepButton
         previousPage="/signing-authority"
         nextPage="/submitted"
+        pageIndex={5}
       />
     </>
   );

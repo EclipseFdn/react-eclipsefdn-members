@@ -263,6 +263,7 @@ const WorkingGroupsWrapper = ({ formField, ...otherProps }) => {
       <CustomStepButton
         previousPage="/membership-level"
         nextPage="/signing-authority"
+        pageIndex={3}
       />
     </>
   );

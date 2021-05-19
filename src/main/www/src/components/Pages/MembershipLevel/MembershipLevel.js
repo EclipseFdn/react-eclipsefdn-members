@@ -133,6 +133,7 @@ const MembershipLevel = ({ formField, ...otherProps }) => {
       <CustomStepButton
         previousPage="/company-info"
         nextPage="/working-groups"
+        pageIndex={2}
       />
     </>
   );

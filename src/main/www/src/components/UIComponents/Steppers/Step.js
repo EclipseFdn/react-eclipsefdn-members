@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 /**
  * Props:
@@ -16,20 +17,28 @@ import React from 'react';
  * **/
 
 const Step = (props) => {
-  const { active, index, title } = props;
-
+  const { index, title, pathName } = props;
+  const [isActive, setIsActive] = useState(false);
   return (
     <div className="step">
-      <span className="step-span-index">{index + 2}</span>
-      <div className="step-span">
-        <div
-          className={
-            active ? 'step-title-container-active' : 'step-title-container'
-          }
-        >
-          <span className="step-title">{title}</span>
+      <NavLink
+        to={pathName}
+        isActive={(match) => {
+          if (match) setIsActive(true);
+          else setIsActive(false);
+        }}
+      >
+        <span className="step-span-index">{index + 2}</span>
+        <div className="step-span">
+          <div
+            className={
+              isActive ? 'step-title-container-active' : 'step-title-container'
+            }
+          >
+            <span className="step-title">{title}</span>
+          </div>
         </div>
-      </div>
+      </NavLink>
     </div>
   );
 };

@@ -1,17 +1,14 @@
 import React from 'react';
 import MembershipContext from '../../../Context/MembershipContext';
 import FormChooser from '../../UIComponents/FormPreprocess/FormChooser';
-import SignInIntroduction from './SignInIntroduction';
 import {
   FETCH_HEADER,
   api_prefix,
   end_point,
-  fakeChildrenArray,
   getCurrentMode,
   MODE_REACT_ONLY,
   MODE_REACT_API,
 } from '../../../Constants/Constants';
-import Step from '../../UIComponents/Steppers/Step';
 import { NavLink } from 'react-router-dom';
 
 /**
@@ -39,7 +36,8 @@ import { NavLink } from 'react-router-dom';
  */
 class SignIn extends React.Component {
   static contextType = MembershipContext;
-  getFakeUser = () => {
+  getFakeUser = (setFurthestPage) => {
+    setFurthestPage({ index: 1, pathName: '/company-info' });
     fetch('membership_data/fake_user.json', { headers: FETCH_HEADER })
       .then((resp) => resp.json())
       .then((data) => {
@@ -47,13 +45,13 @@ class SignIn extends React.Component {
       });
   };
 
-  renderButtons = () => (
+  renderButtons = (setFurthestPage) => (
     <div className="text-center margin-bottom-20">
       {getCurrentMode() === MODE_REACT_ONLY && (
         <NavLink to="/company-info">
           <button
             type="button"
-            onClick={this.getFakeUser}
+            onClick={() => this.getFakeUser(setFurthestPage)}
             className="btn btn-secondary"
           >
             React Only Login
@@ -85,12 +83,15 @@ class SignIn extends React.Component {
   }
 
   render() {
-    console.log(this.context.currentUser);
     return (
       <MembershipContext.Consumer>
-        {(setCurrentUser) => (
+        {({ setFurthestPage }) => (
           <>
-            {this.context.currentUser ? <FormChooser /> : this.renderButtons()}
+            {this.context.currentUser ? (
+              <FormChooser />
+            ) : (
+              this.renderButtons(setFurthestPage)
+            )}
           </>
         )}
       </MembershipContext.Consumer>

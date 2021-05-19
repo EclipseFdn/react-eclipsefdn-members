@@ -12,14 +12,6 @@ export const MEMBERSHIP_LEVEL = 'Membership Level';
 export const WORKING_GROUPS = 'Working Groups';
 export const SIGNING_AUTHORITY = 'Signing Authority';
 export const REVIEW = 'Review';
-export const PATH_NAMES = [
-  '/',
-  '/company-info',
-  '/membership-level',
-  '/working-groups',
-  '/signing-authority',
-  '/review',
-];
 
 export const FETCH_METHOD = {
   POST: 'POST',
@@ -42,12 +34,12 @@ export const membership_levels = [
   { label: 'Associate Member', value: 'associate' },
 ];
 
-export const fakeChildrenArray = [
-  { props: { label: COMPANY_INFORMATION } },
-  { props: { label: MEMBERSHIP_LEVEL } },
-  { props: { label: WORKING_GROUPS } },
-  { props: { label: SIGNING_AUTHORITY } },
-  { props: { label: REVIEW } },
+export const PAGE_STEP = [
+  { props: { label: COMPANY_INFORMATION, pathName: '/company-info' } },
+  { props: { label: MEMBERSHIP_LEVEL, pathName: '/membership-level' } },
+  { props: { label: WORKING_GROUPS, pathName: '/working-groups' } },
+  { props: { label: SIGNING_AUTHORITY, pathName: '/signing-authority' } },
+  { props: { label: REVIEW, pathName: '/review' } },
 ];
 
 export const contact_type = {
