@@ -32,6 +32,10 @@ export default function Input(props) {
     placeholder,
     disableInput,
     requiredMark,
+    value,
+    onChange,
+    error,
+    helperText,
   } = props;
   const classes = useStyles();
 
@@ -40,6 +44,10 @@ export default function Input(props) {
       name={name}
       required={requiredMark}
       disabled={disableInput}
+      value={value}
+      onChange={onChange}
+      error={error}
+      helperText={helperText}
       size="small"
       variant="outlined"
       className={classes.root}

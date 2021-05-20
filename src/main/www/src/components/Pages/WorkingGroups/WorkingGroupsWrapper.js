@@ -213,8 +213,9 @@ const WorkingGroupsWrapper = ({ formField, ...otherProps }) => {
             //   workingGroups,
             //   matchWorkingGroupFields(data, workingGroupsData)
             // );
-            // setWorkingGroupsData(
-            let a = matchWorkingGroupFields(data, workingGroupsData);
+            let test = matchWorkingGroupFields(data, workingGroupsData);
+            setWorkingGroupsData(test);
+
             // console.log(a)
             // );
           }
@@ -223,7 +224,7 @@ const WorkingGroupsWrapper = ({ formField, ...otherProps }) => {
     } else {
       setLoading(false);
     }
-  }, []);
+  }, [currentFormId, workingGroupsData]);
 
   // Fetch data only once and prefill data, as long as
   // fetchWorkingGroupsData Function does not change,

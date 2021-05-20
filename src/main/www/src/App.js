@@ -4,6 +4,7 @@ import AppFooter from './components/UIComponents/layout/AppFooter';
 import AppHeader from './components/UIComponents/layout/AppHeader';
 import MembershipContext from './Context/MembershipContext';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+import { BrowserRouter as Router } from 'react-router-dom';
 import Main from './components/Pages/Main';
 
 const theme = createMuiTheme({
@@ -37,7 +38,12 @@ const App = () => {
             setFurthestPage,
           }}
         >
-          <Main />
+          <Router>
+            <Main
+              furthestPage={furthestPage}
+              setFurthestPage={setFurthestPage}
+            />
+          </Router>
         </MembershipContext.Provider>
         <AppFooter />
       </ThemeProvider>

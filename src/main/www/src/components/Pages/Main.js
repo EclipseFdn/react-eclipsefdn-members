@@ -1,10 +1,6 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import { useFormik } from 'formik';
 import SignIn from './SignIn/SignIn';
 import {
   COMPANY_INFORMATION,
@@ -26,9 +22,26 @@ import Review from './Review/Review';
 import Step from '../UIComponents/Steppers/Step';
 import SignInIntroduction from './SignIn/SignInIntroduction';
 import SubmitSuccess from '../UIComponents/FormComponents/SubmitSuccess';
-import MembershipContext from '../../Context/MembershipContext';
+import { validationSchema } from '../UIComponents/FormComponents/formModels/ValidationSchema';
+import { useHistory } from 'react-router-dom';
 
-export default function Main() {
+export default function Main({ furthestPage, setFurthestPage }) {
+  const history = useHistory();
+
+  const goToNextStep = (pageIndex, nextPage) => {
+    if (furthestPage.index <= pageIndex)
+      setFurthestPage({ index: pageIndex + 1, pathName: nextPage });
+    history.push(nextPage);
+  };
+
+  const formikCompanyInfo = useFormik({
+    initialValues: initialValues,
+    validationSchema: validationSchema[0],
+    onSubmit: (values) => {
+      goToNextStep(1, '/membership-level');
+    },
+  });
+
   // generate the step options above the form
   const renderStepper = () => (
     <div className="stepper">
@@ -50,90 +63,81 @@ export default function Main() {
 
   return (
     <div className="container eclipseFdn-membership-webform">
-      <MembershipContext.Consumer>
-        {({ furthestPage }) => (
-          // create navigation structure/logic for the whole project
-          <Router>
-            {window.location.pathname === '/' ||
-            window.location.pathname === '/signIn' ? (
-              <SignInIntroduction />
-            ) : null}
+      <>
+        {window.location.pathname === '/' ||
+        window.location.pathname === '/signIn' ? (
+          <SignInIntroduction />
+        ) : null}
+        
+        {renderStepper()}
 
-            {renderStepper()}
+        <Switch>
+          <Route exact path="/">
+            <Redirect to="/signIn" />
+          </Route>
 
-            <Switch>
-              <Route exact path="/">
-                <Redirect to="/signIn" />
-              </Route>
+          <Route exact path="/signIn">
+            <SignIn formField={formField} label={COMPANY_INFORMATION} />
+          </Route>
 
-              <Route exact path="/signIn">
-                <SignIn formField={formField} label={COMPANY_INFORMATION} />
-              </Route>
+          <Route path="/company-info">
+            {
+              // stop users visiting steps/pages that are not able to edit yet
+              furthestPage.index >= 1 ? (
+                <CompanyInformation
+                  label={COMPANY_INFORMATION}
+                  formik={formikCompanyInfo}
+                />
+              ) : (
+                // if uses are not allowed to visit this page,
+                // then will be brought back to the furthest they can visit
+                <Redirect to={furthestPage.pathName} />
+              )
+            }
+          </Route>
 
-              <Route path="/company-info">
-                {
-                  // stop users visiting steps/pages that are not able to edit yet
-                  furthestPage.index >= 1 ? (
-                    <CompanyInformation
-                      formField={formField}
-                      label={COMPANY_INFORMATION}
-                    />
-                  ) : (
-                    // if uses are not allowed to visit this page, 
-                    // then will be brought back to the furthest they can visit
-                    <Redirect to={furthestPage.pathName} />
-                  )
-                }
-              </Route>
+          <Route path="/membership-level">
+            {furthestPage.index >= 2 ? (
+              <MembershipLevel formField={formField} label={MEMBERSHIP_LEVEL} />
+            ) : (
+              <Redirect to={furthestPage.pathName} />
+            )}
+          </Route>
 
-              <Route path="/membership-level">
-                {furthestPage.index >= 2 ? (
-                  <MembershipLevel
-                    formField={formField}
-                    label={MEMBERSHIP_LEVEL}
-                  />
-                ) : (
-                  <Redirect to={furthestPage.pathName} />
-                )}
-              </Route>
+          <Route path="/working-groups">
+            {furthestPage.index >= 3 ? (
+              <WorkingGroupsWrapper
+                formField={formField}
+                label={WORKING_GROUPS}
+              />
+            ) : (
+              <Redirect to={furthestPage.pathName} />
+            )}
+          </Route>
 
-              <Route path="/working-groups">
-                {furthestPage.index >= 3 ? (
-                  <WorkingGroupsWrapper
-                    formField={formField}
-                    label={WORKING_GROUPS}
-                  />
-                ) : (
-                  <Redirect to={furthestPage.pathName} />
-                )}
-              </Route>
+          <Route path="/signing-authority">
+            {furthestPage.index >= 4 ? (
+              <SigningAuthority
+                formField={formField}
+                label={SIGNING_AUTHORITY}
+              />
+            ) : (
+              <Redirect to={furthestPage.pathName} />
+            )}
+          </Route>
 
-              <Route path="/signing-authority">
-                {furthestPage.index >= 4 ? (
-                  <SigningAuthority
-                    formField={formField}
-                    label={SIGNING_AUTHORITY}
-                  />
-                ) : (
-                  <Redirect to={furthestPage.pathName} />
-                )}
-              </Route>
-
-              <Route path="/review">
-                {furthestPage.index >= 5 ? (
-                  <Review formField={formField} label={REVIEW} />
-                ) : (
-                  <Redirect to={furthestPage.pathName} />
-                )}
-              </Route>
-
-              <Route path="/submitted">
-                <SubmitSuccess />
-              </Route>
-            </Switch>
-          </Router>
-        )}
-      </MembershipContext.Consumer>
+          <Route path="/review">
+            {furthestPage.index >= 5 ? (
+              <Review formField={formField} label={REVIEW} />
+            ) : (
+              <Redirect to={furthestPage.pathName} />
+            )}
+          </Route>
+          <Route path="/submitted">
+            <SubmitSuccess />
+          </Route>
+        </Switch>
+      </>
     </div>
   );
 }

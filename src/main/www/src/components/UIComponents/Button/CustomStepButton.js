@@ -25,19 +25,14 @@ const CustomStepButton = ({ previousPage, nextPage, pageIndex }) => {
 
       <MembershipContext.Consumer>
         {({ furthestPage, setFurthestPage }) => (
-          <NavLink to={nextPage}>
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              onClick={() => {
-                if (furthestPage.index <= pageIndex)
-                  setFurthestPage({ index: pageIndex + 1, pathName: nextPage });
-              }}
-            >
-              {nextPage === '/submitted' ? 'Submit' : 'Next'}
-            </Button>
-          </NavLink>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            type="submit"
+          >
+            {nextPage === '/submitted' ? 'Submit' : 'Next'}
+          </Button>
         )}
       </MembershipContext.Consumer>
     </div>

@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { useFormikContext } from 'formik';
 import MembershipContext from '../../../Context/MembershipContext';
 // import CustomSelectWrapper from '../../UIComponents/Inputs/CustomSelect/CustomSelectWrapper';
 import WorkingGroupParticipationLevel from './WorkingGroupParticipationLevel';
@@ -36,6 +35,8 @@ const useStyles = makeStyles(() => ({
     backgroundColor: 'white',
   },
 }));
+
+console.log(workingGroups);
 
 const WorkingGroup = ({ formField, workingGroupsData, arrayHelpers }) => {
   const { workingGroups } = initialValues;
