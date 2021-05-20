@@ -9,9 +9,7 @@ clean:;
 	rm -rf src/main/resources/META-INF/*
 install-react:;
 	cd src/main/www && yarn install --frozen-lockfile
-install-spec:;
-	cd spec && yarn install --frozen-lockfile
-validate-spec: install-spec;
-	cd spec && yarn test
+validate-spec: install-react;
+	cd src/main/www && yarn test-spec
 
 
