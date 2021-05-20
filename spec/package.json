@@ -1,0 +1,12 @@
+{
+  "name": "react-eclipsefdn-members-spec",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "swagger-repo": "^2.0.0-rc.15"
+  },
+  "scripts": {
+    "test": "swagger-repo validate -b .",
+    "start": "swagger-repo serve -b ."
+  }
+}
