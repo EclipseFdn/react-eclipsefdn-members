@@ -26,8 +26,7 @@ You will also see any lint errors in the console.
 
 ### Dependencies to run  
 
-- MariaDB
-- Keycloak
+- Docker-compose
 - Maven
 - Java version 11
 
@@ -56,7 +55,7 @@ As a side note, regeneration of the database on start along with the insertion o
 
 ### Running
 
-To run the server as a local instance as a stack, first run `yarn --cwd src/main/www`, this will install all the required package for the react app. Then run `yarn --cwd src/main/www build`. This will package the React app and copy it into the static web resources of the server source. To run as a development application, which is the fastest way with the least dependencies, run the following command: `mvn compile quarkus:dev -Dconfig.secret.path=$(pwd)/config/secret.properties` or `mvn compile quarkus:dev "-Dconfig.secret.path=$pwd/config/secret.properties"` when running in a Windows PowerShell.
+To run the server as a local instance as a stack, you will need to compile the application first, which can be done through `make compile`. This takes care of all of the steps needed to cleanly build and rebuild the application from scratch. To run the stack with the packaged application, use `docker-compose up -d`.
 
 ### Docker
 
