@@ -87,10 +87,7 @@ export const validationSchema = [
       firstName: yup.string().required(`${requiredErrorMsg}`),
       lastName: yup.string().required(`${requiredErrorMsg}`),
       jobtitle: yup.string().required(`${requiredErrorMsg}`),
-      email: yup
-        .string()
-        .required(`${requiredErrorMsg}`)
-        .email('Invalid email address'),
+      email: yup.string('Enter your email').email('Enter a valid email'),
     }),
   }),
 ];

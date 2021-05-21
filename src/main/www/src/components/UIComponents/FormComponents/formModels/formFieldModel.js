@@ -280,26 +280,26 @@ export const formField = {
     },
   ],
 
-  signingAuthorityRepresentative: [
-    {
+  signingAuthorityRepresentative: {
+    firstName: {
       name: 'signingAuthorityRepresentative.firstName',
       label: firstName,
       placeholder: firstName,
     },
-    {
+    lastName: {
       name: 'signingAuthorityRepresentative.lastName',
       label: lastName,
       placeholder: lastName,
     },
-    {
+    jobtitle: {
       name: 'signingAuthorityRepresentative.jobtitle',
       label: jobtitle,
       placeholder: jobtitle,
     },
-    {
+    email: {
       name: 'signingAuthorityRepresentative.email',
       label: email,
       placeholder: email,
     },
-  ],
+  },
 };

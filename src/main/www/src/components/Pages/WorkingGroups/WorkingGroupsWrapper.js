@@ -15,6 +15,7 @@ import {
   MODE_REACT_API,
 } from '../../../Constants/Constants';
 import CustomStepButton from '../../UIComponents/Button/CustomStepButton';
+import { formField } from '../../UIComponents/FormComponents/formModels/formFieldModel';
 
 /**
  * Wrapper for FieldArray of WorkingGroup component,
@@ -169,7 +170,7 @@ const initialWorkingGroupsData = {
   ],
 };
 
-const WorkingGroupsWrapper = ({ formField, ...otherProps }) => {
+const WorkingGroupsWrapper = ({ formik }) => {
   const { currentFormId } = useContext(MembershipContext);
   // const { setFieldValue } = otherProps.parentState.formik;
   const [loading, setLoading] = useState(false);
@@ -239,26 +240,17 @@ const WorkingGroupsWrapper = ({ formField, ...otherProps }) => {
   }
 
   return (
-    <>
+    <form onSubmit={formik.handleSubmit}>
       <h1 className="fw-600 h2">Working Group</h1>
       <p>Please complete the following details for joining a Working Group</p>
       <div
         id="working-groups-page"
         className="align-center margin-top-50 margin-bottom-30"
       >
-        <FieldArray
-          name={workingGroups}
-          render={(arrayHelpers) => {
-            return (
-              <WorkingGroup
-                formField={formField}
-                arrayHelpers={arrayHelpers}
-                workingGroupsData={workingGroupsData}
-                // formikProps={otherProps.parentState.formik}
-              />
-            );
-          }}
-        ></FieldArray>
+        <WorkingGroup
+          formField={formField}
+          workingGroupsData={workingGroupsData}
+        />
       </div>
 
       <CustomStepButton
@@ -266,7 +258,7 @@ const WorkingGroupsWrapper = ({ formField, ...otherProps }) => {
         nextPage="/signing-authority"
         pageIndex={3}
       />
-    </>
+    </form>
   );
 };
 

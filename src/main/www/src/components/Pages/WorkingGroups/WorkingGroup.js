@@ -110,7 +110,7 @@ const WorkingGroup = ({ formField, workingGroupsData, arrayHelpers }) => {
                     placeholder="Select a group"
                     variant="outlined"
                     size="small"
-                    required={true}
+                    // required={true}
                     className={classes.textField}
                   />
                 );

@@ -48,7 +48,6 @@ const Contacts = ({ formik }) => {
             labelName={company.firstName.label}
             ariaLabel={'company-rep' + company.firstName.name}
             placeholder={company.firstName.placeholder}
-            disableInput={false}
             requiredMark={true}
             value={formik.values.representative.company.firstName}
             onChange={formik.handleChange}
@@ -68,7 +67,6 @@ const Contacts = ({ formik }) => {
             labelName={company.lastName.label}
             ariaLabel={'company-rep' + company.lastName.name}
             placeholder={company.lastName.placeholder}
-            disableInput={false}
             requiredMark={true}
             value={formik.values.representative.company.lastName}
             onChange={formik.handleChange}
@@ -88,7 +86,6 @@ const Contacts = ({ formik }) => {
             labelName={company.jobtitle.label}
             ariaLabel={'company-rep' + company.jobtitle.name}
             placeholder={company.jobtitle.placeholder}
-            disableInput={false}
             requiredMark={true}
             value={formik.values.representative.company.jobtitle}
             onChange={formik.handleChange}
@@ -108,7 +105,6 @@ const Contacts = ({ formik }) => {
             labelName={company.email.label}
             ariaLabel={'company-rep' + company.email.name}
             placeholder={company.email.placeholder}
-            disableInput={false}
             requiredMark={true}
             value={formik.values.representative.company.email}
             onChange={formik.handleChange}

@@ -46,8 +46,23 @@ export default function Main({ furthestPage, setFurthestPage }) {
     initialValues: initialValues,
     validationSchema: validationSchema[1],
     onSubmit: (values) => {
-      console.log("hello?")
       goToNextStep(2, '/working-groups');
+    },
+  });
+
+  const formikWorkingGroups = useFormik({
+    initialValues: initialValues,
+    // validationSchema: validationSchema[2],
+    onSubmit: (values) => {
+      goToNextStep(3, '/signing-authority');
+    },
+  });
+
+  const formikSigningAuthority = useFormik({
+    initialValues: initialValues,
+    validationSchema: validationSchema[3],
+    onSubmit: (values) => {
+      goToNextStep(4, '/review');
     },
   });
 
@@ -121,6 +136,7 @@ export default function Main({ furthestPage, setFurthestPage }) {
               <WorkingGroupsWrapper
                 formField={formField}
                 label={WORKING_GROUPS}
+                formik={formikWorkingGroups}
               />
             ) : (
               <Redirect to={furthestPage.pathName} />
@@ -132,6 +148,7 @@ export default function Main({ furthestPage, setFurthestPage }) {
               <SigningAuthority
                 formField={formField}
                 label={SIGNING_AUTHORITY}
+                formik={formikSigningAuthority}
               />
             ) : (
               <Redirect to={furthestPage.pathName} />
