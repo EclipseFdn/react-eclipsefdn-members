@@ -42,6 +42,15 @@ export default function Main({ furthestPage, setFurthestPage }) {
     },
   });
 
+  const formikMembershipLevel = useFormik({
+    initialValues: initialValues,
+    validationSchema: validationSchema[1],
+    onSubmit: (values) => {
+      console.log("hello?")
+      goToNextStep(2, '/working-groups');
+    },
+  });
+
   // generate the step options above the form
   const renderStepper = () => (
     <div className="stepper">
@@ -68,7 +77,7 @@ export default function Main({ furthestPage, setFurthestPage }) {
         window.location.pathname === '/signIn' ? (
           <SignInIntroduction />
         ) : null}
-        
+
         {renderStepper()}
 
         <Switch>
@@ -98,7 +107,10 @@ export default function Main({ furthestPage, setFurthestPage }) {
 
           <Route path="/membership-level">
             {furthestPage.index >= 2 ? (
-              <MembershipLevel formField={formField} label={MEMBERSHIP_LEVEL} />
+              <MembershipLevel
+                formik={formikMembershipLevel}
+                label={MEMBERSHIP_LEVEL}
+              />
             ) : (
               <Redirect to={furthestPage.pathName} />
             )}

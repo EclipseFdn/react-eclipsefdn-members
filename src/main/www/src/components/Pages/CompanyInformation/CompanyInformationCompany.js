@@ -94,23 +94,31 @@ const CompanyInformationCompany = ({ formik }) => {
             id={organizationAddress.country.name}
             options={countryList}
             getOptionLabel={(option) => (option?.label ? option.label : '')}
-            getOptionSelected={(option, value) => {
-              return option.value === value;
-            }}
+            getOptionSelected={(option, value) => option.value === value.value}
             fullWidth={true}
             onChange={(ev, value) => {
+              // this is only for display
+              console.log(value);
               formik.setFieldValue(
                 `${organizationAddress.country.name}-label`,
-                value?.value ? value.value : ''
+                value ? value : null
+              );
+
+              // this is the data will be actually used
+              formik.setFieldValue(
+                organizationAddress.country.name,
+                value ? value.value : null
               );
             }}
-            value={formik.values.organization.address['country-label']}
+            value={
+              formik.values.organization.address['country-label']
+                ? formik.values.organization.address['country-label']
+                : null
+            }
             renderInput={(params) => {
               params.inputProps = {
                 ...params.inputProps,
                 'aria-labelledby': `${organizationName.name}-address`,
-                name: organizationAddress.country.name,
-                value: formik.values.organization.address['country-label'],
               };
               return (
                 <TextField

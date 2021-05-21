@@ -24,7 +24,7 @@ const CustomStepButton = ({ previousPage, nextPage, pageIndex }) => {
       ) : null}
 
       <MembershipContext.Consumer>
-        {({ furthestPage, setFurthestPage }) => (
+        {() => (
           <Button
             variant="contained"
             color="primary"

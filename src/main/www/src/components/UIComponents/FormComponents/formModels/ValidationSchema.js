@@ -33,63 +33,15 @@ import { requiredErrorMsg } from './formFieldModel';
 export const validationSchema = [
   // First step - company Info
   yup.object().shape({
-    // organization: yup.object().shape({
-    //   legalName: yup.mixed().required(`${requiredErrorMsg}`),
-    //   address: yup.object().shape({
-    //     street: yup.string().required(`${requiredErrorMsg}`),
-    //     city: yup.string().required(`${requiredErrorMsg}`),
-    //     provinceOrState: yup.mixed().required(`${requiredErrorMsg}`),
-    //     country: yup.mixed().required(`${requiredErrorMsg}`),
-    //     postalCode: yup.string().required(`${requiredErrorMsg}`),
-    //   }),
-    // }),
-
     // First step - representative contacts
     representative: yup.object().shape({
       company: yup.object().shape({
-        // firstName: yup.string().required(`${requiredErrorMsg}`),
-        // lastName: yup.string().required(`${requiredErrorMsg}`),
-        // jobtitle: yup.string().required(`${requiredErrorMsg}`),
         email: yup.string('Enter your email').email('Enter a valid email'),
       }),
       marketing: yup.object().shape({
-        // sameAsCompany: yup.boolean(),
-        // firstName: yup.string().when('sameAsCompany', {
-        //   is: false,
-        //   then: yup.string().required(`${requiredErrorMsg}`),
-        // }),
-        // lastName: yup.string().when('sameAsCompany', {
-        //   is: false,
-        //   then: yup.string().required(`${requiredErrorMsg}`),
-        // }),
-        // jobtitle: yup.string().when('sameAsCompany', {
-        //   is: false,
-        //   then: yup.string().required(`${requiredErrorMsg}`),
-        // }),
-        // email: yup.string().when('sameAsCompany', {
-        //   is: false,
-        //   then: yup.string().email('Invalid email address'),
-        // }),
         email: yup.string('Enter your email').email('Enter a valid email'),
       }),
       accounting: yup.object().shape({
-        // sameAsCompany: yup.boolean(),
-        // firstName: yup.string().when('sameAsCompany', {
-        //   is: false,
-        //   then: yup.string().required(`${requiredErrorMsg}`),
-        // }),
-        // lastName: yup.string().when('sameAsCompany', {
-        //   is: false,
-        //   then: yup.string().required(`${requiredErrorMsg}`),
-        // }),
-        // jobtitle: yup.string().when('sameAsCompany', {
-        //   is: false,
-        //   then: yup.string().required(`${requiredErrorMsg}`),
-        // }),
-        // email: yup.string().when('sameAsCompany', {
-        //   is: false,
-        //   then: yup.string().email('Invalid email address'),
-        // }),
         email: yup.string('Enter your email').email('Enter a valid email'),
       }),
     }),
@@ -97,7 +49,7 @@ export const validationSchema = [
 
   // Second step - membership level
   yup.object().shape({
-    membershipLevel: yup.mixed().required(`${requiredErrorMsg}`),
+    "membershipLevel-label": yup.mixed(),
   }),
 
   // Third step - working groups

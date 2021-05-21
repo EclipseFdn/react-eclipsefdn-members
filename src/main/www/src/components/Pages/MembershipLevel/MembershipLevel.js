@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import MembershipLevelFeeTable from './MembershipLevelFeeTable';
 import MembershipContext from '../../../Context/MembershipContext';
 import Loading from '../../UIComponents/Loading/Loading';
-// import { mapMembershipLevel } from '../../../Utils/formFunctionHelpers';
+import { mapMembershipLevel } from '../../../Utils/formFunctionHelpers';
 import {
   api_prefix_form,
   FETCH_HEADER,
@@ -15,6 +15,7 @@ import {
 import { makeStyles, TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CustomStepButton from '../../UIComponents/Button/CustomStepButton';
+import { formField } from '../../UIComponents/FormComponents/formModels/formFieldModel';
 
 /**
  * Render membership select component (use React-Select), with fetch and prefill data operation
@@ -32,9 +33,8 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const MembershipLevel = ({ formField, ...otherProps }) => {
+const MembershipLevel = ({ formik }) => {
   const { currentFormId } = useContext(MembershipContext);
-  // const { setFieldValue } = otherProps.parentState.formik;
   const { membershipLevel } = formField;
   const classes = useStyles();
 
@@ -69,24 +69,24 @@ const MembershipLevel = ({ formField, ...otherProps }) => {
             // the retrived membership level backend data to fit frontend, and
             // setFieldValue(): Prefill Data --> Call the setFieldValue of
             // Formik, to set membershipLevel field with the mapped data
-            // setFieldValue(
-            //   membershipLevel.name,
-            //   mapMembershipLevel(data[0]?.membership_level, membership_levels)
-            // );
+            formik.setFieldValue(
+              membershipLevel.name,
+              mapMembershipLevel(data[0]?.membership_level, membership_levels)
+            );
           }
           setLoading(false);
         });
     } else {
       setLoading(false);
     }
-  }, [currentFormId, membershipLevel.name]);
+  }, [currentFormId, membershipLevel.name, formik]);
 
   if (loading) {
     return <Loading />;
   }
 
   return (
-    <>
+    <form onSubmit={formik.handleSubmit}>
       <div className="align-center">
         <h1 className="fw-600 h2">Membership Level</h1>
         <p>
@@ -97,16 +97,29 @@ const MembershipLevel = ({ formField, ...otherProps }) => {
         </h2>
         <div className="row">
           <div className="col-md-12">
-            {/* <CustomSelectWrapper
-              name={membershipLevel.name}
-              renderComponent={DefaultSelect}
-              options={membership_levels}
-              ariaLabel={membershipLevel.name}
-            /> */}
             <Autocomplete
+              id={membershipLevel.name}
               options={membership_levels}
-              getOptionLabel={(option) => option.label}
               fullWidth={true}
+              getOptionLabel={(option) => (option?.label ? option.label : '')}
+              onChange={(ev, value) => {
+                // this is only for display
+                formik.setFieldValue(
+                  `${membershipLevel.name}-label`,
+                  value ? value : null
+                );
+
+                // this is the data will be actually used
+                formik.setFieldValue(
+                  membershipLevel.name,
+                  value ? value.value : null
+                );
+              }}
+              value={
+                formik.values['membershipLevel-label']
+                  ? formik.values['membershipLevel-label']
+                  : null
+              }
               renderInput={(params) => {
                 params.inputProps = {
                   ...params.inputProps,
@@ -135,7 +148,7 @@ const MembershipLevel = ({ formField, ...otherProps }) => {
         nextPage="/working-groups"
         pageIndex={2}
       />
-    </>
+    </form>
   );
 };
 
