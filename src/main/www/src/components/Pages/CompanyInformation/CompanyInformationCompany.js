@@ -98,7 +98,6 @@ const CompanyInformationCompany = ({ formik }) => {
             fullWidth={true}
             onChange={(ev, value) => {
               // this is only for display
-              console.log(value);
               formik.setFieldValue(
                 `${organizationAddress.country.name}-label`,
                 value ? value : null

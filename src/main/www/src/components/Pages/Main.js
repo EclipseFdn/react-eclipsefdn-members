@@ -52,7 +52,7 @@ export default function Main({ furthestPage, setFurthestPage }) {
 
   const formikWorkingGroups = useFormik({
     initialValues: initialValues,
-    // validationSchema: validationSchema[2],
+    validationSchema: validationSchema[2],
     onSubmit: (values) => {
       goToNextStep(3, '/signing-authority');
     },

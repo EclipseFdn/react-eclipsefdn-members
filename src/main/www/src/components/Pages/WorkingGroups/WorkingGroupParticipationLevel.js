@@ -21,31 +21,35 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ParticipationLevel = ({ name, workingGroup }) => {
-  const workingGroupsData = JSON.parse(
-    sessionStorage.getItem('workingGroupsData')
-  );
+const ParticipationLevel = ({
+  name,
+  workingGroup,
+  workingGroupListData,
+  formik,
+  index,
+}) => {
   const classes = useStyles();
 
   const [participationLevels, setParticipationLevels] = useState([]);
-
+  const theIndex = index;
   useEffect(() => {
     // If have selected working group, find this working group's
     // participation levels, and pass to the react-select option
-    if (workingGroupsData) {
-      let temp = workingGroupsData?.find(
-        (item) => workingGroup.value === item.value
+    if (workingGroupListData) {
+      let temp = workingGroupListData?.find(
+        (item) => workingGroup === item.value
       );
       setParticipationLevels(temp?.participation_levels);
+      formik.setFieldValue(
+        `workingGroups.${theIndex}.participationLevel-label`,
+        ''
+      );
     }
-  }, [workingGroupsData, workingGroup.value]);
-  // This i causing the Maximum update depth exceeded warning.
-
-  // Need to have {label: foo, value: foo} format for react-select v2
-  // to work properly, please refer to: https://react-select.com/home
-  // const renderOptions = (array) => {
-  //   return array?.map((el) => ({ label: el, value: el }));
-  // };
+  }, [
+    workingGroupListData,
+    formik.values.workingGroups[theIndex]['workingGroup'],
+  ]);
+  // This is causing the Maximum update depth exceeded warning.
 
   return (
     <>
@@ -55,16 +59,20 @@ const ParticipationLevel = ({ name, workingGroup }) => {
       </h3>
       <div className="row">
         <div className="col-md-12">
-          {/* <CustomSelectWrapper
-            name={name}
-            renderComponent={DefaultSelect}
-            options={renderOptions(participationLevels)}
-            ariaLabel={name}
-          /> */}
           <Autocomplete
             options={participationLevels}
-            getOptionLabel={(option) => option}
+            getOptionLabel={(option) => (option ? option : '')}
             fullWidth={true}
+            onChange={(ev, value) => {
+              // this is only for display
+              formik.setFieldValue(`${name}-label`, value ? value : null);
+
+              // this is the data will be actually used
+              formik.setFieldValue(name, value ? value : null);
+            }}
+            value={
+              formik.values.workingGroups[theIndex]['participationLevel-label']
+            }
             renderInput={(params) => {
               params.inputProps = {
                 ...params.inputProps,

@@ -8,9 +8,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const today = new Date().toISOString().substring(0, 10);
-
-const DateInput = ({ ariaLabel }) => {
+const DateInput = ({ ariaLabel, onChange, name, value }) => {
   const classes = useStyles();
 
   return (
@@ -18,8 +16,12 @@ const DateInput = ({ ariaLabel }) => {
       <TextField
         id="date"
         type="date"
-        defaultValue={today}
+        name={name}
+        defaultValue={value ? value : null}
+        required={true}
         className={classes.root}
+        onChange={onChange}
+        value={value}
         InputProps={{
           inputProps: {
             'aria-labelledby': ariaLabel,

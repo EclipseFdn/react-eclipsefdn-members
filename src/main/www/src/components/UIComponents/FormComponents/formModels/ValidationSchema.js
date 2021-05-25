@@ -49,33 +49,15 @@ export const validationSchema = [
 
   // Second step - membership level
   yup.object().shape({
-    "membershipLevel-label": yup.mixed(),
+    'membershipLevel-label': yup.mixed(),
   }),
 
   // Third step - working groups
   yup.object().shape({
     workingGroups: yup.array().of(
       yup.object().shape({
-        workingGroup: yup.mixed().required(`${requiredErrorMsg}`),
-        participationLevel: yup.mixed().when('workingGroup', {
-          is: (value) => !!value?.value, // If workingGroup field has selected values, participation level is required;
-          then: yup.mixed().required(`${requiredErrorMsg}`),
-        }),
-        effectiveDate: yup.mixed().when('workingGroup', {
-          is: (value) => !!value?.value, // If workingGroup field has selected values, effective Date is required;
-          then: yup.mixed().required(`${requiredErrorMsg}`),
-        }),
-        workingGroupRepresentative: yup.object().when('workingGroup', {
-          is: (value) => !!value?.value, // If workingGroup field has selected values, workingGroup Representative is required;
-          then: yup.object().shape({
-            firstName: yup.string().required(`${requiredErrorMsg}`),
-            lastName: yup.string().required(`${requiredErrorMsg}`),
-            jobtitle: yup.string().required(`${requiredErrorMsg}`),
-            email: yup
-              .string()
-              .required(`${requiredErrorMsg}`)
-              .email('Invalid email address'),
-          }),
+        workingGroupRepresentative: yup.object().shape({
+          email: yup.string('Enter your email').email('Enter a valid email'),
         }),
       })
     ),
