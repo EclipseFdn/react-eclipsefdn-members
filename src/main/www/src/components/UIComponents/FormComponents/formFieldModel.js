@@ -156,87 +156,33 @@ export const formField = {
     label: twitterLabel,
     placeholder: twitter,
   },
-  company: {
-    firstName: {
-      name: 'representative.company.firstName',
+  companyRep: [
+    {
+      name: 'firstName',
       label: firstName,
       placeholder: firstName,
       requiredErrorMsg: requiredErrorMsg,
     },
-    lastName: {
-      name: 'representative.company.lastName',
+    {
+      name: 'lastName',
       label: lastName,
       placeholder: lastName,
       requiredErrorMsg: requiredErrorMsg,
     },
-    jobtitle: {
-      name: 'representative.company.jobtitle',
+    {
+      name: 'jobtitle',
       label: jobtitle,
       placeholder: jobtitle,
       requiredErrorMsg: requiredErrorMsg,
     },
-    email: {
-      name: 'representative.company.email',
+    {
+      name: 'email',
       label: email,
       placeholder: email,
       requiredErrorMsg: requiredErrorMsg,
       invalidErrorMsg: 'email format is incorrect',
     },
-  },
-  marketing: {
-    firstName: {
-      name: 'representative.marketing.firstName',
-      label: firstName,
-      placeholder: firstName,
-      requiredErrorMsg: requiredErrorMsg,
-    },
-    lastName: {
-      name: 'representative.marketing.lastName',
-      label: lastName,
-      placeholder: lastName,
-      requiredErrorMsg: requiredErrorMsg,
-    },
-    jobtitle: {
-      name: 'representative.marketing.jobtitle',
-      label: jobtitle,
-      placeholder: jobtitle,
-      requiredErrorMsg: requiredErrorMsg,
-    },
-    email: {
-      name: 'representative.marketing.email',
-      label: email,
-      placeholder: email,
-      requiredErrorMsg: requiredErrorMsg,
-      invalidErrorMsg: 'email format is incorrect',
-    },
-  },
-  accounting: {
-    firstName: {
-      name: 'representative.accounting.firstName',
-      label: firstName,
-      placeholder: firstName,
-      requiredErrorMsg: requiredErrorMsg,
-    },
-    lastName: {
-      name: 'representative.accounting.lastName',
-      label: lastName,
-      placeholder: lastName,
-      requiredErrorMsg: requiredErrorMsg,
-    },
-    jobtitle: {
-      name: 'representative.accounting.jobtitle',
-      label: jobtitle,
-      placeholder: jobtitle,
-      requiredErrorMsg: requiredErrorMsg,
-    },
-    email: {
-      name: 'representative.accounting.email',
-      label: email,
-      placeholder: email,
-      requiredErrorMsg: requiredErrorMsg,
-      invalidErrorMsg: 'email format is incorrect',
-    },
-  },
+  ],
   membershipLevel: {
     name: 'membershipLevel',
     label: 'Membership Level',
@@ -280,26 +226,26 @@ export const formField = {
     },
   ],
 
-  signingAuthorityRepresentative: {
-    firstName: {
-      name: 'signingAuthorityRepresentative.firstName',
+  signingAuthorityRepresentative: [
+    {
+      name: 'firstName',
       label: firstName,
       placeholder: firstName,
     },
-    lastName: {
-      name: 'signingAuthorityRepresentative.lastName',
+    {
+      name: 'lastName',
       label: lastName,
       placeholder: lastName,
     },
-    jobtitle: {
-      name: 'signingAuthorityRepresentative.jobtitle',
+    {
+      name: 'jobtitle',
       label: jobtitle,
       placeholder: jobtitle,
     },
-    email: {
-      name: 'signingAuthorityRepresentative.email',
+    {
+      name: 'email',
       label: email,
       placeholder: email,
     },
-  },
+  ],
 };

@@ -41,7 +41,7 @@ const CompanyInformation = ({ formik }) => {
     // only react without server.
 
     // just for React only testing.
-    let currentFormId = 'form_1';
+    // let currentFormId = 'form_1';
 
     let url_prefix_local;
     let url_suffix_local = '';

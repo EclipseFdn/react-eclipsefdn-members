@@ -26,7 +26,7 @@ const Contacts = ({ formik }) => {
   // the boolean form value of "is accounting Rep. the same as company Rep.?"
   const isAccountingSameAsCompany =
     formik.values.representative.accounting.sameAsCompany;
-  const { company, marketing, accounting } = formField;
+  const { companyRep } = formField;
 
   /**
    * Generate Representatives Inputs components
@@ -63,231 +63,37 @@ const Contacts = ({ formik }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAccountingSameAsCompany]);
 
-  const generateMemberRepContacts = () => {
-    // Using array.map to generate the Input will cause problem on Formik (useFormik) error and helpertext handler.
-    // So, for now, write down all required input/textfield manually
-    return (
-      <>
-        <div className="col-md-12" id={company.firstName.name}>
+  const generateContacts = (
+    representativeFields,
+    prefix,
+    type,
+    disableInput
+  ) => (
+    <>
+      {representativeFields.map((el, index) => (
+        <div key={prefix + index} className="col-md-12">
           <Input
-            name={company.firstName.name}
-            labelName={company.firstName.label}
-            ariaLabel={'company-rep' + company.firstName.name}
-            placeholder={company.firstName.placeholder}
+            name={`representative.${type}.${el.name}`}
+            labelName={el.label}
+            ariaLabel={prefix + el.name}
+            placeholder={el.placeholder}
             requiredMark={true}
-            value={formik.values.representative.company.firstName}
+            disableInput={disableInput}
             onChange={formik.handleChange}
-          />
-        </div>
-        <div className="col-md-12" id={company.lastName.name}>
-          <Input
-            name={company.lastName.name}
-            labelName={company.lastName.label}
-            ariaLabel={'company-rep' + company.lastName.name}
-            placeholder={company.lastName.placeholder}
-            requiredMark={true}
-            value={formik.values.representative.company.lastName}
-            onChange={formik.handleChange}
-          />
-        </div>
-        <div className="col-md-12" id={company.jobtitle.name}>
-          <Input
-            name={company.jobtitle.name}
-            labelName={company.jobtitle.label}
-            ariaLabel={'company-rep' + company.jobtitle.name}
-            placeholder={company.jobtitle.placeholder}
-            requiredMark={true}
-            value={formik.values.representative.company.jobtitle}
-            onChange={formik.handleChange}
-          />
-        </div>
-        <div className="col-md-12" id={company.email.name}>
-          <Input
-            name={company.email.name}
-            labelName={company.email.label}
-            ariaLabel={'company-rep' + company.email.name}
-            placeholder={company.email.placeholder}
-            requiredMark={true}
-            value={formik.values.representative.company.email}
-            onChange={formik.handleChange}
+            value={formik.values.representative[`${type}`][`${el.name}`]}
             error={
-              formik.touched.representative?.company?.email &&
-              Boolean(formik.errors.representative?.company?.email)
+              formik.touched.representative?.[`${type}`]?.[`${el.name}`] &&
+              Boolean(formik.errors.representative?.[`${type}`]?.[`${el.name}`])
             }
             helperText={
-              formik.touched.representative?.company?.email &&
-              formik.errors.representative?.company?.email
+              formik.touched.representative?.[`${type}`]?.[`${el.name}`] &&
+              formik.errors.representative?.[`${type}`]?.[`${el.name}`]
             }
           />
         </div>
-      </>
-    );
-  };
-
-  const generateMarketingRepContacts = () => {
-    // Using array.map to generate the Input will cause problem on Formik (useFormik) error and helpertext handler.
-    // So, for now, write down all required input/textfield manually
-    return (
-      <>
-        <div className="col-md-12" id={marketing.firstName.name}>
-          <Input
-            name={marketing.firstName.name}
-            labelName={marketing.firstName.label}
-            ariaLabel={'marketing-rep' + marketing.firstName.name}
-            placeholder={marketing.firstName.placeholder}
-            disableInput={isMarketingSameAsCompany}
-            requiredMark={true}
-            value={
-              isMarketingSameAsCompany
-                ? formik.values.representative.company.firstName
-                : formik.values.representative.marketing.firstName
-            }
-            onChange={formik.handleChange}
-          />
-        </div>
-
-        <div className="col-md-12" id={marketing.lastName.name}>
-          <Input
-            name={marketing.lastName.name}
-            labelName={marketing.lastName.label}
-            ariaLabel={'marketing-rep' + marketing.lastName.name}
-            placeholder={marketing.lastName.placeholder}
-            disableInput={isMarketingSameAsCompany}
-            requiredMark={true}
-            value={
-              isMarketingSameAsCompany
-                ? formik.values.representative.company.lastName
-                : formik.values.representative.marketing.lastName
-            }
-            onChange={formik.handleChange}
-          />
-        </div>
-
-        <div className="col-md-12" id={marketing.jobtitle.name}>
-          <Input
-            name={marketing.jobtitle.name}
-            labelName={marketing.jobtitle.label}
-            ariaLabel={'marketing-rep' + marketing.jobtitle.name}
-            placeholder={marketing.jobtitle.placeholder}
-            disableInput={isMarketingSameAsCompany}
-            requiredMark={true}
-            value={
-              isMarketingSameAsCompany
-                ? formik.values.representative.company.jobtitle
-                : formik.values.representative.marketing.jobtitle
-            }
-            onChange={formik.handleChange}
-          />
-        </div>
-
-        <div className="col-md-12" id={marketing.email.name}>
-          <Input
-            name={marketing.email.name}
-            labelName={marketing.email.label}
-            ariaLabel={'marketing-rep' + marketing.email.name}
-            placeholder={marketing.email.placeholder}
-            requiredMark={true}
-            value={
-              isMarketingSameAsCompany
-                ? formik.values.representative.company.email
-                : formik.values.representative.marketing.email
-            }
-            disableInput={isMarketingSameAsCompany}
-            onChange={formik.handleChange}
-            error={
-              formik.touched.representative?.marketing?.email &&
-              Boolean(formik.errors.representative?.marketing?.email)
-            }
-            helperText={
-              formik.touched.representative?.marketing?.email &&
-              formik.errors.representative?.marketing?.email
-            }
-          />
-        </div>
-      </>
-    );
-  };
-
-  const generateAccountingRepContacts = () => {
-    // Using array.map to generate the Input will cause problem on Formik (useFormik) error and helpertext handler.
-    // So, for now, write down all required input/textfield manually
-    return (
-      <>
-        <div className="col-md-12" id={accounting.firstName.name}>
-          <Input
-            name={accounting.firstName.name}
-            labelName={accounting.firstName.label}
-            ariaLabel={'accounting-rep' + accounting.firstName.name}
-            placeholder={accounting.firstName.placeholder}
-            disableInput={isAccountingSameAsCompany}
-            requiredMark={true}
-            value={
-              isAccountingSameAsCompany
-                ? formik.values.representative.company.firstName
-                : formik.values.representative.accounting.firstName
-            }
-            onChange={formik.handleChange}
-          />
-        </div>
-        <div className="col-md-12" id={accounting.lastName.name}>
-          <Input
-            name={accounting.lastName.name}
-            labelName={accounting.lastName.label}
-            ariaLabel={'accounting-rep' + accounting.lastName.name}
-            placeholder={accounting.lastName.placeholder}
-            disableInput={isAccountingSameAsCompany}
-            requiredMark={true}
-            value={
-              isAccountingSameAsCompany
-                ? formik.values.representative.company.lastName
-                : formik.values.representative.accounting.lastName
-            }
-            onChange={formik.handleChange}
-          />
-        </div>
-        <div className="col-md-12" id={accounting.jobtitle.name}>
-          <Input
-            name={accounting.jobtitle.name}
-            labelName={accounting.jobtitle.label}
-            ariaLabel={'accounting-rep' + accounting.jobtitle.name}
-            placeholder={accounting.jobtitle.placeholder}
-            disableInput={isAccountingSameAsCompany}
-            requiredMark={true}
-            value={
-              isAccountingSameAsCompany
-                ? formik.values.representative.company.jobtitle
-                : formik.values.representative.accounting.jobtitle
-            }
-            onChange={formik.handleChange}
-          />
-        </div>
-        <div className="col-md-12" id={accounting.email.name}>
-          <Input
-            name={accounting.email.name}
-            labelName={accounting.email.label}
-            ariaLabel={'accounting-rep' + accounting.email.name}
-            placeholder={accounting.email.placeholder}
-            disableInput={isAccountingSameAsCompany}
-            requiredMark={true}
-            value={
-              isAccountingSameAsCompany
-                ? formik.values.representative.company.email
-                : formik.values.representative.accounting.email
-            }
-            onChange={formik.handleChange}
-            error={
-              formik.touched.representative?.accounting?.email &&
-              Boolean(formik.errors.representative?.accounting?.email)
-            }
-            helperText={
-              formik.touched.representative?.accounting?.email &&
-              formik.errors.representative?.accounting?.email
-            }
-          />
-        </div>
-      </>
-    );
-  };
+      ))}
+    </>
+  );
 
   return (
     <>
@@ -307,7 +113,9 @@ const Contacts = ({ formik }) => {
         All formal communications from the Eclipse Foundation will be sent to
         the Member Representative.
       </p>
-      <div className="row">{generateMemberRepContacts()}</div>
+      <div className="row">
+        {generateContacts(companyRep, 'company-rep', 'company', false)}
+      </div>
 
       <h4 className="fw-600" id="marketing-rep">
         Company Marketing Representative
@@ -323,7 +131,15 @@ const Contacts = ({ formik }) => {
         }
         label="Same as member rep."
       />
-      <div className="row">{generateMarketingRepContacts()}</div>
+
+      <div className="row">
+        {generateContacts(
+          companyRep,
+          'marketing-rep',
+          'marketing',
+          isMarketingSameAsCompany
+        )}
+      </div>
 
       <h4 className="fw-600" id="accounting-rep">
         Company Accounting Representative
@@ -339,7 +155,15 @@ const Contacts = ({ formik }) => {
         }
         label="Same as member rep."
       />
-      <div className="row">{generateAccountingRepContacts()}</div>
+
+      <div className="row">
+        {generateContacts(
+          companyRep,
+          'accounting-rep',
+          'accounting',
+          isAccountingSameAsCompany
+        )}
+      </div>
     </>
   );
 };

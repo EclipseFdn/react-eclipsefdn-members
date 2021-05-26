@@ -23,83 +23,28 @@ const SigningAuthority = ({ formik }) => {
       </p>
 
       <div className="row">
-        {
-          // Using array.map to generate the Input will cause problem on Formik (useFormik) error handler and helpertext handler.
-          // So, for now, write down all required input/textfield manually
-        }
-        <div
-          className="col-md-12"
-          id={signingAuthorityRepresentative.firstName.name}
-        >
-          <Input
-            name={signingAuthorityRepresentative.firstName.name}
-            labelName={signingAuthorityRepresentative.firstName.label}
-            ariaLabel={
-              sectionName + signingAuthorityRepresentative.firstName.name
-            }
-            placeholder={signingAuthorityRepresentative.firstName.placeholder}
-            requiredMark={true}
-            value={formik.values.signingAuthorityRepresentative.firstName}
-            onChange={formik.handleChange}
-          />
-        </div>
-
-        <div
-          className="col-md-12"
-          id={signingAuthorityRepresentative.lastName.name}
-        >
-          <Input
-            name={signingAuthorityRepresentative.lastName.name}
-            labelName={signingAuthorityRepresentative.lastName.label}
-            ariaLabel={
-              sectionName + signingAuthorityRepresentative.lastName.name
-            }
-            placeholder={signingAuthorityRepresentative.lastName.placeholder}
-            requiredMark={true}
-            value={formik.values.signingAuthorityRepresentative.lastName}
-            onChange={formik.handleChange}
-          />
-        </div>
-
-        <div
-          className="col-md-12"
-          id={signingAuthorityRepresentative.jobtitle.name}
-        >
-          <Input
-            name={signingAuthorityRepresentative.jobtitle.name}
-            labelName={signingAuthorityRepresentative.jobtitle.label}
-            ariaLabel={
-              sectionName + signingAuthorityRepresentative.jobtitle.name
-            }
-            placeholder={signingAuthorityRepresentative.jobtitle.placeholder}
-            requiredMark={true}
-            value={formik.values.signingAuthorityRepresentative.jobtitle}
-            onChange={formik.handleChange}
-          />
-        </div>
-
-        <div
-          className="col-md-12"
-          id={signingAuthorityRepresentative.email.name}
-        >
-          <Input
-            name={signingAuthorityRepresentative.email.name}
-            labelName={signingAuthorityRepresentative.email.label}
-            ariaLabel={sectionName + signingAuthorityRepresentative.email.name}
-            placeholder={signingAuthorityRepresentative.email.placeholder}
-            requiredMark={true}
-            value={formik.values.signingAuthorityRepresentative.email}
-            onChange={formik.handleChange}
-            error={
-              formik.touched.signingAuthorityRepresentative?.email &&
-              Boolean(formik.errors.signingAuthorityRepresentative?.email)
-            }
-            helperText={
-              formik.touched.signingAuthorityRepresentative?.email &&
-              formik.errors.signingAuthorityRepresentative?.email
-            }
-          />
-        </div>
+        {signingAuthorityRepresentative.map((el, index) => (
+          <div key={index} className="col-md-12">
+            <Input
+              name={`signingAuthorityRepresentative.${el.name}`}
+              labelName={el.label}
+              placeholder={el.placeholder}
+              requiredMark={true}
+              onChange={formik.handleChange}
+              value={formik.values.signingAuthorityRepresentative[`${el.name}`]}
+              error={
+                formik.touched.signingAuthorityRepresentative?.[`${el.name}`] &&
+                Boolean(
+                  formik.errors.signingAuthorityRepresentative?.[`${el.name}`]
+                )
+              }
+              helperText={
+                formik.touched.signingAuthorityRepresentative?.[`${el.name}`] &&
+                formik.errors.signingAuthorityRepresentative?.[`${el.name}`]
+              }
+            />
+          </div>
+        ))}
       </div>
 
       <CustomStepButton

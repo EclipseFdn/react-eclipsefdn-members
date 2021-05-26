@@ -198,7 +198,7 @@ const Review = ({ values, submitForm }) => {
                 </div>
               </div>
               <div className="col-md-6">
-                <label>Job Title</label>
+                <label>Email</label>
                 <div className="preview-field">
                   {el.workingGroupRepresentative.email}
                 </div>
@@ -222,7 +222,13 @@ const Review = ({ values, submitForm }) => {
               {values.signingAuthorityRepresentative.lastName}
             </div>
           </div>
-          <div className="col-md-12">
+          <div className="col-md-6">
+            <label>Job Title</label>
+            <div className="preview-field">
+              {values.signingAuthorityRepresentative.jobtitle}
+            </div>
+          </div>
+          <div className="col-md-6">
             <label>Email</label>
             <div className="preview-field">
               {values.signingAuthorityRepresentative.email}
