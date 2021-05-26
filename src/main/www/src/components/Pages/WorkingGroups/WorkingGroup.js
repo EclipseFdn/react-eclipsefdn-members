@@ -52,7 +52,7 @@ const useStyles = makeStyles(() => ({
 const WorkingGroup = ({ formik }) => {
   const classes = useStyles();
   const { currentFormId } = useContext(MembershipContext);
-  const [workingGroupListData, setWorkingGroupListData] = useState(''); // the working groups data, all available ones
+  const [workingGroupListData, setWorkingGroupListData] = useState([]); // the working groups data, all available ones
 
   const removeWorkingGroupCall = (arrayHelpersRemove, index, id) => {
     // Call API to remove
@@ -67,18 +67,16 @@ const WorkingGroup = ({ formik }) => {
   };
 
   const fetchAvailableWorkingGroups = () => {
-    if (!workingGroupListData) {
-      fetch('workingGroups.json', { headers: FETCH_HEADER })
-        .then((res) => res.json())
-        .then((data) => {
-          let options = data.working_groups.map((item) => ({
-            label: item.name,
-            value: item.id,
-            participation_levels: item.participation_levels,
-          }));
-          setWorkingGroupListData(options);
-        });
-    }
+    fetch('workingGroups.json', { headers: FETCH_HEADER })
+      .then((res) => res.json())
+      .then((data) => {
+        let options = data.working_groups.map((item) => ({
+          label: item.name,
+          value: item.id,
+          participation_levels: item.participation_levels,
+        }));
+        setWorkingGroupListData(options);
+      });
   };
 
   useEffect(() => {
@@ -123,6 +121,8 @@ const WorkingGroup = ({ formik }) => {
                   }}
                   value={
                     formik.values.workingGroups[index]['workingGroup-label']
+                      ? formik.values.workingGroups[index]['workingGroup-label']
+                      : null
                   }
                   renderInput={(params) => {
                     params.inputProps = {

@@ -17,7 +17,6 @@ const DateInput = ({ ariaLabel, onChange, name, value }) => {
         id="date"
         type="date"
         name={name}
-        defaultValue={value ? value : null}
         required={true}
         className={classes.root}
         onChange={onChange}

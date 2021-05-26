@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useFormik } from 'formik';
 import SignIn from './SignIn/SignIn';
 import {
   COMPANY_INFORMATION,
   MEMBERSHIP_LEVEL,
-  REVIEW,
   SIGNING_AUTHORITY,
   WORKING_GROUPS,
   PAGE_STEP,
@@ -27,6 +26,7 @@ import { useHistory } from 'react-router-dom';
 
 export default function Main({ furthestPage, setFurthestPage }) {
   const history = useHistory();
+  const [updatedFormValues, setUpdatedFormValues] = useState(initialValues);
 
   const goToNextStep = (pageIndex, nextPage) => {
     if (furthestPage.index <= pageIndex)
@@ -34,10 +34,26 @@ export default function Main({ furthestPage, setFurthestPage }) {
     history.push(nextPage);
   };
 
+  const submitForm = (pageIndex, nextPage) => {
+    // do something for submiting
+    // ...
+    // history.replace('/');
+    goToNextStep(pageIndex, nextPage);
+  };
+
   const formikCompanyInfo = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema[0],
     onSubmit: (values) => {
+      console.log('values: ', values);
+      // update the organization values
+      const organization = values.organization;
+      const representative = values.representative;
+      setUpdatedFormValues({
+        ...updatedFormValues,
+        organization,
+        representative,
+      });
       goToNextStep(1, '/membership-level');
     },
   });
@@ -46,6 +62,9 @@ export default function Main({ furthestPage, setFurthestPage }) {
     initialValues: initialValues,
     validationSchema: validationSchema[1],
     onSubmit: (values) => {
+      // update the membershipLevel values
+      const membershipLevel = values.membershipLevel;
+      setUpdatedFormValues({ ...updatedFormValues, membershipLevel });
       goToNextStep(2, '/working-groups');
     },
   });
@@ -54,6 +73,9 @@ export default function Main({ furthestPage, setFurthestPage }) {
     initialValues: initialValues,
     validationSchema: validationSchema[2],
     onSubmit: (values) => {
+      // update the workingGroups values
+      const workingGroups = values.workingGroups;
+      setUpdatedFormValues({ ...updatedFormValues, workingGroups });
       goToNextStep(3, '/signing-authority');
     },
   });
@@ -62,6 +84,13 @@ export default function Main({ furthestPage, setFurthestPage }) {
     initialValues: initialValues,
     validationSchema: validationSchema[3],
     onSubmit: (values) => {
+      // update the signingAuthorityRepresentative values
+      const signingAuthorityRepresentative =
+        values.signingAuthorityRepresentative;
+      setUpdatedFormValues({
+        ...updatedFormValues,
+        signingAuthorityRepresentative,
+      });
       goToNextStep(4, '/review');
     },
   });
@@ -93,7 +122,7 @@ export default function Main({ furthestPage, setFurthestPage }) {
           <SignInIntroduction />
         ) : null}
 
-        {renderStepper()}
+        {window.location.pathname !== '/submitted' && renderStepper()}
 
         <Switch>
           <Route exact path="/">
@@ -157,7 +186,7 @@ export default function Main({ furthestPage, setFurthestPage }) {
 
           <Route path="/review">
             {furthestPage.index >= 5 ? (
-              <Review formField={formField} label={REVIEW} />
+              <Review values={updatedFormValues} submitForm={submitForm} />
             ) : (
               <Redirect to={furthestPage.pathName} />
             )}

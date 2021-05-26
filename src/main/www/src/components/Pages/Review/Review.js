@@ -1,14 +1,11 @@
 import React from 'react';
-// import { useFormikContext } from 'formik';
-import { initialValues } from '../../UIComponents/FormComponents/formModels/formFieldModel';
 import CustomStepButton from '../../UIComponents/Button/CustomStepButton';
 
-const Review = () => {
-  // const { values } = useFormikContext();
-  const values = initialValues;
+const Review = ({ values, submitForm }) => {
+  console.log(values);
 
   return (
-    <>
+    <form onSubmit={() => submitForm(5, '/submitted')}>
       <h1 className="fw-600 h2">
         Review and Submit your Completed Application
       </h1>
@@ -24,7 +21,7 @@ const Review = () => {
         <div className="row">
           <div className="col-md-16">
             <div className="margin-top-25 preview-field">
-              {values.organization.legalName.label}
+              {values.organization.legalName}
             </div>
           </div>
           <div className="col-md-8">
@@ -58,7 +55,7 @@ const Review = () => {
           <div className="col-md-4">
             <label>Country</label>
             <div className="preview-field">
-              {values.organization.address.country.label}
+              {values.organization.address.country}
             </div>
           </div>
           <div className="col-md-4">
@@ -156,7 +153,7 @@ const Review = () => {
         <h2 className="fw-600 h3">Intended Membership Level</h2>
         <div className="row margin-bottom-30">
           <div className="col-md-10">
-            <div className="preview-field">{values.membershipLevel.label}</div>
+            <div className="preview-field">{values.membershipLevel}</div>
           </div>
         </div>
 
@@ -166,13 +163,11 @@ const Review = () => {
             <div className="row margin-bottom-30">
               <div className="col-md-8">
                 <label>Working group</label>
-                <div className="preview-field">{el.workingGroup.label}</div>
+                <div className="preview-field">{el.workingGroup}</div>
               </div>
               <div className="col-md-8">
                 <label>Intended Participation Level</label>
-                <div className="preview-field">
-                  {el.participationLevel.label}
-                </div>
+                <div className="preview-field">{el.participationLevel}</div>
               </div>
               <div className="col-md-8">
                 <label>Effective Date</label>
@@ -243,7 +238,7 @@ const Review = () => {
         nextPage="/submitted"
         pageIndex={5}
       />
-    </>
+    </form>
   );
 };
 

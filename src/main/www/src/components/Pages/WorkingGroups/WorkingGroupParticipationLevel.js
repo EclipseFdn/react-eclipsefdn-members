@@ -72,6 +72,10 @@ const ParticipationLevel = ({
             }}
             value={
               formik.values.workingGroups[theIndex]['participationLevel-label']
+                ? formik.values.workingGroups[theIndex][
+                    'participationLevel-label'
+                  ]
+                : null
             }
             renderInput={(params) => {
               params.inputProps = {

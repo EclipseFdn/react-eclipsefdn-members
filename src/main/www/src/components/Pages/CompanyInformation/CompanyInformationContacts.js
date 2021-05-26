@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Input from '../../UIComponents/Inputs/Input';
 import { formField } from '../../UIComponents/FormComponents/formModels/formFieldModel';
 import { Checkbox, FormControlLabel } from '@material-ui/core';
@@ -37,6 +37,32 @@ const Contacts = ({ formik }) => {
    * @param disableInput - if marketing / accounting is the same as company Rep., mark the input disabled and just used the same values from company Rep.
    */
 
+  // update representative.marketing values based on related checkbox
+  useEffect(() => {
+    if (isMarketingSameAsCompany) {
+      const newValues = {
+        ...formik.values.representative.company,
+        id: formik.values.representative.marketing.id || '',
+        sameAsCompany: formik.values.representative.marketing.sameAsCompany,
+      };
+      formik.setFieldValue('representative.marketing', newValues);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMarketingSameAsCompany]);
+
+  // update representative.accounting values based on related checkbox
+  useEffect(() => {
+    if (isAccountingSameAsCompany) {
+      const newValues = {
+        ...formik.values.representative.company,
+        id: formik.values.representative.accounting.id || '',
+        sameAsCompany: formik.values.representative.accounting.sameAsCompany,
+      };
+      formik.setFieldValue('representative.accounting', newValues);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAccountingSameAsCompany]);
+
   const generateMemberRepContacts = () => {
     // Using array.map to generate the Input will cause problem on Formik (useFormik) error and helpertext handler.
     // So, for now, write down all required input/textfield manually
@@ -51,14 +77,6 @@ const Contacts = ({ formik }) => {
             requiredMark={true}
             value={formik.values.representative.company.firstName}
             onChange={formik.handleChange}
-            error={
-              formik.touched.representative?.company?.firstName &&
-              Boolean(formik.errors.representative?.company?.firstName)
-            }
-            helperText={
-              formik.touched.representative?.company?.firstName &&
-              formik.errors.representative?.company?.firstName
-            }
           />
         </div>
         <div className="col-md-12" id={company.lastName.name}>
@@ -70,14 +88,6 @@ const Contacts = ({ formik }) => {
             requiredMark={true}
             value={formik.values.representative.company.lastName}
             onChange={formik.handleChange}
-            error={
-              formik.touched.representative?.company?.lastName &&
-              Boolean(formik.errors.representative?.company?.lastName)
-            }
-            helperText={
-              formik.touched.representative?.company?.lastName &&
-              formik.errors.representative?.company?.lastName
-            }
           />
         </div>
         <div className="col-md-12" id={company.jobtitle.name}>
@@ -89,14 +99,6 @@ const Contacts = ({ formik }) => {
             requiredMark={true}
             value={formik.values.representative.company.jobtitle}
             onChange={formik.handleChange}
-            error={
-              formik.touched.representative?.company?.jobtitle &&
-              Boolean(formik.errors.representative?.company?.jobtitle)
-            }
-            helperText={
-              formik.touched.representative?.company?.jobtitle &&
-              formik.errors.representative?.company?.jobtitle
-            }
           />
         </div>
         <div className="col-md-12" id={company.email.name}>
@@ -141,14 +143,6 @@ const Contacts = ({ formik }) => {
                 : formik.values.representative.marketing.firstName
             }
             onChange={formik.handleChange}
-            error={
-              formik.touched.representative?.marketing?.firstName &&
-              Boolean(formik.errors.representative?.marketing?.firstName)
-            }
-            helperText={
-              formik.touched.representative?.marketing?.firstName &&
-              formik.errors.representative?.marketing?.firstName
-            }
           />
         </div>
 
@@ -166,14 +160,6 @@ const Contacts = ({ formik }) => {
                 : formik.values.representative.marketing.lastName
             }
             onChange={formik.handleChange}
-            error={
-              formik.touched.representative?.marketing?.lastName &&
-              Boolean(formik.errors.representative?.marketing?.lastName)
-            }
-            helperText={
-              formik.touched.representative?.marketing?.lastName &&
-              formik.errors.representative?.marketing?.lastName
-            }
           />
         </div>
 
@@ -191,14 +177,6 @@ const Contacts = ({ formik }) => {
                 : formik.values.representative.marketing.jobtitle
             }
             onChange={formik.handleChange}
-            error={
-              formik.touched.representative?.marketing?.jobtitle &&
-              Boolean(formik.errors.representative?.marketing?.jobtitle)
-            }
-            helperText={
-              formik.touched.representative?.marketing?.jobtitle &&
-              formik.errors.representative?.marketing?.jobtitle
-            }
           />
         </div>
 
@@ -249,14 +227,6 @@ const Contacts = ({ formik }) => {
                 : formik.values.representative.accounting.firstName
             }
             onChange={formik.handleChange}
-            error={
-              formik.touched.representative?.accounting?.firstName &&
-              Boolean(formik.errors.representative?.accounting?.firstName)
-            }
-            helperText={
-              formik.touched.representative?.accounting?.firstName &&
-              formik.errors.representative?.accounting?.firstName
-            }
           />
         </div>
         <div className="col-md-12" id={accounting.lastName.name}>
@@ -273,14 +243,6 @@ const Contacts = ({ formik }) => {
                 : formik.values.representative.accounting.lastName
             }
             onChange={formik.handleChange}
-            error={
-              formik.touched.representative?.accounting?.lastName &&
-              Boolean(formik.errors.representative?.accounting?.lastName)
-            }
-            helperText={
-              formik.touched.representative?.accounting?.lastName &&
-              formik.errors.representative?.accounting?.lastName
-            }
           />
         </div>
         <div className="col-md-12" id={accounting.jobtitle.name}>
@@ -297,14 +259,6 @@ const Contacts = ({ formik }) => {
                 : formik.values.representative.accounting.jobtitle
             }
             onChange={formik.handleChange}
-            error={
-              formik.touched.representative?.accounting?.jobtitle &&
-              Boolean(formik.errors.representative?.accounting?.jobtitle)
-            }
-            helperText={
-              formik.touched.representative?.accounting?.jobtitle &&
-              formik.errors.representative?.accounting?.jobtitle
-            }
           />
         </div>
         <div className="col-md-12" id={accounting.email.name}>
