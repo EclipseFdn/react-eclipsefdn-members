@@ -1,7 +1,7 @@
 import React from 'react';
 import CustomStepButton from '../../UIComponents/Button/CustomStepButton';
 import Input from '../../UIComponents/Inputs/Input';
-import { formField } from '../../UIComponents/FormComponents/formModels/formFieldModel';
+import { formField } from '../../UIComponents/FormComponents/formFieldModel';
 /**
  * Have not added any API calls here,
  * simply use the form fields to render
@@ -11,6 +11,7 @@ import { formField } from '../../UIComponents/FormComponents/formModels/formFiel
 const sectionName = 'signing-authority';
 const SigningAuthority = ({ formik }) => {
   const { signingAuthorityRepresentative } = formField;
+  console.log(formik.values);
   return (
     <form onSubmit={formik.handleSubmit}>
       <h1 className="fw-600 h2" id={sectionName}>

@@ -12,7 +12,7 @@ import {
 import {
   formField,
   initialValues,
-} from '../UIComponents/FormComponents/formModels/formFieldModel';
+} from '../UIComponents/FormComponents/formFieldModel';
 import CompanyInformation from './CompanyInformation/CompanyInformation';
 import MembershipLevel from './MembershipLevel/MembershipLevel';
 import WorkingGroupsWrapper from './WorkingGroups/WorkingGroupsWrapper';
@@ -20,8 +20,8 @@ import SigningAuthority from './SigningAuthority/SigningAuthority';
 import Review from './Review/Review';
 import Step from '../UIComponents/Steppers/Step';
 import SignInIntroduction from './SignIn/SignInIntroduction';
-import SubmitSuccess from '../UIComponents/FormComponents/SubmitSuccess';
-import { validationSchema } from '../UIComponents/FormComponents/formModels/ValidationSchema';
+import SubmitSuccess from './SubmitSuccess/SubmitSuccess';
+import { validationSchema } from '../UIComponents/FormComponents/ValidationSchema';
 import { useHistory } from 'react-router-dom';
 
 export default function Main({ furthestPage, setFurthestPage }) {
@@ -37,7 +37,7 @@ export default function Main({ furthestPage, setFurthestPage }) {
   const submitForm = (pageIndex, nextPage) => {
     // do something for submiting
     // ...
-    // history.replace('/');
+
     goToNextStep(pageIndex, nextPage);
   };
 
@@ -45,7 +45,6 @@ export default function Main({ furthestPage, setFurthestPage }) {
     initialValues: initialValues,
     validationSchema: validationSchema[0],
     onSubmit: (values) => {
-      console.log('values: ', values);
       // update the organization values
       const organization = values.organization;
       const representative = values.representative;
@@ -192,7 +191,11 @@ export default function Main({ furthestPage, setFurthestPage }) {
             )}
           </Route>
           <Route path="/submitted">
-            <SubmitSuccess />
+            {furthestPage.index >= 6 ? (
+              <SubmitSuccess />
+            ) : (
+              <Redirect to={furthestPage.pathName} />
+            )}
           </Route>
         </Switch>
       </>

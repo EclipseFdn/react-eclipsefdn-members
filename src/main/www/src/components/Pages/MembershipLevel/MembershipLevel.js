@@ -15,13 +15,13 @@ import {
 import { makeStyles, TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CustomStepButton from '../../UIComponents/Button/CustomStepButton';
-import { formField } from '../../UIComponents/FormComponents/formModels/formFieldModel';
+import { formField } from '../../UIComponents/FormComponents/formFieldModel';
 
 /**
  * Render membership select component (use React-Select), with fetch and prefill data operation
  *
  *  - Props:
- *    -  otherProps: any other props passing down from MultiStepForm and FormikStepper components, including formik props of formik library (such as "formik.values", "formik.setFieldValue");
+ *    -  otherProps: any other props passing down from FormikStepper components, including formik props of formik library (such as "formik.values", "formik.setFieldValue");
  *    - formField: the form field in formModels/formFieldModel.js;
  */
 
@@ -46,6 +46,9 @@ const MembershipLevel = ({ formik }) => {
   useEffect(() => {
     // All pre-process: if running without server,
     // use fake json data; if running with API, use API
+
+    // just for React only testing.
+    let currentFormId = 'form_1';
     let url_prefix_local;
     let url_suffix_local = '';
     if (getCurrentMode() === MODE_REACT_ONLY) {
@@ -69,17 +72,20 @@ const MembershipLevel = ({ formik }) => {
             // the retrived membership level backend data to fit frontend, and
             // setFieldValue(): Prefill Data --> Call the setFieldValue of
             // Formik, to set membershipLevel field with the mapped data
-            formik.setFieldValue(
-              membershipLevel.name,
-              mapMembershipLevel(data[0]?.membership_level, membership_levels)
+            const tempMembershipLevel = mapMembershipLevel(
+              data[0]?.membership_level,
+              membership_levels
             );
+            formik.setFieldValue('membershipLevel', tempMembershipLevel.label);
+            formik.setFieldValue('membershipLevel-label', tempMembershipLevel);
           }
           setLoading(false);
         });
     } else {
       setLoading(false);
     }
-  }, [currentFormId, membershipLevel.name, formik]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentFormId]);
 
   if (loading) {
     return <Loading />;

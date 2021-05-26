@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import DefaultSelect from '../../UIComponents/Inputs/CustomSelect/DefaultSelect';
-// import CustomSelectWrapper from '../../UIComponents/Inputs/CustomSelect/CustomSelectWrapper';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles, TextField } from '@material-ui/core';
 
@@ -45,11 +43,8 @@ const ParticipationLevel = ({
         ''
       );
     }
-  }, [
-    workingGroupListData,
-    formik.values.workingGroups[theIndex]['workingGroup'],
-  ]);
-  // This is causing the Maximum update depth exceeded warning.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [workingGroupListData]);
 
   return (
     <>

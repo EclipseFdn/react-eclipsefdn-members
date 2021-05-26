@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Input from '../../UIComponents/Inputs/Input';
-import { formField } from '../../UIComponents/FormComponents/formModels/formFieldModel';
+import { formField } from '../../UIComponents/FormComponents/formFieldModel';
 import { Checkbox, FormControlLabel } from '@material-ui/core';
 
 /**

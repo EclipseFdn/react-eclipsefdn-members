@@ -20,7 +20,7 @@ import { FieldArray } from 'formik';
  * and WorkingGroups Representative inputs components
  *
  *  - Props:
- *    - workingGroupsData: working group options to choose from; passed from MultiStepForm component to WorkingGroupsWrapper and to here
+ *    - workingGroupsData: working group options to choose from; passed from WorkingGroupsWrapper to here
  *
  *    - arrayHelpers: from Formik library, passed from WorkingGroupsWrapper component, includes all array operations for inputs, please refer to https://formik.org/docs/api/fieldarray#fieldarray-helpers
  *
@@ -98,7 +98,6 @@ const WorkingGroup = ({ formik }) => {
                   Which working group would you like to join?{' '}
                   <span className="orange-star">*</span>{' '}
                 </h2>
-                {console.log('testdd: ', formik.values)}
                 <Autocomplete
                   id={`${workingGroupsLabel}.${index}.workingGroup`}
                   options={workingGroupListData}

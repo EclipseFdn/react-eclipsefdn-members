@@ -5,7 +5,8 @@ import DateInput from '../../UIComponents/Inputs/DateInput';
  * Render Effective Date input component (react-datepicker)
  *
  *  - Props:
- *    - name: fieldName (for Effective Date, an example would be: `workingGroups[i].effectiveDate`); this is handled by and passed from WorkingGroup component
+ *    - name: fieldName (for Effective Date, an example would be: `workingGroups[i].effectiveDate`); 
+ *            this is handled by and passed from WorkingGroup component
  */
 const EffectiveDate = ({ name, index, formik }) => {
   const theIndex = index;
@@ -18,10 +19,6 @@ const EffectiveDate = ({ name, index, formik }) => {
       </h3>
       <div className="row">
         <div className="col-md-12">
-          {console.log(
-            'date: ',
-            formik.values.workingGroups[theIndex].effectiveDate
-          )}
           <DateInput
             ariaLabel={name}
             label="EffectiveDate"

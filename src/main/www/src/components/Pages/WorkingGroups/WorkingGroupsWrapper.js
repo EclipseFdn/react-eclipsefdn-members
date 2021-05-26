@@ -24,9 +24,9 @@ import { FormikProvider } from 'formik';
  * please refer to https://formik.org/docs/api/fieldarray
  *
  *  - Props:
- *    - workingGroupsData: working group options to choose from; passed from MultiStepForm component
+ *    - workingGroupsData: working group options to choose from;
  *
- *    - otherProps: any other props passing down from MultiStepForm and FormikStepper components, including formik props of formik library (such as "formik.values", "formik.setFieldValue");
+ *    - otherProps: any other props passing down from FormikStepper components, including formik props of formik library (such as "formik.values", "formik.setFieldValue");
  *
  *    - formField: the form field in formModels/formFieldModel.js
  */
@@ -40,6 +40,7 @@ const WorkingGroupsWrapper = ({ formik }) => {
   const fetchWorkingGroupsData = () => {
     // All pre-process: if running without server,
     // use fake json data; if running with API, use API
+
     let url_prefix_local;
     let url_suffix_local = '';
     if (getCurrentMode() === MODE_REACT_ONLY) {
@@ -84,6 +85,7 @@ const WorkingGroupsWrapper = ({ formik }) => {
   useEffect(() => {
     // Fetch existing form data
     fetchWorkingGroupsData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loading) {

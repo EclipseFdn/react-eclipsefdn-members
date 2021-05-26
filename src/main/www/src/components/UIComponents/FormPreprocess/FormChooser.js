@@ -46,16 +46,16 @@ const FormChooser = () => {
           <button
             type="button"
             onClick={fetchExistingForm(setCurrentFormId)}
-            className="btn btn-primary">
-            {' '}
-            Continue Existing Application{' '}
+            className="btn btn-primary"
+          >
+            Continue Existing Application
           </button>
           <button
             type="button"
             onClick={setCurrentFormId(newForm_tempId)}
-            className="btn btn-primary">
-            {' '}
-            Start New Application{' '}
+            className="btn btn-primary"
+          >
+            Start New Application
           </button>
         </div>
       )}

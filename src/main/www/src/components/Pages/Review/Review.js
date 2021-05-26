@@ -2,8 +2,6 @@ import React from 'react';
 import CustomStepButton from '../../UIComponents/Button/CustomStepButton';
 
 const Review = ({ values, submitForm }) => {
-  console.log(values);
-
   return (
     <form onSubmit={() => submitForm(5, '/submitted')}>
       <h1 className="fw-600 h2">
