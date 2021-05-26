@@ -34,7 +34,7 @@ You will also see any lint errors in the console.
 
 As part of the set up, you will need to create a `secret.properties` file within the `./config` folder and set up the secrets that are required to run the application. If named `secret.properties`, the file should be ignored by Github automatically, making it less risky that credentials are accidentally uploaded to a branch.  
 
-The fields required to run are the datasource and OIDC properties. The datasource properties should be a set of user credentials that can write to a local mariadb instance. Within that mariadb instance, a database should be created to contain the data used in development. Once created, a JDBC URL can now be formed for the new database. This URL should follow the pattern below, with port not always required (depending on your local setup and proxy settings).  
+The fields required to run are the datasource and OIDC properties. The datasource properties should be a set of user credentials that can write to a local mariadb instance. Within that mariadb instance, a database should be created to contain the data used in development. Once created, a JDBC URL can now be formed for the new database. This URL should follow the pattern below, with port not always required (depending on your local setup and proxy settings).  This will be set in the `secret.properties` file. 
 
 ```  
 quarkus.datasource.jdbc.url = jdbc:mariadb://<host><:port?>/<databaseName>
