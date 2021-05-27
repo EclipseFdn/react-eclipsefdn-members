@@ -1,4 +1,3 @@
-import React from 'react';
 import MembershipContext from '../../../Context/MembershipContext';
 
 import {
@@ -34,6 +33,7 @@ const FormChooser = () => {
       })
       .catch((err) => console.log(err));
   };
+  console.log(fetchExistingForm)
 
   return (
     <MembershipContext.Consumer>
@@ -45,7 +45,7 @@ const FormChooser = () => {
           </h1>
           <button
             type="button"
-            onClick={fetchExistingForm(setCurrentFormId)}
+            // onClick={fetchExistingForm(setCurrentFormId)}
             className="btn btn-primary"
           >
             Continue Existing Application

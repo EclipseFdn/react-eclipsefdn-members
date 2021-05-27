@@ -1,6 +1,6 @@
 import React from 'react';
 import MembershipContext from '../../../Context/MembershipContext';
-import FormChooser from '../../UIComponents/FormPreprocess/FormChooser';
+// import FormChooser from '../../UIComponents/FormPreprocess/FormChooser';
 import {
   FETCH_HEADER,
   api_prefix,
@@ -75,7 +75,7 @@ class SignIn extends React.Component {
       fetch(api_prefix() + `/${end_point.userinfo}`, { headers: FETCH_HEADER })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data); // {family_name: "User1", given_name: "User1", name: "user1"}
+          console.log("data: ",data); // {family_name: "User1", given_name: "User1", name: "user1"}
           this.context.setCurrentUser(data);
         })
         .catch((err) => console.log(err));
@@ -87,11 +87,10 @@ class SignIn extends React.Component {
       <MembershipContext.Consumer>
         {({ setFurthestPage }) => (
           <>
-            {this.context.currentUser ? (
-              <FormChooser />
-            ) : (
-              this.renderButtons(setFurthestPage)
-            )}
+            {this.context.currentUser
+              ? // <FormChooser />
+                this.renderButtons(setFurthestPage)
+              : this.renderButtons(setFurthestPage)}
           </>
         )}
       </MembershipContext.Consumer>
