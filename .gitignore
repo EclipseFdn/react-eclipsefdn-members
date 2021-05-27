@@ -7,6 +7,7 @@ node_modules
 
 # docker volumes
 volumes/
+certs
 
 # testing
 /coverage
@@ -72,6 +73,7 @@ nb-configuration.xml
 # Ignore built resources to display in package
 src/main/resources/META-INF/resources/*
 secret.properties
+docker.secret.properties
 
 #environment variables
 .env
