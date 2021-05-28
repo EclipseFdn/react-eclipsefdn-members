@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import AppFooter from './components/UIComponents/layout/AppFooter';
 import AppHeader from './components/UIComponents/layout/AppHeader';
@@ -30,15 +30,20 @@ const App = () => {
     currentFormId,
     setCurrentFormId: (val) => setCurrentFormId(val),
     furthestPage,
-    setFurthestPage
+    setFurthestPage,
   };
-  
+
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
         <AppHeader />
         <MembershipContext.Provider value={membershipContextValue}>
-          <FormWrapper />
+          <Router>
+            <Main
+              furthestPage={furthestPage}
+              setFurthestPage={setFurthestPage}
+            />
+          </Router>
         </MembershipContext.Provider>
         <AppFooter />
       </ThemeProvider>
