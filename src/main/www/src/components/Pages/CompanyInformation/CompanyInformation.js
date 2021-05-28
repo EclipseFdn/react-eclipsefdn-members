@@ -17,6 +17,7 @@ import {
   MODE_REACT_API,
 } from '../../../Constants/Constants';
 import CustomStepButton from '../../UIComponents/Button/CustomStepButton';
+import { initialValues } from '../../UIComponents/FormComponents/formFieldModel';
 
 /**
  * Wrapper for Contacts and Company components
@@ -106,6 +107,10 @@ const CompanyInformation = ({ formik }) => {
           }
           setLoading(false);
         });
+    } else if (currentFormId === newForm_tempId) {
+      formik.setFieldValue('representative', initialValues.representative);
+      formik.setFieldValue('organization', initialValues.organization);
+      setLoading(false);
     } else {
       setLoading(false);
     }
@@ -115,6 +120,7 @@ const CompanyInformation = ({ formik }) => {
   // as long as currentFormId and setFieldValue
   // Function does not change, will not cause re-render again
   useEffect(() => {
+    setLoading(true);
     detectModeAndFetch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentFormId]);

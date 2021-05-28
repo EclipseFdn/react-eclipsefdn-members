@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useFormik } from 'formik';
 import SignIn from './SignIn/SignIn';
@@ -23,12 +23,10 @@ import SignInIntroduction from './SignIn/SignInIntroduction';
 import SubmitSuccess from './SubmitSuccess/SubmitSuccess';
 import { validationSchema } from '../UIComponents/FormComponents/ValidationSchema';
 import { useHistory } from 'react-router-dom';
-import MembershipContext from '../../Context/MembershipContext';
 
 export default function Main({ furthestPage, setFurthestPage }) {
   const history = useHistory();
   const [updatedFormValues, setUpdatedFormValues] = useState(initialValues);
-  const { currentUser } = useContext(MembershipContext);
 
   const goToNextStep = (pageIndex, nextPage) => {
     if (furthestPage.index <= pageIndex)
@@ -115,13 +113,6 @@ export default function Main({ furthestPage, setFurthestPage }) {
     </div>
   );
 
-  useEffect(() => {
-    if (currentUser) {
-      setFurthestPage({ index: 1, pathName: '/company-info' });
-      history.push('/company-info');
-    }
-  }, [currentUser]);
-
   return (
     <div className="container eclipseFdn-membership-webform">
       <>
@@ -138,7 +129,11 @@ export default function Main({ furthestPage, setFurthestPage }) {
           </Route>
 
           <Route exact path="/signIn">
-            <SignIn formField={formField} label={COMPANY_INFORMATION} />
+            <SignIn
+              formField={formField}
+              label={COMPANY_INFORMATION}
+              setFurthestPage={setFurthestPage}
+            />
           </Route>
 
           <Route path="/company-info">
