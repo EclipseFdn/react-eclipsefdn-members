@@ -24,26 +24,21 @@ const App = () => {
     pathName: '/signIn',
   });
 
+  const membershipContextValue = {
+    currentUser,
+    setCurrentUser: (val) => setCurrentUser(val),
+    currentFormId,
+    setCurrentFormId: (val) => setCurrentFormId(val),
+    furthestPage,
+    setFurthestPage
+  };
+  
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
         <AppHeader />
-        <MembershipContext.Provider
-          value={{
-            currentUser,
-            setCurrentUser: (val) => setCurrentUser(val),
-            currentFormId,
-            setCurrentFormId: (val) => setCurrentFormId(val),
-            furthestPage,
-            setFurthestPage,
-          }}
-        >
-          <Router>
-            <Main
-              furthestPage={furthestPage}
-              setFurthestPage={setFurthestPage}
-            />
-          </Router>
+        <MembershipContext.Provider value={membershipContextValue}>
+          <FormWrapper />
         </MembershipContext.Provider>
         <AppFooter />
       </ThemeProvider>
