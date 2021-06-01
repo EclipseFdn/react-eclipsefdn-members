@@ -670,29 +670,45 @@ components:
       Organization:
          type: object
          properties:
-            organization_id:
+            id:
                $ref: '#/components/schemas/ObjectID'
             name:
                type: string
-            memberType:
-               type: string
-            shortDescription:
-               type: string
-            companyUrl:
-               type: string
-            smallLogo:
-               type: string
-            largeLogo:
-               type: string
-            wgpa:
+            member_level:
                type: object
-               description: test
-               additionalProperties:
+               properties:
+                  level:
+                     type: string
+                  description:
+                     type: string
+            description:
+               type: object
+               properties:
+                  short:
+                     type: string
+                  full:
+                     type: string
+            website:
+               type: string
+            logos:
+               type: object
+               properties:
+                  small:
+                     type: string
+                     description: URL of compressed for web logo 
+                  full:
+                     type: string
+                     description: URL of full resolution logo
+            wgpa:
+               type: array
+               items:
                   type: object
                   properties:
                      document_id:
                         $ref: '#/components/schemas/ObjectID'
-                     relation:
+                     level:
+                        type: string
+                     working_group:
                         type: string
                      description:
                         type: string
