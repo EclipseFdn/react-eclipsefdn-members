@@ -21,6 +21,11 @@ import javax.ws.rs.core.Response;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.eclipsefoundation.react.api.OrganizationAPI;
 
+/**
+ * Allows for external organizations data to be retrieved and displayed. This
+ * endpoint is unencrypted as all data displayed is publicly available
+ * information.
+ */
 @Path("organizations")
 @Produces(MediaType.APPLICATION_JSON)
 public class OrganizationResource {

@@ -23,14 +23,37 @@ import javax.ws.rs.core.MediaType;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import org.eclipsefoundation.react.api.model.Organization;
 
+/**
+ * REST API binding for the external Foundation Organizations API. This endpoint
+ * allows for the retrieval of Eclipse Foundation members, and for filtering by
+ * page, working group ID, or ID of the organization.
+ */
 @Path("member")
 @RegisterRestClient(configKey = "fdn-api")
 public interface OrganizationAPI {
 
+    /**
+     * Retrieves a set of organizations from the external endpoing, allowing for
+     * simple pagination of the results and filtering by organizations participation
+     * within a working group.
+     * 
+     * @param workingGroup optional string to filter organizations by working group
+     *                     participation, given the ID
+     * @param page         the page of results ro retrieve
+     * @return the set of organizations for the given query parameters, or an empty
+     *         set if none are found.
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     Set<Organization> organizations(@QueryParam("working_group") String workingGroup, @QueryParam("page") int page);
 
+    /**
+     * Retrieves a single organization by ID from the external endpoint.
+     * 
+     * @param id the ID of the organization that should be retrieved.
+     * @return the organization data if it exists as an Eclipse Foundation member,
+     *         or null if there is no member with the given ID.
+     */
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
