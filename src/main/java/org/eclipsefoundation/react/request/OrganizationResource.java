@@ -11,10 +11,8 @@
  */
 package org.eclipsefoundation.react.request;
 
-import java.util.Collections;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -25,10 +23,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.eclipse.microprofile.rest.client.inject.RestClient;
-import org.eclipsefoundation.react.api.OrganizationAPI;
 import org.eclipsefoundation.react.api.model.Organization;
-import org.jboss.resteasy.specimpl.MultivaluedMapImpl;
+import org.eclipsefoundation.react.service.OrganizationsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,40 +38,25 @@ import org.slf4j.LoggerFactory;
 public class OrganizationResource extends AbstractRESTResource {
     public static final Logger LOGGER = LoggerFactory.getLogger(OrganizationResource.class);
 
-    @RestClient
     @Inject
-    OrganizationAPI orgAPI;
+    OrganizationsService orgAPI;
 
     @GET
     public Response get() {
-        Optional<List<Organization>> orgs = cache.get("all", new MultivaluedMapImpl<>(), Organization.class, () -> getAll(null));
+        List<Organization> orgs = orgAPI.get();
         if (orgs.isEmpty()) {
             return Response.noContent().build();
         }
-        return Response.ok(orgs.get()).build();
+        return Response.ok(new ArrayList<>(orgs)).build();
     }
 
     @GET
     @Path("{orgID}")
     public Response get(@PathParam("orgID") String organizationID) {
-        Organization org = orgAPI.organizationByID(organizationID);
+        Organization org = orgAPI.getByID(organizationID);
         if (org == null) {
             return Response.noContent().build();
         }
-        return Response.ok(orgAPI.organizationByID(organizationID)).build();
-    }
-
-    private List<Organization> getAll(String workingGroup) {
-        String actualWG = workingGroup == null ? "" : workingGroup;
-        List<Organization> orgs = new LinkedList<>();
-        Set<Organization> tmp = Collections.emptySet();
-        int count = 1;
-        do {
-            tmp = orgAPI.organizations(actualWG, count);
-            orgs.addAll(tmp);
-            LOGGER.error("{}",tmp);
-            count++;
-        } while(!tmp.isEmpty() && tmp != null);
-        return orgs;
+        return Response.ok(org).build();
     }
 }
