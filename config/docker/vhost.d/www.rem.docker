@@ -1,23 +1,23 @@
 location /form {
-  proxy_pass http://api:8090/form;
+  proxy_pass http://api:8443/form;
 }
 
 location /login {
-  proxy_pass http://api:8090/login;
+  proxy_pass http://api:8443/login;
 }
 
 location /userinfo {
-  proxy_pass http://api:8090/userinfo;
+  proxy_pass http://api:8443/userinfo;
 }
 
 location /logout {
-  proxy_pass http://api:8090/logout;
+  proxy_pass http://api:8443/logout;
 }
 
 location /working_groups {
-  proxy_pass http://api:8090/working_groups;
+  proxy_pass http://api:8443/working_groups;
 }
 
 location /organizations {
-  proxy_pass http://api:8090/organizations;
+  proxy_pass http://api:8443/organizations;
 }

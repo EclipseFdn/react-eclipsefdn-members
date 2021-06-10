@@ -18,13 +18,17 @@ services:
       dockerfile: ./src/main/docker/Dockerfile.jvm
     image: eclipsefdn/membership-rest-api:latest
     ports:
-      - 8090
+      - 8443
     environment:
       - VIRTUAL_HOST=api.rem.docker
-      - VIRTUAL_PORT=8090
+      - VIRTUAL_PORT=8443
+      - VIRTUAL_PROTO=https
       - CONFIG_SECRET_PATH=/var/run/secrets/secret.properties
+      - QUARKUS_HTTP_SSL_CERTIFICATE_FILE=/var/run/secrets/ssl/www.rem.docker.crt
+      - QUARKUS_HTTP_SSL_CERTIFICATE_KEY_FILE=/var/run/secrets/ssl/www.rem.docker.key
     volumes:
       - ./config/secret.properties:/var/run/secrets/secret.properties
+      - ./certs:/var/run/secrets/ssl
     deploy:
       restart_policy:
         condition: on-failure
