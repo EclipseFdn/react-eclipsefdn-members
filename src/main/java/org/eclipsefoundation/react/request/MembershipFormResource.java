@@ -81,9 +81,11 @@ public class MembershipFormResource extends AbstractRESTResource {
         List<MembershipForm> results = dao.get(new RDBMSQuery<>(wrap, filters.get(MembershipForm.class), params));
         if (results == null) {
             return Response.serverError().build();
+        } else if (results.isEmpty()) {
+            return Response.status(404).build();
         }
         // return the results as a response
-        return Response.ok(results).build();
+        return Response.ok(results.get(0)).build();
     }
 
     @POST
@@ -95,11 +97,12 @@ public class MembershipFormResource extends AbstractRESTResource {
 
     @PUT
     @Path("{id}")
-    public List<MembershipForm> update(@PathParam("id") String formID, MembershipForm mem) {
+    public Response update(@PathParam("id") String formID, MembershipForm mem) {
         mem.setUserID(ident.getPrincipal().getName());
         // need to fetch ref to use attached entity
         MembershipForm ref = mem.cloneTo(dao.getReference(formID, MembershipForm.class));
-        return dao.add(new RDBMSQuery<>(wrap, filters.get(MembershipForm.class)), Arrays.asList(ref));
+        return Response.ok(dao.add(new RDBMSQuery<>(wrap, filters.get(MembershipForm.class)), Arrays.asList(ref)))
+                .build();
     }
 
     @DELETE

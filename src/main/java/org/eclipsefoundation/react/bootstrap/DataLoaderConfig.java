@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 import io.quarkus.arc.config.ConfigProperties;
 
 /**
@@ -29,7 +30,7 @@ public class DataLoaderConfig {
     private boolean enabled = false;
     private List<String> dataLoaderProfiles = Arrays.asList("dev", "staging");
     private Integer formCount = 25;
-    private List<String> userIDs = Arrays.asList("malowe", "cguindon", "epoirier", "zhoufang");
+    private List<String> userIds = Arrays.asList("malowe", "cguindon", "epoirier", "zhoufang");
     private List<String> workingGroups = Arrays.asList("internet-things-iot", "jakarta-ee", "cloud-tools-development");
     private List<String> membershipLevels = Arrays.asList("strategic", "contributing", "associate", "committer");
     private List<String> participationLevels = Arrays.asList("platinum", "gold", "silver", "associate");
@@ -79,15 +80,15 @@ public class DataLoaderConfig {
     /**
      * @return the userIDs
      */
-    public List<String> getUserIDs() {
-        return new ArrayList<>(userIDs);
+    public List<String> getUserIds() {
+        return new ArrayList<>(userIds);
     }
 
     /**
      * @param userIDs the userIDs to set
      */
-    public void setUserIDs(List<String> userIDs) {
-        this.userIDs = new ArrayList<>(userIDs);
+    public void setUserIds(List<String> userIDs) {
+        this.userIds = new ArrayList<>(userIDs);
     }
 
     /**
