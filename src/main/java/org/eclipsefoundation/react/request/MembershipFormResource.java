@@ -23,11 +23,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
 
 import org.eclipsefoundation.core.helper.CSRFHelper;
 import org.eclipsefoundation.core.namespace.DefaultUrlParameterNames;
@@ -48,9 +46,6 @@ import io.quarkus.security.Authenticated;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class MembershipFormResource extends AbstractRESTResource {
-
-    @Context
-    SecurityContext ctx;
 
     @GET
     public Response getAll(@HeaderParam(value = CSRFHelper.CSRF_HEADER_NAME) String csrf) {
@@ -98,6 +93,10 @@ public class MembershipFormResource extends AbstractRESTResource {
     @PUT
     @Path("{id}")
     public Response update(@PathParam("id") String formID, MembershipForm mem) {
+        // make sure we have something to put
+        if (mem == null) {
+            return Response.status(500).build();
+        }
         mem.setUserID(ident.getPrincipal().getName());
         // need to fetch ref to use attached entity
         MembershipForm ref = mem.cloneTo(dao.getReference(formID, MembershipForm.class));
