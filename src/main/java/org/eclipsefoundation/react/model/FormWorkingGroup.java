@@ -154,7 +154,6 @@ public class FormWorkingGroup extends BareNode implements TargetedClone<FormWork
 
     @Override
     public FormWorkingGroup cloneTo(FormWorkingGroup target) {
-        target.setContact(getContact());
         target.setEffectiveDate(getEffectiveDate());
         target.setParticipationLevel(getParticipationLevel());
         target.setWorkingGroupID(getWorkingGroupID());
