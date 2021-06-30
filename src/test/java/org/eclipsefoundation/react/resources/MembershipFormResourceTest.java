@@ -105,6 +105,20 @@ public class MembershipFormResourceTest {
                 .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter)).when()
                 .get(FORMS_BY_ID_URL, SAMPLE_FORM_UUID).then().assertThat()
                 .body(matchesJsonSchemaInClasspath(SchemaNamespaceHelper.MEMBERSHIP_FORM_SCHEMA_PATH));
+
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter)).when()
+                .get(FORMS_BY_ID_URL, SAMPLE_FORM_UUID).then().statusCode(200);
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter)).accept(ContentType.JSON)
+                .when().get(FORMS_BY_ID_URL, SAMPLE_FORM_UUID).then().statusCode(200);
+
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter)).accept(ContentType.XML)
+                .when().get(FORMS_BY_ID_URL, SAMPLE_FORM_UUID).then().statusCode(500);
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter)).accept(ContentType.TEXT)
+                .when().get(FORMS_BY_ID_URL, SAMPLE_FORM_UUID).then().statusCode(500);
     }
 
     //
@@ -141,11 +155,21 @@ public class MembershipFormResourceTest {
         String json = generateSample(Optional.of(SAMPLE_FORM_UUID));
         Assertions.assertTrue(
                 matchesJsonSchemaInClasspath(SchemaNamespaceHelper.MEMBERSHIP_FORM_PUSH_SCHEMA_PATH).matches(json));
-
+        // json format
         SessionFilter sessionFilter = new SessionFilter();
         given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter)).body(json)
+                .contentType(ContentType.JSON).when().post(FORMS_BASE_URL).then().statusCode(200);
+
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter)).body(json).when()
+                .post(FORMS_BASE_URL).then().statusCode(500);
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
                 .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
-                .contentType(ContentType.JSON).body(json).when().post(FORMS_BASE_URL).then().statusCode(200);
+                .contentType(ContentType.TEXT).body(json).when().post(FORMS_BASE_URL).then().statusCode(500);
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
+                .contentType(ContentType.XML).body(json).when().post(FORMS_BASE_URL).then().statusCode(500);
     }
 
     @Test
@@ -156,6 +180,19 @@ public class MembershipFormResourceTest {
                 .contentType(ContentType.JSON).body(generateSample(Optional.of(SAMPLE_FORM_UUID))).when()
                 .post(FORMS_BASE_URL).then().assertThat()
                 .body(matchesJsonSchemaInClasspath(SchemaNamespaceHelper.MEMBERSHIP_FORMS_SCHEMA_PATH));
+
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
+                .body(generateSample(Optional.of(SAMPLE_FORM_UUID))).when().post(FORMS_BASE_URL).then().assertThat()
+                .statusCode(500);
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
+                .contentType(ContentType.TEXT).body(generateSample(Optional.of(SAMPLE_FORM_UUID))).when()
+                .post(FORMS_BASE_URL).then().statusCode(500);
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
+                .contentType(ContentType.XML).body(generateSample(Optional.of(SAMPLE_FORM_UUID))).when()
+                .post(FORMS_BASE_URL).then().statusCode(500);
     }
 
     //
@@ -166,16 +203,17 @@ public class MembershipFormResourceTest {
         // auth is triggered after CSRF for non GET requests
         SessionFilter sessionFilter = new SessionFilter();
         given().filter(sessionFilter).header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter)).auth()
-                .none().contentType(ContentType.JSON).body(generateSample(Optional.of(SAMPLE_FORM_UUID))).when()
-                .put(FORMS_BY_ID_URL, SAMPLE_FORM_UUID).then().statusCode(401);
+                .none().contentType(ContentType.JSON).accept(ContentType.JSON)
+                .body(generateSample(Optional.of(SAMPLE_FORM_UUID))).when().put(FORMS_BY_ID_URL, SAMPLE_FORM_UUID)
+                .then().statusCode(401);
     }
 
     @Test
     void putFormByID_csrfGuard() {
         // happens after auth, once the request is processed
         given().auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet())).contentType(ContentType.JSON)
-                .body(generateSample(Optional.of(SAMPLE_FORM_UUID))).when().put(FORMS_BY_ID_URL, SAMPLE_FORM_UUID)
-                .then().statusCode(403);
+                .accept(ContentType.JSON).body(generateSample(Optional.of(SAMPLE_FORM_UUID))).when()
+                .put(FORMS_BY_ID_URL, SAMPLE_FORM_UUID).then().statusCode(403);
     }
 
     @Test
@@ -183,7 +221,8 @@ public class MembershipFormResourceTest {
         SessionFilter sessionFilter = new SessionFilter();
         given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
                 .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
-                .contentType(ContentType.JSON).when().put(FORMS_BY_ID_URL, SAMPLE_FORM_UUID).then().statusCode(500);
+                .contentType(ContentType.JSON).accept(ContentType.JSON).when().put(FORMS_BY_ID_URL, SAMPLE_FORM_UUID)
+                .then().statusCode(500);
     }
 
     @Test
@@ -191,7 +230,7 @@ public class MembershipFormResourceTest {
         SessionFilter sessionFilter = new SessionFilter();
         given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
                 .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
-                .contentType(ContentType.JSON).body(generateSample(Optional.empty())).when()
+                .body(generateSample(Optional.empty())).contentType(ContentType.JSON).when()
                 .put(FORMS_BY_ID_URL, SAMPLE_FORM_UUID).then().statusCode(200);
     }
 
@@ -205,23 +244,49 @@ public class MembershipFormResourceTest {
         SessionFilter sessionFilter = new SessionFilter();
         given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
                 .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
+                .contentType(ContentType.JSON).accept(ContentType.JSON).body(json).when()
+                .put(FORMS_BY_ID_URL, SAMPLE_FORM_UUID).then().statusCode(200);
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
                 .contentType(ContentType.JSON).body(json).when().put(FORMS_BY_ID_URL, SAMPLE_FORM_UUID).then()
                 .statusCode(200);
+
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
+                .contentType(ContentType.TEXT).body(json).when().put(FORMS_BY_ID_URL, SAMPLE_FORM_UUID).then()
+                .statusCode(500);
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
+                .contentType(ContentType.XML).body(json).when().put(FORMS_BY_ID_URL, SAMPLE_FORM_UUID).then()
+                .statusCode(500);
     }
 
     @Test
     void putFormByID_success_format() {
-        // Check that the input matches what is specified in spec
-        String json = generateSample(Optional.of(SAMPLE_FORM_UUID));
-        Assertions.assertTrue(
-                matchesJsonSchemaInClasspath(SchemaNamespaceHelper.MEMBERSHIP_FORM_PUSH_SCHEMA_PATH).matches(json));
-
+        // Check that the output matches what is specified in spec
         SessionFilter sessionFilter = new SessionFilter();
         given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
                 .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
+                .contentType(ContentType.JSON).accept(ContentType.JSON)
+                .body(generateSample(Optional.of(SAMPLE_FORM_UUID))).when().put(FORMS_BY_ID_URL, SAMPLE_FORM_UUID)
+                .then().body(matchesJsonSchemaInClasspath(SchemaNamespaceHelper.MEMBERSHIP_FORMS_SCHEMA_PATH))
+                .statusCode(200);
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
                 .contentType(ContentType.JSON).body(generateSample(Optional.of(SAMPLE_FORM_UUID))).when()
-                .put(FORMS_BY_ID_URL, SAMPLE_FORM_UUID).then().assertThat()
-                .body(matchesJsonSchemaInClasspath(SchemaNamespaceHelper.MEMBERSHIP_FORMS_SCHEMA_PATH));
+                .put(FORMS_BY_ID_URL, SAMPLE_FORM_UUID).then()
+                .body(matchesJsonSchemaInClasspath(SchemaNamespaceHelper.MEMBERSHIP_FORMS_SCHEMA_PATH)).statusCode(200);
+        // asserts content type of output for integrity
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
+                .contentType(ContentType.JSON).accept(ContentType.TEXT)
+                .body(generateSample(Optional.of(SAMPLE_FORM_UUID))).when().put(FORMS_BY_ID_URL, SAMPLE_FORM_UUID)
+                .then().statusCode(500);
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
+                .contentType(ContentType.JSON).accept(ContentType.XML)
+                .body(generateSample(Optional.of(SAMPLE_FORM_UUID))).when().put(FORMS_BY_ID_URL, SAMPLE_FORM_UUID)
+                .then().statusCode(500);
     }
 
     @Test

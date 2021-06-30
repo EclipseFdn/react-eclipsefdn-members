@@ -117,7 +117,24 @@ public class FormWorkingGroupsResourceTest {
                 .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter)).when()
                 .get(FORM_WORKING_GROUP_BY_ID_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID,
                         FormWorkingGroupsResourceTest.SAMPLE_WORKING_GROUPS_ID)
-                .then().assertThat().body(matchesJsonSchemaInClasspath(SchemaNamespaceHelper.WORKING_GROUP_SCHEMA_PATH));
+                .then().assertThat()
+                .body(matchesJsonSchemaInClasspath(SchemaNamespaceHelper.WORKING_GROUP_SCHEMA_PATH));
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter)).accept(ContentType.JSON)
+                .when().get(FORM_WORKING_GROUP_BY_ID_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID,
+                        FormWorkingGroupsResourceTest.SAMPLE_WORKING_GROUPS_ID)
+                .then().statusCode(200);
+
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter)).accept(ContentType.XML)
+                .when().get(FORM_WORKING_GROUP_BY_ID_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID,
+                        FormWorkingGroupsResourceTest.SAMPLE_WORKING_GROUPS_ID)
+                .then().statusCode(500);
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter)).accept(ContentType.TEXT)
+                .when().get(FORM_WORKING_GROUP_BY_ID_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID,
+                        FormWorkingGroupsResourceTest.SAMPLE_WORKING_GROUPS_ID)
+                .then().statusCode(500);
     }
 
     //
@@ -128,8 +145,7 @@ public class FormWorkingGroupsResourceTest {
         // auth is triggered after CSRF for non GET requests
         SessionFilter sessionFilter = new SessionFilter();
         given().filter(sessionFilter).header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter)).auth()
-                .none().contentType(ContentType.JSON)
-                .body(generateSample(Optional.of(MembershipFormResourceTest.SAMPLE_FORM_UUID))).when()
+                .none().contentType(ContentType.JSON).body(generateSample(Optional.of(SAMPLE_WORKING_GROUPS_ID))).when()
                 .post(FORM_WORKING_GROUPS_BASE_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID).then().statusCode(401);
     }
 
@@ -137,7 +153,7 @@ public class FormWorkingGroupsResourceTest {
     void postFormWorkingGroup_csrfGuard() {
         // happens after auth, once the request is processed
         given().auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet())).contentType(ContentType.JSON)
-                .body(generateSample(Optional.of(MembershipFormResourceTest.SAMPLE_FORM_UUID))).when()
+                .body(generateSample(Optional.of(SAMPLE_WORKING_GROUPS_ID))).when()
                 .post(FORM_WORKING_GROUPS_BASE_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID).then().statusCode(403);
     }
 
@@ -146,15 +162,14 @@ public class FormWorkingGroupsResourceTest {
         SessionFilter sessionFilter = new SessionFilter();
         given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
                 .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
-                .contentType(ContentType.JSON)
-                .body(generateSample(Optional.of(MembershipFormResourceTest.SAMPLE_FORM_UUID))).when()
+                .contentType(ContentType.JSON).body(generateSample(Optional.of(SAMPLE_WORKING_GROUPS_ID))).when()
                 .post(FORM_WORKING_GROUPS_BASE_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID).then().statusCode(200);
     }
 
     @Test
     void postFormWorkingGroup_success_pushFormat() {
         // Check that the input matches what is specified in spec
-        String json = generateSample(Optional.of(MembershipFormResourceTest.SAMPLE_FORM_UUID));
+        String json = generateSample(Optional.of(SAMPLE_WORKING_GROUPS_ID));
         Assertions.assertTrue(
                 matchesJsonSchemaInClasspath(SchemaNamespaceHelper.ORGANIZATION_PUSH_SCHEMA_PATH).matches(json));
 
@@ -164,6 +179,19 @@ public class FormWorkingGroupsResourceTest {
                 .contentType(ContentType.JSON).body(json).when()
                 .post(FORM_WORKING_GROUPS_BASE_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID).then().assertThat()
                 .body(matchesJsonSchemaInClasspath(SchemaNamespaceHelper.WORKING_GROUPS_SCHEMA_PATH));
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
+                .contentType(ContentType.JSON).body(json).when()
+                .post(FORM_WORKING_GROUPS_BASE_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID).then().statusCode(200);
+
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
+                .contentType(ContentType.TEXT).body(json).when()
+                .post(FORM_WORKING_GROUPS_BASE_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID).then().statusCode(500);
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
+                .contentType(ContentType.XML).body(json).when()
+                .post(FORM_WORKING_GROUPS_BASE_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID).then().statusCode(500);
     }
 
     @Test
@@ -171,10 +199,22 @@ public class FormWorkingGroupsResourceTest {
         SessionFilter sessionFilter = new SessionFilter();
         given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
                 .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
-                .contentType(ContentType.JSON)
-                .body(generateSample(Optional.of(MembershipFormResourceTest.SAMPLE_FORM_UUID))).when()
+                .body(generateSample(Optional.of(SAMPLE_WORKING_GROUPS_ID))).contentType(ContentType.JSON).when()
                 .post(FORM_WORKING_GROUPS_BASE_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID).then().assertThat()
                 .body(matchesJsonSchemaInClasspath(SchemaNamespaceHelper.WORKING_GROUPS_SCHEMA_PATH));
+
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
+                .body(generateSample(Optional.of(SAMPLE_WORKING_GROUPS_ID))).when()
+                .post(FORM_WORKING_GROUPS_BASE_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID).then().statusCode(500);
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
+                .contentType(ContentType.TEXT).body(generateSample(Optional.of(SAMPLE_WORKING_GROUPS_ID))).when()
+                .post(FORM_WORKING_GROUPS_BASE_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID).then().statusCode(500);
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
+                .contentType(ContentType.XML).body(generateSample(Optional.of(SAMPLE_WORKING_GROUPS_ID))).when()
+                .post(FORM_WORKING_GROUPS_BASE_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID).then().statusCode(500);
     }
 
     //
@@ -185,8 +225,7 @@ public class FormWorkingGroupsResourceTest {
         // auth is triggered after CSRF for non GET requests
         SessionFilter sessionFilter = new SessionFilter();
         given().filter(sessionFilter).header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter)).auth()
-                .none().contentType(ContentType.JSON)
-                .body(generateSample(Optional.of(MembershipFormResourceTest.SAMPLE_FORM_UUID))).when()
+                .none().contentType(ContentType.JSON).body(generateSample(Optional.of(SAMPLE_WORKING_GROUPS_ID))).when()
                 .put(FORM_WORKING_GROUP_BY_ID_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID,
                         FormWorkingGroupsResourceTest.SAMPLE_WORKING_GROUPS_ID)
                 .then().statusCode(401);
@@ -196,7 +235,7 @@ public class FormWorkingGroupsResourceTest {
     void putFormWorkingGroupByID_csrfGuard() {
         // happens after auth, once the request is processed
         given().auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet())).contentType(ContentType.JSON)
-                .body(generateSample(Optional.of(MembershipFormResourceTest.SAMPLE_FORM_UUID))).when()
+                .body(generateSample(Optional.of(SAMPLE_WORKING_GROUPS_ID))).when()
                 .put(FORM_WORKING_GROUP_BY_ID_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID,
                         FormWorkingGroupsResourceTest.SAMPLE_WORKING_GROUPS_ID)
                 .then().statusCode(403);
@@ -233,11 +272,29 @@ public class FormWorkingGroupsResourceTest {
                 matchesJsonSchemaInClasspath(SchemaNamespaceHelper.ORGANIZATION_PUSH_SCHEMA_PATH).matches(json));
 
         given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
-                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
-                .contentType(ContentType.JSON).body(json).when()
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter)).body(json)
+                .contentType(ContentType.JSON).when()
                 .put(FORM_WORKING_GROUP_BY_ID_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID,
                         FormWorkingGroupsResourceTest.SAMPLE_WORKING_GROUPS_ID)
                 .then().statusCode(200);
+
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter)).body(json).when()
+                .put(FORM_WORKING_GROUP_BY_ID_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID,
+                        FormWorkingGroupsResourceTest.SAMPLE_WORKING_GROUPS_ID)
+                .then().statusCode(500);
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
+                .contentType(ContentType.TEXT).body(json).when()
+                .put(FORM_WORKING_GROUP_BY_ID_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID,
+                        FormWorkingGroupsResourceTest.SAMPLE_WORKING_GROUPS_ID)
+                .then().statusCode(500);
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
+                .contentType(ContentType.XML).body(json).when()
+                .put(FORM_WORKING_GROUP_BY_ID_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID,
+                        FormWorkingGroupsResourceTest.SAMPLE_WORKING_GROUPS_ID)
+                .then().statusCode(500);
     }
 
     @Test
@@ -245,12 +302,34 @@ public class FormWorkingGroupsResourceTest {
         SessionFilter sessionFilter = new SessionFilter();
         given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
                 .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
-                .contentType(ContentType.JSON)
-                .body(generateSample(Optional.of(MembershipFormResourceTest.SAMPLE_FORM_UUID))).when()
+                .contentType(ContentType.JSON).body(generateSample(Optional.of(SAMPLE_WORKING_GROUPS_ID))).when()
                 .put(FORM_WORKING_GROUP_BY_ID_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID,
                         FormWorkingGroupsResourceTest.SAMPLE_WORKING_GROUPS_ID)
                 .then().assertThat()
                 .body(matchesJsonSchemaInClasspath(SchemaNamespaceHelper.WORKING_GROUPS_SCHEMA_PATH));
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
+                .contentType(ContentType.JSON).body(generateSample(Optional.of(SAMPLE_WORKING_GROUPS_ID))).when()
+                .put(FORM_WORKING_GROUP_BY_ID_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID,
+                        FormWorkingGroupsResourceTest.SAMPLE_WORKING_GROUPS_ID)
+                .then().body(matchesJsonSchemaInClasspath(SchemaNamespaceHelper.MEMBERSHIP_FORMS_SCHEMA_PATH))
+                .statusCode(200);
+
+        // asserts content type of output for integrity
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
+                .contentType(ContentType.JSON).accept(ContentType.TEXT)
+                .body(generateSample(Optional.of(SAMPLE_WORKING_GROUPS_ID))).when()
+                .put(FORM_WORKING_GROUP_BY_ID_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID,
+                        FormWorkingGroupsResourceTest.SAMPLE_WORKING_GROUPS_ID)
+                .then().statusCode(500);
+        given().filter(sessionFilter).auth().oauth2(AuthHelper.getAccessToken(Collections.emptySet()))
+                .header(CSRFHelper.CSRF_HEADER_NAME, AuthHelper.getCSRFValue(sessionFilter))
+                .contentType(ContentType.JSON).accept(ContentType.XML)
+                .body(generateSample(Optional.of(SAMPLE_WORKING_GROUPS_ID))).when()
+                .put(FORM_WORKING_GROUP_BY_ID_URL, MembershipFormResourceTest.SAMPLE_FORM_UUID,
+                        FormWorkingGroupsResourceTest.SAMPLE_WORKING_GROUPS_ID)
+                .then().statusCode(500);
     }
 
     @Test
