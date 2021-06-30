@@ -22,6 +22,8 @@ import org.eclipsefoundation.core.service.CachingService;
 import org.eclipsefoundation.persistence.dao.PersistenceDao;
 import org.eclipsefoundation.persistence.service.FilterService;
 import org.eclipsefoundation.react.model.MembershipForm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import io.quarkus.security.identity.SecurityIdentity;
 
@@ -31,6 +33,7 @@ import io.quarkus.security.identity.SecurityIdentity;
  * @author Martin Lowe
  */
 public abstract class AbstractRESTResource {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractRESTResource.class);
     public static final String ALL_CACHE_PLACEHOLDER = "all";
 
     @Inject
@@ -69,7 +72,9 @@ public abstract class AbstractRESTResource {
             return Response.status(404).build();
         }
         // check that the logged in user is the creator of the form
-        if (form.getUserID().equals(ident.getPrincipal().getName())) {
+        if (!form.getUserID().equalsIgnoreCase(ident.getPrincipal().getName())) {
+            LOGGER.warn("User with name '{}' attempted to access form data for user '{}'",
+                    ident.getPrincipal().getName(), form.getUserID());
             return Response.status(403).build();
         }
         // if there is no issue, return no response
