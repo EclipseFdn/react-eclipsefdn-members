@@ -13,6 +13,7 @@ package org.eclipsefoundation.react.bootstrap;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -30,7 +31,7 @@ public class DataLoaderConfig {
     private boolean enabled = false;
     private List<String> dataLoaderProfiles = Arrays.asList("dev", "staging");
     private Integer formCount = 25;
-    private List<String> userIds = Arrays.asList("malowe", "cguindon", "epoirier", "zhoufang");
+    private List<String> userIds = Collections.emptyList();
     private List<String> workingGroups = Arrays.asList("internet-things-iot", "jakarta-ee", "cloud-tools-development");
     private List<String> membershipLevels = Arrays.asList("strategic", "contributing", "associate", "committer");
     private List<String> participationLevels = Arrays.asList("platinum", "gold", "silver", "associate");
