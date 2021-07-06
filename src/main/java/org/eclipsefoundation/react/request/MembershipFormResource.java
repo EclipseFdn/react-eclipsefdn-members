@@ -51,6 +51,7 @@ public class MembershipFormResource extends AbstractRESTResource {
     public Response getAll(@HeaderParam(value = CSRFHelper.CSRF_HEADER_NAME) String csrf) {
         // ensure csrf
         csrfHelper.compareCSRF(aud, csrf);
+
         // create parameter map
         MultivaluedMap<String, String> params = new MultivaluedMapImpl<>();
         params.add(MembershipFormAPIParameterNames.USER_ID.getName(), ident.getPrincipal().getName());
@@ -68,6 +69,11 @@ public class MembershipFormResource extends AbstractRESTResource {
     public Response get(@PathParam("id") String formID, @HeaderParam(value = CSRFHelper.CSRF_HEADER_NAME) String csrf) {
         // ensure csrf
         csrfHelper.compareCSRF(aud, csrf);
+        // check if user is allowed to modify these resources
+        Response r = checkAccess(formID);
+        if (r != null) {
+            return r;
+        }
         // create parameter map
         MultivaluedMap<String, String> params = new MultivaluedMapImpl<>();
         params.add(DefaultUrlParameterNames.ID.getName(), formID);
@@ -97,6 +103,11 @@ public class MembershipFormResource extends AbstractRESTResource {
         if (mem == null) {
             return Response.status(500).build();
         }
+        // check if user is allowed to modify these resources
+        Response r = checkAccess(formID);
+        if (r != null) {
+            return r;
+        }
         mem.setUserID(ident.getPrincipal().getName());
         // need to fetch ref to use attached entity
         MembershipForm ref = mem.cloneTo(dao.getReference(formID, MembershipForm.class));
@@ -107,9 +118,13 @@ public class MembershipFormResource extends AbstractRESTResource {
     @DELETE
     @Path("{id}")
     public Response delete(@PathParam("id") String formID) {
+        // check if user is allowed to modify these resources
+        Response r = checkAccess(formID);
+        if (r != null) {
+            return r;
+        }
         MultivaluedMap<String, String> params = new MultivaluedMapImpl<>();
         params.add(DefaultUrlParameterNames.ID.getName(), formID);
-        //params.add(MembershipFormAPIParameterNames.USER_ID.getName(), ident.getPrincipal().getName());
 
         dao.delete(new RDBMSQuery<>(wrap, filters.get(MembershipForm.class), params));
         return Response.ok().build();
@@ -118,10 +133,14 @@ public class MembershipFormResource extends AbstractRESTResource {
     @POST
     @Path("{id}/complete")
     public Response completeForm(@PathParam("id") String formID) {
+        // check if user is allowed to modify these resources
+        Response r = checkAccess(formID);
+        if (r != null) {
+            return r;
+        }
         // create parameter map
         MultivaluedMap<String, String> params = new MultivaluedMapImpl<>();
         params.add(DefaultUrlParameterNames.ID.getName(), formID);
-        params.add(MembershipFormAPIParameterNames.USER_ID.getName(), ident.getPrincipal().getName());
 
         // retrieve the possible cached object
         List<MembershipForm> results = dao.get(new RDBMSQuery<>(wrap, filters.get(MembershipForm.class), params));
