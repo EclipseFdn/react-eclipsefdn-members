@@ -14,6 +14,7 @@ package org.eclipsefoundation.react.request;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -30,12 +31,16 @@ import javax.ws.rs.core.Response;
 import org.eclipsefoundation.core.helper.CSRFHelper;
 import org.eclipsefoundation.core.namespace.DefaultUrlParameterNames;
 import org.eclipsefoundation.persistence.model.RDBMSQuery;
+import org.eclipsefoundation.react.model.Contact;
+import org.eclipsefoundation.react.model.FormOrganization;
+import org.eclipsefoundation.react.model.FormWorkingGroup;
 import org.eclipsefoundation.react.model.MembershipForm;
 import org.eclipsefoundation.react.namespace.MembershipFormAPIParameterNames;
 import org.jboss.resteasy.specimpl.MultivaluedMapImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import io.quarkus.security.Authenticated;
-
 /**
  * Handles membership form CRUD requests.
  *
@@ -46,6 +51,7 @@ import io.quarkus.security.Authenticated;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class MembershipFormResource extends AbstractRESTResource {
+    public static final Logger LOGGER = LoggerFactory.getLogger(MembershipFormResource.class);
 
     @GET
     public Response getAll(@HeaderParam(value = CSRFHelper.CSRF_HEADER_NAME) String csrf) {
@@ -123,9 +129,16 @@ public class MembershipFormResource extends AbstractRESTResource {
         if (r != null) {
             return r;
         }
+        // standard form params
         MultivaluedMap<String, String> params = new MultivaluedMapImpl<>();
         params.add(DefaultUrlParameterNames.ID.getName(), formID);
 
+        // FK dependents params
+        MultivaluedMap<String, String> depParams = new MultivaluedMapImpl<>();
+        depParams.add(MembershipFormAPIParameterNames.FORM_ID.getName(), formID);
+        dao.delete(new RDBMSQuery<>(wrap, filters.get(FormWorkingGroup.class), depParams));
+        dao.delete(new RDBMSQuery<>(wrap, filters.get(Contact.class), depParams));
+        dao.delete(new RDBMSQuery<>(wrap, filters.get(FormOrganization.class), depParams));
         dao.delete(new RDBMSQuery<>(wrap, filters.get(MembershipForm.class), params));
         return Response.ok().build();
     }
